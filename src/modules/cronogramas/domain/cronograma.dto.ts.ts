@@ -3,13 +3,13 @@ import { IsNumber, IsOptional } from 'class-validator';
 export class FilterTypeObject {
   @IsOptional()
   @IsNumber()
-  public cargoId?: number
+  public cargo_id?: number
 
   @IsOptional()
   @IsNumber()
-  public typeCategoriaId?: number
+  public type_categoria_id?: number
 
   @IsOptional()
   @IsNumber()
-  public metaId?: number
+  public meta_id?: number
 }
