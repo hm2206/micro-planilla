@@ -65,4 +65,16 @@ export class CronogramaRepository extends Repository<CronogramaEntity> {
       .getRawMany()
   }
 
+  public async getCountHistorial(id: number, filter?: FilterTypeObject): Promise<number> {
+    const { total } = await this.createQueryBuilder('cro')
+    .innerJoin('historials', 'his', 'his.cronograma_id = cro.id')
+    .where(`cro.id = ${id}`)
+    .andWhere(filter.cargoId ? `his.cargo_id = ${filter.cargoId}` : '1')
+    .andWhere(filter.typeCategoriaId ? `his.type_categoria_id = ${filter.typeCategoriaId}` : '1')
+    .andWhere(filter.metaId ? `his.meta_id = ${filter.metaId}` : '1')
+    .select(`COUNT(his.id) as total`)
+    .getRawOne()
+    return parseInt(total);
+  }
+
 }
