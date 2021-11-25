@@ -1,5 +1,59 @@
 import { Repository, EntityRepository } from 'typeorm';
 import { CronogramaEntity } from './cronograma.entity';
+import { FilterTypeObject } from './cronograma.dto.ts';
 
 @EntityRepository(CronogramaEntity)
-export class CronogramaRepository extends Repository<CronogramaEntity> {}
+export class CronogramaRepository extends Repository<CronogramaEntity> {
+
+  public getTypeRemunerations(id: number, filter: FilterTypeObject) {
+    const columns = [
+      'type.id', 'type.key', 'type.alias', 
+      'type.descripcion', 'type.ext_pptto',
+      'type.base', 'type.bonificacion', 'type.edit',
+      'type.orden', 'type.estado'
+    ];
+    return this.createQueryBuilder('cro')
+      .innerJoin('historials', 'his', 'his.cronograma_id = cro.id')
+      .innerJoin('remuneracions', 'rem', 'rem.historial_id = his.id')
+      .innerJoin('type_remuneracions', 'type', 'type.id = rem.type_remuneracion_id')
+      .where(`cro.id = ${id}`)
+      .select(`${columns.join(', ')}`)
+      .addSelect('IFNULL(SUM(rem.monto), 0) as price')
+      .groupBy(`${columns.join(', ')}`)
+      .getRawMany()
+  }
+
+  public getTypeDescuentos(id: number, filter: FilterTypeObject) {
+    const columns = [
+      'type.id', 'type.key', 'type.descripcion', 
+      'type.edit', 'type.orden', 'type.estado'
+    ];
+    return this.createQueryBuilder('cro')
+      .innerJoin('historials', 'his', 'his.cronograma_id = cro.id')
+      .innerJoin('descuentos', 'des', 'des.historial_id = his.id')
+      .innerJoin('type_descuentos', 'type', 'type.id = des.type_descuento_id')
+      .where(`cro.id = ${id}`)
+      .select(`${columns.join(', ')}`)
+      .addSelect('IFNULL(SUM(des.monto), 0) as price')
+      .groupBy(`${columns.join(', ')}`)
+      .getRawMany()
+  }
+
+  public getTypeAportaciones(id: number, filter: FilterTypeObject) {
+    const columns = [
+      'type.id', 'type.key', 'type.descripcion', 
+      'type.porcentaje', 'type.minimo', 'type.default',
+      'type.ext_pptto', 'type.estado'
+    ];
+    return this.createQueryBuilder('cro')
+      .innerJoin('historials', 'his', 'his.cronograma_id = cro.id')
+      .innerJoin('aportacions', 'apo', 'apo.historial_id = his.id')
+      .innerJoin('type_aportacions', 'type', 'type.id = apo.type_aportacion_id')
+      .where(`cro.id = ${id}`)
+      .select(`${columns.join(', ')}`)
+      .addSelect('IFNULL(SUM(apo.monto), 0) as price')
+      .groupBy(`${columns.join(', ')}`)
+      .getRawMany()
+  }
+
+}
