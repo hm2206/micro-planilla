@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, StreamableFile  } from '@nestjs/common';
+import { Controller, Param, Post, Query, StreamableFile  } from '@nestjs/common';
 import { CustomValidation } from 'src/common/pipes/custom-validation.pipe';
 import { ReportGeneralService } from '../application/report-general.service';
 import { FilterTypeObject } from '../domain/cronograma.dto.ts';
@@ -7,7 +7,7 @@ import { FilterTypeObject } from '../domain/cronograma.dto.ts';
 export class HttpController {
   constructor(private reportGeneral: ReportGeneralService) {} 
 
-  @Get(':id/report/general.xlsx')
+  @Post(':id/report/general.xlsx')
   public async reportGeneralExcel(
     @Param('id') id: number, 
     @Query(new CustomValidation(FilterTypeObject)) query) {
