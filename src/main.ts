@@ -9,9 +9,15 @@ async function bootstrap() {
     origin: '*',
     credentials: true, 
   });
+
+  const host = process.env.HOST;
+  const port = process.env.PORT;
+
   app.useGlobalFilters(new HttpExceptionFilter);
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api');
-  await app.listen(process.env.PORT);
+  await app.listen(port, host, () => {
+    console.log(`Server run: ${host}:${port}`);
+  });
 }
 bootstrap();
