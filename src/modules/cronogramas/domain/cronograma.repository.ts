@@ -5,7 +5,7 @@ import { FilterTypeObject } from './cronograma.dto.ts';
 @EntityRepository(CronogramaEntity)
 export class CronogramaRepository extends Repository<CronogramaEntity> {
 
-  public getTypeRemunerations(id: number, filter: FilterTypeObject) {
+  public getTypeRemunerations(id: number, filter?: FilterTypeObject): Promise<any> {
     const columns = [
       'type.id', 'type.key', 'type.alias', 
       'type.descripcion', 'type.ext_pptto',
@@ -17,13 +17,16 @@ export class CronogramaRepository extends Repository<CronogramaEntity> {
       .innerJoin('remuneracions', 'rem', 'rem.historial_id = his.id')
       .innerJoin('type_remuneracions', 'type', 'type.id = rem.type_remuneracion_id')
       .where(`cro.id = ${id}`)
+      .andWhere(filter.cargoId ? `his.cargo_id = ${filter.cargoId}` : '1')
+      .andWhere(filter.typeCategoriaId ? `his.type_categoria_id = ${filter.typeCategoriaId}` : '1')
+      .andWhere(filter.metaId ? `his.meta_id = ${filter.metaId}` : '1')
       .select(`${columns.join(', ')}`)
       .addSelect('IFNULL(SUM(rem.monto), 0) as price')
       .groupBy(`${columns.join(', ')}`)
       .getRawMany()
   }
 
-  public getTypeDescuentos(id: number, filter: FilterTypeObject) {
+  public getTypeDescuentos(id: number, filter?: FilterTypeObject): Promise<any> {
     const columns = [
       'type.id', 'type.key', 'type.descripcion', 
       'type.edit', 'type.orden', 'type.estado'
@@ -33,13 +36,16 @@ export class CronogramaRepository extends Repository<CronogramaEntity> {
       .innerJoin('descuentos', 'des', 'des.historial_id = his.id')
       .innerJoin('type_descuentos', 'type', 'type.id = des.type_descuento_id')
       .where(`cro.id = ${id}`)
+      .andWhere(filter.cargoId ? `his.cargo_id = ${filter.cargoId}` : '1')
+      .andWhere(filter.typeCategoriaId ? `his.type_categoria_id = ${filter.typeCategoriaId}` : '1')
+      .andWhere(filter.metaId ? `his.meta_id = ${filter.metaId}` : '1')
       .select(`${columns.join(', ')}`)
       .addSelect('IFNULL(SUM(des.monto), 0) as price')
       .groupBy(`${columns.join(', ')}`)
       .getRawMany()
   }
 
-  public getTypeAportaciones(id: number, filter: FilterTypeObject) {
+  public getTypeAportaciones(id: number, filter?: FilterTypeObject): Promise<any> {
     const columns = [
       'type.id', 'type.key', 'type.descripcion', 
       'type.porcentaje', 'type.minimo', 'type.default',
@@ -50,6 +56,9 @@ export class CronogramaRepository extends Repository<CronogramaEntity> {
       .innerJoin('aportacions', 'apo', 'apo.historial_id = his.id')
       .innerJoin('type_aportacions', 'type', 'type.id = apo.type_aportacion_id')
       .where(`cro.id = ${id}`)
+      .andWhere(filter.cargoId ? `his.cargo_id = ${filter.cargoId}` : '1')
+      .andWhere(filter.typeCategoriaId ? `his.type_categoria_id = ${filter.typeCategoriaId}` : '1')
+      .andWhere(filter.metaId ? `his.meta_id = ${filter.metaId}` : '1')
       .select(`${columns.join(', ')}`)
       .addSelect('IFNULL(SUM(apo.monto), 0) as price')
       .groupBy(`${columns.join(', ')}`)

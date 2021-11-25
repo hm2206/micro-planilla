@@ -1,6 +1,12 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
 export class FilterTypeObject {
-  @IsNotEmpty()
-  public cargoId: number
+  @IsNumber()
+  public cargoId?: number
+
+  @IsNumber()
+  public typeCategoriaId?: number
+
+  @IsNumber()
+  public metaId?: number
 }
