@@ -4,7 +4,8 @@ import { Response } from 'express';
 interface ParamsException {
   status?: number
   message: string,
-  errors?: { [key: string]: string[] }
+  errors?: { [key: string]: string[] },
+  name?: string
 }
 
 @Catch()
@@ -19,6 +20,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
         statusCode: status,
         timestamp: new Date().toISOString(),
         message: exception.message,
+        code: exception.name,
         errors: exception.errors
       })
   }

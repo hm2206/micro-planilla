@@ -9,10 +9,9 @@ export class PaymentRequiredException extends HttpException {
 
   errors: paymentItem[] = []
 
-  code: "PAYMENT_REQUIRED"
-
   constructor(errors: ValidationError[]) {
     super('Payment Required', 402);
+    super.name = "ERR_PAYMENT_REQUIRED";
     this.formatter(errors);
   }
 
