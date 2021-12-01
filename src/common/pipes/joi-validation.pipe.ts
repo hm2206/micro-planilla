@@ -1,26 +1,20 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
-import { PaymentRequiredException } from '../exceptions/payment-required.exception';
-import * as Joi from 'joi';
+import { PaymentRequiredJoiException } from '../exceptions/payment-required.exception';
+import { Schema } from 'joi';
 
 @Injectable()
-export class JoiValidationPipe implements PipeTransform<any> {
-
-  private schema: Joi.Schema;
-
-  constructor(schema: Joi.Schema) {
-    this.schema = schema;
-  }
+export class JoiValidationPipe implements PipeTransform {
+  constructor(private schema: Schema) {}
 
   transform(value: any, metadata: ArgumentMetadata) {
-    // const { error } = this.schema.validate(value, { 
-    //   abortEarly: false,
-    //   allowUnknown: true,
-    //   stripUnknown: true,
-    // });
+    const { error } = this.schema.validate(value, { 
+      abortEarly: false,
+      allowUnknown: true,
+      stripUnknown: true,
+    });
 
-    // if (!error) return value;
-    console.log(this.schema);
-    return value;
-    // throw new  PaymentRequiredException(error.details)
+    if (!error) return value;
+
+    throw new  PaymentRequiredJoiException(error.details)
   }
 }

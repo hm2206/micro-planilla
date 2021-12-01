@@ -7,6 +7,11 @@ import { FilterTypeObject } from '../domain/cronograma.dto.ts';
 export class HttpController {
   constructor(private reportGeneral: ReportGeneralService) {} 
 
+  @Post(':id/copy')
+  public async copy() {
+    return 'ok'
+  }
+
   @Post(':id/report/general.xlsx')
   public async reportGeneralExcel(
     @Param('id') id: number, 
