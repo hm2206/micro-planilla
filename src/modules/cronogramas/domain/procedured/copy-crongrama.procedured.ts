@@ -24,6 +24,10 @@ export class CopyCronogramaProcedured extends DatabaseProcedured {
       ]
   }
 
+  public call(sourceId: number, targetId: number): Promise<any> {
+    return super.call(sourceId, targetId);
+  }
+
   public query() {
     return (
       `
