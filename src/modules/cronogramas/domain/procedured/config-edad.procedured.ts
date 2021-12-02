@@ -1,11 +1,11 @@
 import { DatabaseProcedured, ParamProcedured, paramModeProcedured } from 'src/database/database.procedured';
 
-export class AddAportacionesProcedured extends DatabaseProcedured {
+export class ConfigEdadProcedured extends DatabaseProcedured {
   constructor() {
     super();
   }
 
-  public displayName: string = AddAportacionesProcedured.name;
+  public displayName: string = ConfigEdadProcedured.name;
 
   public params(): ParamProcedured[] {
       return [
