@@ -1,4 +1,4 @@
-import { IsBoolean, IsEmpty, IsNotEmpty, IsNumber, IsOptional, MaxLength } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, MaxLength } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateCronograma {
@@ -7,7 +7,7 @@ export class CreateCronograma {
   public year: number;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsNumber({ allowNaN: true, maxDecimalPlaces: 0 })
   public mes: number;
 
   @IsNotEmpty()
@@ -23,7 +23,6 @@ export class CreateCronograma {
   public planillaId: number;
 
   @IsNotEmpty()
-  @IsNumber()
   public entityId: number;
 }
 
