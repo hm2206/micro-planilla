@@ -14,8 +14,8 @@ export class CronogramaEntity {
   @Column()
   public mes: number;
 
-  @Column({ default: false })
-  public adicional: boolean;
+  @Column({ default: 0 })
+  public adicional: number;
 
   @Column({ default: 30 })
   public dias: number;

@@ -27,13 +27,14 @@ export class CreateCronograma {
   public entityId: number;
 }
 
-export class CreateCronogramaAdicional extends PartialType(CreateCronograma) {
-  @IsEmpty()
-  public readonly adicional = true;
+export class CreateCronogramaWithAdicional extends PartialType(CreateCronograma) {
+  @IsNotEmpty()
+  @IsNumber()
+  public adicional: number;
 
   @IsNotEmpty()
   @IsBoolean()
-  public readonly remanente: boolean;
+  public remanente: boolean;
 }
 
 export class FilterTypeObject {
