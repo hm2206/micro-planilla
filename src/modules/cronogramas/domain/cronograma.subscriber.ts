@@ -18,4 +18,9 @@ export class CronogramaSubscriber implements EntitySubscriberInterface<Cronogram
     cronograma.token = token;
     cronograma.state = true;
   }
+
+  // public async afterInsert(event: InsertEvent<CronogramaEntity>) {
+  //   const cronograma = event.entity;
+    
+  // }
 }

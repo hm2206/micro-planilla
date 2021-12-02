@@ -1,4 +1,5 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsBoolean, IsEmpty, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateCronograma {
   @IsNotEmpty()
@@ -17,10 +18,6 @@ export class CreateCronograma {
   @IsNotEmpty()
   @IsNumber()
   public dias: number;
-  
-  @IsNotEmpty()
-  @IsBoolean()
-  public adicional: boolean;
 
   @IsOptional()
   @MaxLength(255)
@@ -33,10 +30,15 @@ export class CreateCronograma {
   @IsNotEmpty()
   @IsNumber()
   public entityId: number;
+}
 
-  @IsOptional()
+export class CreateCronogramaAdicional extends PartialType(CreateCronograma) {
+  @IsEmpty()
+  public readonly adicional = true;
+
+  @IsNotEmpty()
   @IsBoolean()
-  public remanente = false;
+  public readonly remanente: boolean;
 }
 
 export class FilterTypeObject {

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { CreateCronograma } from '../domain/cronograma.dto.ts';
 import { CronogramaEntity } from '../domain/cronograma.entity';
 import { CronogramaRepository } from '../domain/cronograma.repository';
+import { AddInfosProcedured } from '../domain/procedured/add-infos.procedured';
 
 @Injectable()
 export class CronogramasService {
@@ -13,9 +14,11 @@ export class CronogramasService {
       const execute = async () => {
         try {
           const tmpCronograma = this.cronogramaRepository.create(payload)
-          return await this.cronogramaRepository.save(tmpCronograma);
+          const cronograma = await this.cronogramaRepository.save(tmpCronograma);
+          // processar datos
+          (new AddInfosProcedured).call(cronograma.id);
+          return cronograma;
         } catch (err) {
-          console.log(err);
           throw new InternalServerErrorException("No se pudó guardar los datos");
         }
       }
