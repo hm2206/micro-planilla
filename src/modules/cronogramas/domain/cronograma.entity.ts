@@ -53,9 +53,9 @@ export class CronogramaEntity {
   @Column({ name: 'estado', default: true })
   public state: boolean;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', default: 'CURRENT_TIMESTAMP' })
   public createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'updated_at', default: 'CURRENT_TIMESTAMP' })
   public updatedAt: Date; 
 }

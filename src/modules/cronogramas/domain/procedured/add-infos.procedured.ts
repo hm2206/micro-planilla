@@ -86,13 +86,13 @@ export class AddInfosProcedured extends DatabaseProcedured {
       UPDATE cronogramas as cro 
       INNER JOIN historials as his ON his.cronograma_id = cro.id
       INNER JOIN infos as inf ON his.info_id = inf.id
-      SET his.dias = IF(inf.fecha_de_ingreso is not NULL AND inf.fecha_de_ingreso <> '', 
+      SET his.dias = IF(inf.fecha_de_ingreso is not NULL AND inf.fecha_de_ingreso is not null, 
       IF(YEAR(inf.fecha_de_ingreso) = YEAR(NOW()) AND MONTH(inf.fecha_de_ingreso) = MONTH(NOW()),
       DAY(inf.fecha_de_cese) - DAY(inf.fecha_de_ingreso),
       IF(DAY(inf.fecha_de_cese) > 30, 30, DAY(inf.fecha_de_cese))),
       IF(DAY(fecha_de_cese) > 30, 30, DAY(fecha_de_cese)))
       WHERE cro.id = p_cronograma_id
-      AND (inf.fecha_de_cese is not null OR inf.fecha_de_cese <> '')
+      AND (inf.fecha_de_cese is not null OR inf.fecha_de_cese is not null)
       AND YEAR(inf.fecha_de_cese) = YEAR(NOW()) AND MONTH(inf.fecha_de_cese) = MONTH(NOW())
       AND cro.estado = 1 AND inf.estado = 1;
     `

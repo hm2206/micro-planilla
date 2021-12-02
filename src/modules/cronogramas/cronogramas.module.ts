@@ -3,7 +3,7 @@ import { HttpController } from './infrastructure/http.controller';
 import { ReportGeneralService } from './application/report-general.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CronogramaRepository } from './domain/cronograma.repository';
-import { CronogramasService } from './application/cronogramas.service';
+import { CreateCronogramaService } from './application/create-cronograma.service';
 import { CronogramaSubscriber } from './domain/cronograma.subscriber';
 
 @Module({
@@ -11,7 +11,7 @@ import { CronogramaSubscriber } from './domain/cronograma.subscriber';
     TypeOrmModule.forFeature([CronogramaRepository]),
   ],
   providers: [
-    CronogramasService, 
+    CreateCronogramaService, 
     ReportGeneralService,
     CronogramaSubscriber,
   ],

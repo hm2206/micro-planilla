@@ -54,7 +54,8 @@ export class CopyCronogramaProcedured extends DatabaseProcedured {
       FROM historials as his
       INNER JOIN infos as inf ON inf.id = his.info_id
       INNER JOIN works as w ON w.id = inf.work_id
-      WHERE his.cronograma_id = p_cronograma_source_id;
+      WHERE his.cronograma_id = p_cronograma_source_id
+      AND inf.estado = 1;
     `
   }
 

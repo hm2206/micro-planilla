@@ -10,6 +10,6 @@ export const mysqlService = TypeOrmModule.forRootAsync({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
     entities: [path.join(__dirname, '../modules/**/domain/*.entity{.ts,.js}')],
-    logging: false
+    logging: true
   }),
 });
