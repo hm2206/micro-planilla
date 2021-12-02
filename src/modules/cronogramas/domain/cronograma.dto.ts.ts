@@ -1,12 +1,7 @@
-import { IsBoolean, IsEmpty, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsBoolean, IsEmpty, IsNotEmpty, IsNumber, IsOptional, MaxLength } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateCronograma {
-  @IsNotEmpty()
-  @IsString()
-  @MaxLength(255)
-  public descripcion: string;
-
   @IsNotEmpty()
   @IsNumber()
   public year: number;

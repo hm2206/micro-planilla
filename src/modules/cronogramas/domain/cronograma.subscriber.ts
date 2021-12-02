@@ -1,10 +1,14 @@
 import { Connection, EntitySubscriberInterface, EventSubscriber, InsertEvent } from 'typeorm';
 import { CronogramaEntity } from './cronograma.entity';
 import ObjectId from 'bson-objectid';
+import { PlanillasService } from 'src/modules/planillas/application/planillas.service';
 
 @EventSubscriber()
 export class CronogramaSubscriber implements EntitySubscriberInterface<CronogramaEntity> {
-  constructor(connection: Connection) {
+  constructor(
+    connection: Connection,
+    private planillasService: PlanillasService
+  ) {
     connection.subscribers.push(this);
   }
 
@@ -15,12 +19,8 @@ export class CronogramaSubscriber implements EntitySubscriberInterface<Cronogram
   public async beforeInsert(event: InsertEvent<CronogramaEntity>) {
     const token = new ObjectId().toHexString();
     const cronograma = event.entity;
+    const planilla = await this.planillasService.findOrFail(cronograma.planillaId);
     cronograma.token = token;
-    cronograma.state = true;
+    cronograma.descripcion = planilla.description;
   }
-
-  // public async afterInsert(event: InsertEvent<CronogramaEntity>) {
-  //   const cronograma = event.entity;
-    
-  // }
 }

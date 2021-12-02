@@ -5,10 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CronogramaRepository } from './domain/cronograma.repository';
 import { CreateCronogramaService } from './application/create-cronograma.service';
 import { CronogramaSubscriber } from './domain/cronograma.subscriber';
+import { PlanillasModule } from '../planillas/planillas.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([CronogramaRepository]),
+    PlanillasModule
   ],
   providers: [
     CreateCronogramaService, 
