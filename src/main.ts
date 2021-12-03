@@ -37,6 +37,7 @@ async function bootstrap() {
   await seeder.seed();
 
   const { HOST, PORT } = process.env;
+  // host
   await app.listen(PORT, HOST, () => {
     console.log(`Server run: ${HOST}:${PORT}`);
   });
