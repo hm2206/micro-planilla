@@ -29,6 +29,9 @@ export class CronogramasService {
       .catch(() => console.log(`error: ${history.id}`));
     });
     // response
-    return { process: true }
+    return { 
+      process: true,
+      count: historialIds.length
+    }
   }
 }
