@@ -6,15 +6,17 @@ import { CronogramaRepository } from './domain/cronograma.repository';
 import { CreateCronogramaService } from './application/create-cronograma.service';
 import { CronogramaSubscriber } from './domain/cronograma.subscriber';
 import { PlanillasModule } from '../planillas/planillas.module';
-import { MicroservicesModule } from '../microservices/microservices.module';
+import { CronogramasService } from './application/cronogramas.service';
+import { HistorialModule } from '../historial/historial.module';
 
 @Module({
   imports: [
-    MicroservicesModule,
+    HistorialModule,
     TypeOrmModule.forFeature([CronogramaRepository]),
     PlanillasModule
   ],
   providers: [
+    CronogramasService,
     CreateCronogramaService, 
     ReportGeneralService,
     CronogramaSubscriber,

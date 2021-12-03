@@ -2,14 +2,14 @@ import { Body, Controller, Param, Post, Query, StreamableFile  } from '@nestjs/c
 import { CustomValidation } from 'src/common/pipes/custom-validation.pipe';
 import { CreateCronogramaService } from '../application/create-cronograma.service';
 import { ReportGeneralService } from '../application/report-general.service';
+import { CronogramasService } from '../application/cronogramas.service';
 import { CreateCronograma, FilterTypeObject, CreateCronogramaWithAdicional } from '../domain/cronograma.dto.ts';
-import { ShippingService } from 'src/modules/microservices/shipping/shipping.service';
-import { SendMailDto } from 'src/modules/microservices/shipping/shipping.dto';
+// import { SendMailDto } from 'src/modules/microservices/shipping/shipping.dto';
 
 @Controller('cronogramas')
 export class HttpController {
   constructor(
-    private shippingService: ShippingService,
+    private cronogramasService: CronogramasService,
     private createCronogramaService: CreateCronogramaService,
     private reportGeneral: ReportGeneralService
   ) {} 
@@ -36,16 +36,7 @@ export class HttpController {
   }
 
   @Post(':id/sendMail')
-  public async sendMail() {
-    const result = this.shippingService.sendMail({
-      email: 'twd2206@gmail.com',
-      subject: 'Enviar Correo',
-      content: 'Listo ok'
-    } as SendMailDto);
-    result.subscribe({
-      next: (data) => console.log(data),
-      error: (err) => console.log(err)
-    })
-    return 'ok';
+  public async sendMail(@Param('id') id: number) {
+    return this.cronogramasService.sendMail(id);
   }
 }

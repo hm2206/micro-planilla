@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CronogramasModule } from './modules/cronogramas/cronogramas.module';
+import { storageConfig } from './common/configs/storage.config';
+import { StorageModule } from '@haorama/nestjs-storage';
 import { DatabaseModule } from './database/database.module';
 import { TypeRemunerationsModule } from './modules/type-remunerations/type-remunerations.module';
 
@@ -9,6 +11,7 @@ import { TypeRemunerationsModule } from './modules/type-remunerations/type-remun
     ConfigModule.forRoot({
       envFilePath: ['.env.local', '.env.production'],
     }),
+    StorageModule.forRoot(storageConfig),
     CronogramasModule,
     DatabaseModule,
     TypeRemunerationsModule,

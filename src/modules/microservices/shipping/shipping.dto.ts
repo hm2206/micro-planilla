@@ -5,12 +5,20 @@ export class SendMailDto {
   @IsNotEmpty()
   public email: string;
 
+  @IsString()
+  @IsOptional()
+  public displayLink?: string;
+
+  @IsString()
+  @IsOptional()
+  public link?: string;
+
   @IsNotEmpty()
   public subject: string;
 
   @IsString()
   @IsOptional()
-  public template = 'default';
+  public template?: string = 'default';
 
   @IsString()
   @IsOptional()
