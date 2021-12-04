@@ -32,6 +32,8 @@ export class SendBoletaService {
           .addSelect('cro.year as displayYear')
           .addSelect('cro.mes as displayMes') 
           .getRawOne();
+        // actualizar
+        await this.historialRepository.save(history);
         // generar link
         const link = urlJoin(this.host, `?ClientId=${this.clientId}&ClientSecret=${this.clientSecret}&token_verify=${history.tokenVerify}`);
         // obtener persona
@@ -49,7 +51,6 @@ export class SendBoletaService {
             }).subscribe({
               next: async (data) => {
                 history.sendEmail = true;
-                await this.historialRepository.save(history);
                 return resolve(data);
               },
               error: (err) => reject(err)
