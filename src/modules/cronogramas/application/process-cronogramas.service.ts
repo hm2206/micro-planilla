@@ -48,6 +48,8 @@ export class ProcessCronogramasService {
 
   public async changeCargo(id: number, cargoId: number, filter: FilterTypeObject) {
     const cronograma = await this.cronogramaRepository.findOneOrFail(id);
+    // validar si el cronograma está abierto
+    if (!cronograma.state) throw new InternalServerErrorException("El cronograma ya está cerrado");
     // verificamos si es remanente
     const isRemanente = cronograma.remanente ? true : false;
     // preparar filtros
