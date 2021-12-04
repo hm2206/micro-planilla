@@ -7,6 +7,7 @@ import { ProcessHistorialService } from './application/process-historial.service
 import { SendBoletaService } from './application/send-boleta.service';
 import { HistorialRepository } from './domain/historial.repository';
 import { HistorialService } from './application/historial.service';
+import { RabbitMqController } from './infrastructure/rabbitmq.crontroller';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { HistorialService } from './application/historial.service';
     SendBoletaService, 
     ProcessHistorialService
   ],
+  controllers: [RabbitMqController],
   exports: [
     HistorialService,
     SendBoletaService, 
