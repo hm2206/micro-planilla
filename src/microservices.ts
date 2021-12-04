@@ -5,7 +5,7 @@ export const SENT_MAIL = {
   transport: Transport.RMQ,
   options: {
     urls: [`amqp://${RABBITMQ_USER}:${RABBITMQ_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/${RABBITMQ_VIRTUAL}`],
-    queue: 'shipping',
+    queue: 'planilla',
     noAck: false
   }
 } as MicroserviceOptions
