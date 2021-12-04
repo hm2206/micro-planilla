@@ -1,12 +1,12 @@
 import { Controller } from '@nestjs/common';
-import { EventPattern, Payload, Ctx, RmqContext } from '@nestjs/microservices';
+import { MessagePattern, Payload, Ctx, RmqContext } from '@nestjs/microservices';
 import { HistorialService } from '../application/historial.service';
 
 @Controller()
 export class RabbitMqController {
   constructor(private historialService: HistorialService) {}
 
-  @EventPattern('sendMailProcess')
+  @MessagePattern('sendMailProcess')
   public async sendMail(@Payload() payload: any, @Ctx() context: RmqContext): Promise<void> {
     try {
       const channel = context.getChannelRef();
