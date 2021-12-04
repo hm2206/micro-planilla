@@ -6,7 +6,7 @@ import { HistorialService } from '../application/historial.service';
 export class RabbitMqController {
   constructor(private historialService: HistorialService) {}
 
-  @EventPattern('sendMailProcess')
+  @EventPattern('sendMailPlanilla')
   public async sendMail(@Payload() payload: any, @Ctx() context: RmqContext): Promise<void> {
     const channel = context.getChannelRef();
     const originalMsg = context.getMessage();
