@@ -43,6 +43,7 @@ export class SendBoletaService {
             const person = data.person;
             if (!person.email_contact) return reject(new InternalServerErrorException("El trabajador no tiene correo"))
             this.shippingService.sendMail({
+              objectId: history.id,
               email: person.email_contact,
               subject: `Boleta de Pago de la Planilla ${metaData?.displayPlanilla} ${metaData?.displayYear}/${metaData?.displayMes}`,
               content: `Hola ${person.name.toUpperCase()}, su boleta de pago ya está lista`,
@@ -50,7 +51,6 @@ export class SendBoletaService {
               link
             }).subscribe({
               next: async (data) => {
-                history.sendEmail = true;
                 return resolve(data);
               },
               error: (err) => reject(err)

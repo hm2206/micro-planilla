@@ -9,6 +9,9 @@ export class SendMailDto {
   @IsOptional()
   public displayLink?: string;
 
+  @IsOptional()
+  public objectId?: any;
+
   @IsString()
   @IsOptional()
   public link?: string;

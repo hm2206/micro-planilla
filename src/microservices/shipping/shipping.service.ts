@@ -10,6 +10,6 @@ export class ShippingService {
   private rabbitmq: ClientProxy ) {}
 
   public sendMail(payload: SendMailDto): Observable<any> {
-    return this.rabbitmq.send('sendMail', payload);
+    return this.rabbitmq.emit('sendMail', payload);
   }  
 }
