@@ -3,10 +3,12 @@ import { AuthHttpService } from '../../../client-http/application/auth-http.serv
 import { ShippingService } from '../../../microservices/shipping/shipping.service';
 import { HistorialRepository } from '../domain/historial.repository';
 import * as urlJoin from 'url-join';
+import { HistorialService } from './historial.service';
 
 @Injectable()
 export class SendBoletaService {
   constructor(
+    private historialService: HistorialService,
     private shippingService: ShippingService,
     private authService: AuthHttpService,
     private historialRepository: HistorialRepository) {}
@@ -51,6 +53,9 @@ export class SendBoletaService {
               link
             }).subscribe({
               next: async (data) => {
+                // cambiar de estado
+                history.sendEmail = true;
+                await this.historialService.update(history.id, history);
                 return resolve(data);
               },
               error: (err) => reject(err)
