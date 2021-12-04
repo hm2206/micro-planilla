@@ -22,6 +22,12 @@ export class AddRemuneracionInfosProcedure extends DatabaseProcedured {
           length: 20
         },
         { 
+          name: "p_meta_id",
+          type: "BIGINT",
+          mode: paramModeProcedured.IN,
+          length: 20
+        },
+        { 
           name: "p_cargo_id",
           type: "BIGINT",
           mode: paramModeProcedured.IN,
@@ -36,8 +42,8 @@ export class AddRemuneracionInfosProcedure extends DatabaseProcedured {
       ]
   }
 
-  public call(typeRemuneracionId: number, planillaId = 0, cargoId = 0, typeCategoriaId = 0): Promise<any> {
-    return super.call(typeRemuneracionId, planillaId, cargoId, typeCategoriaId);
+  public call(typeRemuneracionId: number, planillaId = 0, metaId = 0, cargoId = 0, typeCategoriaId = 0): Promise<any> {
+    return super.call(typeRemuneracionId, planillaId, metaId, cargoId, typeCategoriaId);
   }
 
   public query() {
@@ -51,6 +57,7 @@ export class AddRemuneracionInfosProcedure extends DatabaseProcedured {
       where IF(p_planilla_id = 0, 1, info.planilla_id = p_planilla_id)
       AND IF(p_cargo_id = 0, 1, info.cargo_id = p_cargo_id)
       AND IF(p_type_categoria_id = 0, 1, info.type_categoria_id = p_type_categoria_id)
+      AND IF(meta_id = 0, 1, info.meta_id = meta_id)
       AND cat.type_remuneracion_id = p_type_remuneracion_id
       AND info.estado = 1
       AND NOT EXISTS (

@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { AuthHttpService } from 'src/modules/client-http/application/auth-http.service';
-import { ShippingService } from 'src/modules/microservices/shipping/shipping.service';
+import { AuthHttpService } from '../../../client-http/application/auth-http.service';
+import { ShippingService } from '../../../microservices/shipping/shipping.service';
 import { HistorialRepository } from '../domain/historial.repository';
 import * as urlJoin from 'url-join';
 

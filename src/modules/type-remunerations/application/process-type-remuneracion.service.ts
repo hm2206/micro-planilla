@@ -8,7 +8,14 @@ export class ProcessTypeRemuneracionService {
   constructor(private typeRemuneracionRepository: TypeRemunerationRepository) {}
 
   public async syncToInfos(id: number, payload: FilterSyncToInfos) {
-    await (new AddRemuneracionInfosProcedure()).call(id, payload.planillaId, payload.cargoId, payload.typeCategoriaId);
+    await (new AddRemuneracionInfosProcedure()).call(
+      id, 
+      payload.planillaId, 
+      payload.metaId, 
+      payload.cargoId, 
+      payload.typeCategoriaId
+    );
+    // result
     return { process: true }
   }
 }

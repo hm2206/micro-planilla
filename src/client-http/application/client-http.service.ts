@@ -5,7 +5,7 @@ import { InputGetFile } from '../client-http.dto';
 import { Observable } from 'rxjs';
 import ObjectId from 'bson-objectid';
 import { StorageManager } from '@slynova/flydrive';
-import { pathUpload } from '../../../common/configs/storage.config';
+import { pathUpload } from '../../common/configs/storage.config';
 
 @Injectable()
 export class ClientHttpService {

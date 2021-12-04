@@ -1,15 +1,15 @@
-import { IsNumber, IsOptional } from 'class-validator';
+import { IsOptional } from 'class-validator';
 
 export class FilterSyncToInfos {
   @IsOptional()
-  @IsNumber()
   public planillaId = 0;
 
   @IsOptional()
-  @IsNumber()
+  public metaId = 0;
+
+  @IsOptional()
   public cargoId = 0;
 
   @IsOptional()
-  @IsNumber()
   public typeCategoriaId = 0;
 }
