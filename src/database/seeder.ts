@@ -18,6 +18,7 @@ import { AddSindicatoProcedured } from '../modules/cronogramas/domain/procedured
 import { UpdateSindicatoProcedured } from '../modules/cronogramas/domain/procedured/update-sindicato.procedured'
 import { UpdateAportacionProcedured } from '../modules/cronogramas/domain/procedured/update-aportacion.procedured';
 import { UpdateDescuentoEscalafonProcedured } from '../modules/cronogramas/domain/procedured/update-descuento-escalafon.procedured';
+import { AddRemuneracionInfosProcedure } from '../modules/type-remunerations/domain/procedured/add-remuneracion-infos.procedured';
 
 @Injectable()
 export class Seeder {
@@ -41,5 +42,6 @@ export class Seeder {
     (new UpdateAportacionProcedured).up();
     (new UpdateDescuentoEscalafonProcedured).up();
     (new CopyCronogramaProcedured).up();
+    (new AddRemuneracionInfosProcedure).up();
   }
 }
