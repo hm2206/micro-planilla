@@ -26,7 +26,7 @@ export class CronogramasService {
     // iterar historial
     historialIds.forEach(history => {
       this.sendBoletaService.sendMail(history.id)
-      .catch(() => console.log(`error: ${history.id}`));
+      .catch((err) => console.log(`error: ${history.id}, ${err.message}`));
     });
     // response
     return { 
