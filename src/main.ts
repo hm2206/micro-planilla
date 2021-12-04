@@ -4,6 +4,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { Seeder } from './database/seeder';
+import { SENT_MAIL } from './microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -35,6 +36,11 @@ async function bootstrap() {
   // add seeder
   const seeder = app.get(Seeder);
   await seeder.seed();
+
+  // microservices
+  app.connectMicroservice(SENT_MAIL);
+
+  await app.startAllMicroservices();
 
   const { HOST, PORT } = process.env;
   // host

@@ -6,12 +6,16 @@ import { HistorialService } from '../application/historial.service';
 export class RabbitMqController {
   constructor(private historialService: HistorialService) {}
 
-  @EventPattern('sendMailPlanilla')
+  @EventPattern('sendMailProcess')
   public async sendMail(@Payload() payload: any, @Ctx() context: RmqContext): Promise<void> {
-    const channel = context.getChannelRef();
-    const originalMsg = context.getMessage();
-    const data = { sendEmail: true };
-    await this.historialService.update(payload, data as any);
-    channel.ack(originalMsg);
+    try {
+      const channel = context.getChannelRef();
+      const originalMsg = context.getMessage();
+      const data = { sendEmail: true };
+      await this.historialService.update(payload, data as any);
+      channel.ack(originalMsg);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
