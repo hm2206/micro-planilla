@@ -49,3 +49,9 @@ export class FilterTypeObject {
   @IsNumber()
   public meta_id?: number
 }
+
+export class ChangeCargoId extends PartialType(FilterTypeObject) {
+  @IsNotEmpty()
+  @IsNumber()
+  public targetCargoId: number;
+}

@@ -8,6 +8,8 @@ import { CronogramaSubscriber } from './domain/cronograma.subscriber';
 import { PlanillasModule } from '../planillas/planillas.module';
 import { CronogramasService } from './application/cronogramas.service';
 import { HistorialModule } from '../historial/historial.module';
+import { SendBoletaCronogramas } from './application/send-boleta-cronogramas.service';
+import { ProcessCronogramasService } from './application/process-cronogramas.service';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { HistorialModule } from '../historial/historial.module';
   providers: [
     CronogramasService,
     CreateCronogramaService, 
+    SendBoletaCronogramas,
+    ProcessCronogramasService,
     ReportGeneralService,
     CronogramaSubscriber,
   ],

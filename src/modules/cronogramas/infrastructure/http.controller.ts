@@ -1,16 +1,17 @@
 import { Body, Controller, Param, Post, Query, StreamableFile  } from '@nestjs/common';
 import { CustomValidation } from 'src/common/pipes/custom-validation.pipe';
 import { CreateCronogramaService } from '../application/create-cronograma.service';
+import { ProcessCronogramasService } from '../application/process-cronogramas.service';
 import { ReportGeneralService } from '../application/report-general.service';
-import { CronogramasService } from '../application/cronogramas.service';
-import { CreateCronograma, FilterTypeObject, CreateCronogramaWithAdicional } from '../domain/cronograma.dto.ts';
-// import { SendMailDto } from 'src/modules/microservices/shipping/shipping.dto';
+import { SendBoletaCronogramas } from '../application/send-boleta-cronogramas.service';
+import { CreateCronograma, FilterTypeObject, CreateCronogramaWithAdicional, ChangeCargoId } from '../domain/cronograma.dto.ts';
 
 @Controller('cronogramas')
 export class HttpController {
   constructor(
-    private cronogramasService: CronogramasService,
+    private sendBoletaCronogramas: SendBoletaCronogramas,
     private createCronogramaService: CreateCronogramaService,
+    private proccessCronogramaService: ProcessCronogramasService,
     private reportGeneral: ReportGeneralService
   ) {} 
 
@@ -22,9 +23,14 @@ export class HttpController {
 
   @Post(':id/clone')
   public async clone(@Param('id') id: number,
-    @Body(new CustomValidation(CreateCronograma)) payload
-  ) {
+    @Body(new CustomValidation(CreateCronograma)) payload) {
     return await this.createCronogramaService.clone(id, payload);
+  }
+
+  @Post(':id/changeCargo')
+  public async changeCargo(@Param('id') id: number,
+    @Body(new CustomValidation(ChangeCargoId)) payload) {
+    return this.proccessCronogramaService.changeCargo(id, payload.targetCargoId, payload);
   }
 
   @Post(':id/report/general.xlsx')
@@ -37,6 +43,6 @@ export class HttpController {
 
   @Post(':id/sendMail')
   public async sendMail(@Param('id') id: number) {
-    return this.cronogramasService.sendMail(id);
+    return this.sendBoletaCronogramas.sendMail(id);
   }
 }
