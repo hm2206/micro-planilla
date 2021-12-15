@@ -30,7 +30,9 @@ export class CreateCronogramaService {
         payload.adicional = countAdicional;
         payload.remanente = new Boolean(payload.remanente).valueOf();
         const tmpCronograma = this.cronogramaRepository.create(payload)
-        return await this.cronogramaRepository.save(tmpCronograma);
+        const cronograma = await this.cronogramaRepository.save(tmpCronograma);
+        await this.processCronogramasService.processing(cronograma.id);
+        return cronograma;
       } else {
         payload.remanente = false;
         const tmpCronograma = this.cronogramaRepository.create(payload)
