@@ -36,7 +36,7 @@ export class AddAportacionesProcedured extends DatabaseProcedured {
       INNER JOIN cronogramas as cro ON cro.id = his.cronograma_id AND cro.remanente = 0
       WHERE his.cronograma_id = p_cronograma_id
       AND NOT EXISTS (SELECT null FROM aportacions as apo WHERE apo.historial_id = his.id)
-      GROUP BY his.id, type.id, type.porcentaje, type.minimo, type.\`default\`;
+      GROUP BY his.id, type.id, type.porcentaje, type.minimo, type.\`default\`, his.is_pay;
       UPDATE aportacions as apo
       INNER JOIN (SELECT his.id, conf.type_aportacion_id, ((conf.uit * conf.porcentaje) / 100) as monto
       FROM config_aportes as conf
