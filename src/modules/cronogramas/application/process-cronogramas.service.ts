@@ -15,7 +15,7 @@ import { AddSindicatoProcedured } from '../domain/procedured/add-sindicato.proce
 import { UpdateSindicatoProcedured } from '../domain/procedured/update-sindicato.procedured';
 import { UpdateAportacionProcedured } from '../domain/procedured/update-aportacion.procedured';
 import { UpdateDescuentoEscalafonProcedured } from '../domain/procedured/update-descuento-escalafon.procedured';
-import { FilterTypeObject } from '../domain/cronograma.dto.ts';
+import { FilterTypeObject } from '../application/dtos/filter-type.dto';
 import { ProcessHistorialService } from 'src/modules/historial/application/process-historial.service';
 
 @Injectable()

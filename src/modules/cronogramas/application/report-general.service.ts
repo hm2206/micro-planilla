@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CronogramaRepository } from '../domain/cronograma.repository';
-import { FilterTypeObject } from '../domain/cronograma.dto.ts';
+import { FilterTypeObject } from '../application/dtos/filter-type.dto';
 import * as xlsx from 'excel4node';
 import { Collection } from 'collect.js';
 import { DateTime } from "luxon";

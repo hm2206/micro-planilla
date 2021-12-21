@@ -1,5 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { CreateCronograma, CreateCronogramaWithAdicional } from '../domain/cronograma.dto.ts';
+import { CreateCronogramaDto, CreateCronogramaWithAdicionalDto } from '../application/dtos/create-cronogram.dto';
 import { CronogramaEntity } from '../domain/cronograma.entity';
 import { CronogramaRepository } from '../domain/cronograma.repository';
 import { AddDescuentosProcedured } from '../domain/procedured/add-descuentos.procedured';
@@ -13,7 +13,7 @@ export class CreateCronogramaService {
   constructor(private cronogramaRepository: CronogramaRepository,
     private processCronogramasService: ProcessCronogramasService) {}
 
-  public async create(payload: CreateCronogramaWithAdicional): Promise<CronogramaEntity> {
+  public async create(payload: CreateCronogramaWithAdicionalDto): Promise<CronogramaEntity> {
     try {
       const isAdicional = payload.adicional >= 1;
       // validar adicional
@@ -49,7 +49,7 @@ export class CreateCronogramaService {
     }
   }
 
-  public async clone(id: number, payload: CreateCronograma): Promise<any> {
+  public async clone(id: number, payload: CreateCronogramaDto): Promise<any> {
     try { 
       const cronogramaSource = await this.cronogramaRepository.findOneOrFail(id);
       // validar planilla

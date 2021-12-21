@@ -1,6 +1,6 @@
 import { Repository, EntityRepository } from 'typeorm';
 import { CronogramaEntity } from './cronograma.entity';
-import { FilterTypeObject } from './cronograma.dto.ts';
+import { FilterTypeObject } from '../application/dtos/filter-type.dto';
 
 @EntityRepository(CronogramaEntity)
 export class CronogramaRepository extends Repository<CronogramaEntity> {

@@ -4,7 +4,10 @@ import { CreateCronogramaService } from '../application/create-cronograma.servic
 import { ProcessCronogramasService } from '../application/process-cronogramas.service';
 import { ReportGeneralService } from '../application/report-general.service';
 import { SendBoletaCronogramas } from '../application/send-boleta-cronogramas.service';
-import { CreateCronograma, FilterTypeObject, CreateCronogramaWithAdicional, ChangeCargoId } from '../domain/cronograma.dto.ts';
+import { CreateCronogramaDto, CreateCronogramaWithAdicionalDto } from '../application/dtos/create-cronogram.dto';
+import { ChangeCargoId } from '../application/dtos/change-cargo.dto';
+import { FilterTypeObject } from '../application/dtos/filter-type.dto';
+import { ApiBody } from '@nestjs/swagger';
 
 @Controller('cronogramas')
 export class HttpController {
@@ -17,13 +20,15 @@ export class HttpController {
 
 
   @Post()
-  public async store(@Body(new CustomValidation(CreateCronogramaWithAdicional)) payload) {
+  @ApiBody({ type: [CreateCronogramaWithAdicionalDto] })
+  public async store(@Body(new CustomValidation(CreateCronogramaWithAdicionalDto)) payload) {
     return await this.createCronogramaService.create(payload);
   }
 
   @Post(':id/clone')
+  @ApiBody({ type: [CreateCronogramaDto] })
   public async clone(@Param('id') id: number,
-    @Body(new CustomValidation(CreateCronograma)) payload) {
+    @Body(new CustomValidation(CreateCronogramaDto)) payload) {
     return await this.createCronogramaService.clone(id, payload);
   }
 
@@ -41,7 +46,7 @@ export class HttpController {
   @Post(':id/report/general.xlsx')
   public async reportGeneralExcel(
     @Param('id') id: number, 
-    @Query(new CustomValidation(FilterTypeObject)) query) {
+    @Query(new CustomValidation(FilterTypeObject)) query): Promise<StreamableFile> {
     const file = await this.reportGeneral.excel(id, query);
     return new StreamableFile(file);
   }
