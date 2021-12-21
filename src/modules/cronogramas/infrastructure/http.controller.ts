@@ -33,6 +33,11 @@ export class HttpController {
     return this.proccessCronogramaService.changeCargo(id, payload.targetCargoId, payload);
   }
 
+  @Post(':id/process')
+  public async process(@Param('id') id: number) {
+    return this.proccessCronogramaService.processing(id);
+  }
+
   @Post(':id/report/general.xlsx')
   public async reportGeneralExcel(
     @Param('id') id: number, 

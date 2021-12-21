@@ -34,7 +34,7 @@ export class UpdateAfpPrimaProcedured extends DatabaseProcedured {
         INNER JOIN descuentos as des ON des.type_descuento_id = af.prima_descuento_id AND des.historial_id = his.id
         INNER JOIN cronogramas as cro ON cro.id = his.cronograma_id AND cro.remanente = 0
         WHERE his.cronograma_id = p_cronograma_id and rem.base = 0
-        GROUP BY his.id, af.prima, des.type_descuento_id) as afp_prima
+        GROUP BY his.id, af.prima, des.type_descuento_id, his.prima_seguro, af.prima_limite) as afp_prima
         SET u_des.monto = afp_prima.calculo
         WHERE u_des.id = afp_prima.id AND u_des.edit = 0;
       `

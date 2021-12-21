@@ -37,15 +37,15 @@ async function bootstrap() {
   const seeder = app.get(Seeder);
   await seeder.seed();
 
-  // microservices
-  app.connectMicroservice(SENT_MAIL);
-
-  await app.startAllMicroservices();
-
   const { HOST, PORT } = process.env;
   // host
   await app.listen(PORT, HOST, () => {
     console.log(`Server run: ${HOST}:${PORT}`);
   });
+
+  // microservices
+  app.connectMicroservice(SENT_MAIL);
+
+  await app.startAllMicroservices();
 }
 bootstrap();
