@@ -42,7 +42,6 @@ export class ProcessCronogramasService {
       await (new UpdateAportacionProcedured).call(id);
       await (new UpdateDescuentoEscalafonProcedured).call(id);
     } catch (error) {
-      console.log(error);
       throw new InternalServerErrorException("No se pudó procesar el cronograma!");
     }
   }
