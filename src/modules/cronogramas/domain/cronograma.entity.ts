@@ -26,36 +26,36 @@ export class CronogramaEntity {
   @Column()
   public token: string;
 
-  @Column({ name: 'entity_id' })
+  @Column()
   public entityId: number;
 
-  @Column({ name: 'planilla_id' })
+  @Column()
   public planillaId: number;
 
-  @Column({ name: 'sede_id' })
+  @Column()
   public sedeId: number;
 
   @Column({ default: false })
   public remanente: boolean;
 
-  @Column({ name: 'send_email', default: false })
+  @Column('boolean', { default: false })
   public sendEmail: boolean
 
-  @Column({ default: false})
+  @Column('boolean', { default: false})
   public processing: boolean;
 
   @Column({ default: '/img/sello.png' })
   public sello: string
 
-  @Column({ name: 'count_token', default: 0 })
+  @Column({ default: 0 })
   public countToken: number;
 
-  @Column({ name: 'estado', default: true })
+  @Column('boolean', { default: true })
   public state: boolean;
 
-  @CreateDateColumn({ name: 'created_at', default: 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn()
   public createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', default: 'CURRENT_TIMESTAMP' })
+  @UpdateDateColumn()
   public updatedAt: Date; 
 }

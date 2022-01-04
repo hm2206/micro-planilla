@@ -5,6 +5,9 @@ import { storageConfig } from './common/configs/storage.config';
 import { StorageModule } from '@haorama/nestjs-storage';
 import { DatabaseModule } from './database/database.module';
 import { TypeRemunerationsModule } from './modules/type-remunerations/type-remunerations.module';
+import { PimsModule } from './modules/pims/pims.module';
+import { CargosModule } from './modules/cargos/cargos.module';
+import { MetasModule } from './modules/metas/metas.module';
 
 @Module({
   imports: [
@@ -15,6 +18,9 @@ import { TypeRemunerationsModule } from './modules/type-remunerations/type-remun
     CronogramasModule,
     DatabaseModule,
     TypeRemunerationsModule,
+    PimsModule,
+    CargosModule,
+    MetasModule,
   ],
 })
 export class AppModule {}
