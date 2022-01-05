@@ -16,7 +16,7 @@ import { UpdateSindicatoProcedured } from '../domain/procedured/update-sindicato
 import { UpdateAportacionProcedured } from '../domain/procedured/update-aportacion.procedured';
 import { UpdateDescuentoEscalafonProcedured } from '../domain/procedured/update-descuento-escalafon.procedured';
 import { FilterTypeObject } from '../application/dtos/filter-type.dto';
-import { ProcessHistorialService } from 'src/modules/historial/application/process-historial.service';
+import { ProcessHistorialService } from '../../historial/application/process-historial.service';
 
 @Injectable()
 export class ProcessCronogramasService {

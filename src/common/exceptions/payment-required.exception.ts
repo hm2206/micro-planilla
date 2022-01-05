@@ -23,8 +23,8 @@ export class PaymentRequiredJoiException extends HttpException {
 
   formatter(details: Joi.ValidationErrorItem[]) {
     details.forEach(detail => {
-      let key = detail.context.key;
-      let value = [detail.message];
+      const key = detail.context.key;
+      const value = [detail.message];
       this.errors.push({ [key]: value });
     })
   }

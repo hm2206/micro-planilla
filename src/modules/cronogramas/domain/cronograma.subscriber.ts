@@ -1,7 +1,7 @@
 import { Connection, EntitySubscriberInterface, EventSubscriber, InsertEvent } from 'typeorm';
 import { CronogramaEntity } from './cronograma.entity';
 import ObjectId from 'bson-objectid';
-import { PlanillasService } from 'src/modules/planillas/application/planillas.service';
+import { PlanillasService } from '../../planillas/application/planillas.service';
 
 @EventSubscriber()
 export class CronogramaSubscriber implements EntitySubscriberInterface<CronogramaEntity> {

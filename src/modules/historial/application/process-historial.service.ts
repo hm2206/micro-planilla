@@ -3,7 +3,7 @@ import { HistorialRepository } from '../domain/historial.repository';
 import { FilterTypeObject, UpdateHistorial } from '../domain/historial.dto';
 import { HistorialEntity } from '../domain/historial.entity';
 import { Collection } from 'collect.js';
-import { ProcessInfosService } from 'src/modules/infos/application/process-infos.service';
+import { ProcessInfosService } from '../../infos/application/process-infos.service';
 
 @Injectable()
 export class ProcessHistorialService {
