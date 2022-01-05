@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { CreatePimDto } from "../application/dtos/create-pim.dto";
 import { EditPimDto } from "../application/dtos/edit-pim.dto";
 import { PimsService } from "../application/pims.service";
@@ -27,8 +27,13 @@ export class PimsController {
     return this.pimsService.editPim(id, editPimDto);
   }
 
-  @Delete(':id')
-  public delete(@Param('id') id: number) {
-    return id;
+  @Get(':id/meta')
+  public meta(@Param('id') id: number) {
+    return this.pimsService.findMeta(id);
+  }
+
+  @Get(':id/cargo')
+  public cargo(@Param('id') id: number) {
+    return this.pimsService.findCargo(id);
   }
 }

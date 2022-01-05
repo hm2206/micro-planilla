@@ -1,4 +1,6 @@
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { CargosService } from "src/modules/cargos/application/cargos.service";
+import { MetasService } from "src/modules/metas/application/metas.service";
 import { PimEntity } from "../domain/pim.entity";
 import { PimRepository } from "../domain/pim.repository";
 import { ICreatePimDto } from "./dtos/create-pim.dto";
@@ -6,7 +8,10 @@ import { IEditPimDto } from "./dtos/edit-pim.dto";
 
 @Injectable()
 export class PimsService {
-  constructor(private pimRepository: PimRepository) { }
+  constructor(
+    private pimRepository: PimRepository,
+    private metasService: MetasService,
+    private cargosService: CargosService) { }
 
   public async getPims() {
     return await this.pimRepository.createQueryBuilder('p')
@@ -39,7 +44,11 @@ export class PimsService {
     }
   }
 
+  public async findMeta(id: number) {
+    return await this.metasService.findMeta(id);
+  }
+
   public async findCargo(id: number) {
-    return 'ok';
+    return await this.cargosService.findCargo(id);
   }
 }

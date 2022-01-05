@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CargosModule } from '../cargos/cargos.module';
+import { MetasModule } from '../metas/metas.module';
 import { PimLogsModule } from '../pim-logs/pim-logs.module';
 import { PimsService } from './application/pims.service';
 import { PimRepository } from './domain/pim.repository';
@@ -9,7 +11,9 @@ import { PimsController } from './infrastructure/pims.controller';
 @Module({
   imports: [
     PimLogsModule,
-    TypeOrmModule.forFeature([PimRepository])
+    MetasModule,
+    CargosModule,
+    TypeOrmModule.forFeature([PimRepository]),
   ],
   providers: [
     PimsService,

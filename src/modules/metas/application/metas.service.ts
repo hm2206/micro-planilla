@@ -5,7 +5,7 @@ import { MetaRepository } from "../domain/meta.repository";
 export class MetasService {
   constructor(private metaRepository: MetaRepository) { }
   
-  public findCargo() {
-    return 'ok';
+  public findMeta(id: number) {
+    return this.metaRepository.findOneOrFail(id);
   }
 }
