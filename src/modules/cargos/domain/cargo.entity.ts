@@ -14,7 +14,7 @@ export class CargoEntity {
   @Column()
   public extension: string;
 
-  @Column()
+  @Column({ nullable: true })
   public parentId: number;
 
   @Column('boolean', { default: true })

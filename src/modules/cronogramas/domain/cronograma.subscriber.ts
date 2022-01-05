@@ -6,10 +6,10 @@ import { PlanillasService } from 'src/modules/planillas/application/planillas.se
 @EventSubscriber()
 export class CronogramaSubscriber implements EntitySubscriberInterface<CronogramaEntity> {
   constructor(
-    connection: Connection,
+    private connection: Connection,
     private planillasService: PlanillasService
   ) {
-    connection.subscribers.push(this);
+    this.connection.subscribers.push(this);
   }
 
   public listenTo() {
