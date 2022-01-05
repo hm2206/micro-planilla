@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { CronogramasModule } from './modules/cronogramas/cronogramas.module';
 import { storageConfig } from './common/configs/storage.config';
 import { StorageModule } from '@haorama/nestjs-storage';
@@ -9,12 +8,11 @@ import { PimsModule } from './modules/pims/pims.module';
 import { CargosModule } from './modules/cargos/cargos.module';
 import { MetasModule } from './modules/metas/metas.module';
 import { PimLogsModule } from './modules/pim-logs/pim-logs.module';
+import { ConfigsModule } from './common/configs/configs.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: ['.env.local', '.env.production'],
-    }),
+    ConfigsModule,
     StorageModule.forRoot(storageConfig),
     CronogramasModule,
     DatabaseModule,

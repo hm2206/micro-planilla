@@ -5,6 +5,10 @@ import { ICreatePimDto } from "./dtos/create-pim.dto";
 @Injectable()
 export class PimsService {
   constructor(private pimRepository: PimRepository) { }
+
+  public async getPims() {
+    return this.pimRepository.findOne();
+  }
   
   public async createPim(createPimDto: ICreatePimDto) {
     try {

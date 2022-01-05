@@ -1,16 +1,38 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as path from 'path';
+import { ConfigsEnum } from '../common/configs/configs.enum';
+import { ConfigsModule } from '../common/configs/configs.module';
+import { ConfigsService } from '../common/configs/configs.service';
 
 export const mysqlService = TypeOrmModule.forRootAsync({
-  useFactory: () => ({
+  imports: [ConfigsModule],
+  inject: [ConfigsService],
+  useFactory: (config: ConfigsService) => ({
     type: "mysql",
-    host: process.env.MYSQL_HOST,
-    port: parseInt(process.env.MYSQL_PORT) as number,
-    username: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
+    host: config.get(ConfigsEnum.MYSQL_HOST),
+    port: parseInt(config.get(ConfigsEnum.MYSQL_PORT)) as number,
+    username: config.get(ConfigsEnum.MYSQL_USERNAME),
+    password: config.get(ConfigsEnum.MYSQL_PASSWORD),
+    database: config.get(ConfigsEnum.MYSQL_DBNAME),
     entities: [path.join(__dirname, '../modules/**/domain/*.entity{.ts,.js}')],
     logging: false,
-    synchronize: true
-  }),
+    synchronize: false
+  })
+});
+
+export const MysqlTestService = TypeOrmModule.forRootAsync({
+  imports: [ConfigsModule],
+  inject: [ConfigsService],
+  useFactory: (config: ConfigsService) => ({
+    name: "mysql-test",
+    type: "mysql",
+    host: config.get(ConfigsEnum.MYSQL_HOST),
+    port: parseInt(config.get(ConfigsEnum.MYSQL_PORT)) as number,
+    username: config.get(ConfigsEnum.MYSQL_USERNAME),
+    password: config.get(ConfigsEnum.MYSQL_PASSWORD),
+    database: `${config.get(ConfigsEnum.MYSQL_DBNAME)}_test`,
+    entities: [path.join(__dirname, '../modules/**/domain/*.entity{.ts,.js}')],
+    logging: false,
+    synchronize: false
+  })
 });
