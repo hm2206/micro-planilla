@@ -53,8 +53,8 @@ export class HistorialEntity {
   @Column('boolean')
   public isEmail: boolean;
 
-  @Column()
-  public token: string;
+  @Column({ nullable: true })
+  public tokenVerify : string;
 
   @Column('boolean')
   public isPay: boolean;

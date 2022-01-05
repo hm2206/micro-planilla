@@ -8,6 +8,7 @@ import { TypeRemunerationsModule } from './modules/type-remunerations/type-remun
 import { PimsModule } from './modules/pims/pims.module';
 import { CargosModule } from './modules/cargos/cargos.module';
 import { MetasModule } from './modules/metas/metas.module';
+import { PimLogsModule } from './modules/pim-logs/pim-logs.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { MetasModule } from './modules/metas/metas.module';
     PimsModule,
     CargosModule,
     MetasModule,
+    PimLogsModule,
   ],
 })
 export class AppModule {}
