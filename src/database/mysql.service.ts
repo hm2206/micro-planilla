@@ -16,23 +16,6 @@ export const mysqlService = TypeOrmModule.forRootAsync({
     database: config.get(ConfigsEnum.MYSQL_DBNAME),
     entities: [path.join(__dirname, '../modules/**/domain/*.entity{.ts,.js}')],
     logging: false,
-    synchronize: false
-  })
-});
-
-export const MysqlTestService = TypeOrmModule.forRootAsync({
-  imports: [ConfigsModule],
-  inject: [ConfigsService],
-  useFactory: (config: ConfigsService) => ({
-    name: "mysql-test",
-    type: "mysql",
-    host: config.get(ConfigsEnum.MYSQL_HOST),
-    port: parseInt(config.get(ConfigsEnum.MYSQL_PORT)) as number,
-    username: config.get(ConfigsEnum.MYSQL_USERNAME),
-    password: config.get(ConfigsEnum.MYSQL_PASSWORD),
-    database: `${config.get(ConfigsEnum.MYSQL_DBNAME)}_test`,
-    entities: [path.join(__dirname, '../modules/**/domain/*.entity{.ts,.js}')],
-    logging: false,
-    synchronize: false
+    synchronize: true
   })
 });

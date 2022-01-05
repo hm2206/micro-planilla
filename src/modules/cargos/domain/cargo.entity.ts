@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { PimEntity } from "src/modules/pims/domain/pim.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('cargos')
 export class CargoEntity {
@@ -25,4 +26,7 @@ export class CargoEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @OneToMany(() => PimEntity, pim => pim.cargo)
+  public pims: PimEntity[];
 }

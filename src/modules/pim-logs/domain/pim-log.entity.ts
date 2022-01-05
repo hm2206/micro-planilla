@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { PimEntity } from "src/modules/pims/domain/pim.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('pim_logs')
 export class PimLogEntity {
@@ -11,7 +12,7 @@ export class PimLogEntity {
   @Column('decimal', { default: 0, precision: 12, scale: 2 })
   public money: number;
 
-  @Column()
+  @Column('date')
   public date: Date;
 
   @Column('boolean', { default: true })
@@ -25,4 +26,7 @@ export class PimLogEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => PimEntity, pim => pim.pimLogs)
+  public pim: PimEntity;
 }

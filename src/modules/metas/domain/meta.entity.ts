@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { PimEntity } from "src/modules/pims/domain/pim.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('metas')
 export class MetaEntity {
@@ -58,4 +59,7 @@ export class MetaEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @OneToMany(() => PimEntity, pim => pim.meta)
+  public pims: PimEntity[];
 }
