@@ -1,0 +1,10 @@
+
+export enum ContractConditionEnum {
+  NOMBRADO = "NOMBRADO",
+  CONTRATADO = "CONTRATADO",
+  CONSURSO = "CONCURSO",
+  CAS = "CAS",
+  PENSIONISTA = "PENSIONISTA",
+  SUPLENTE = "SUPLENTE",
+  OTRO = "OTRO",
+}

@@ -9,6 +9,7 @@ import { CargosModule } from './modules/cargos/cargos.module';
 import { MetasModule } from './modules/metas/metas.module';
 import { PimLogsModule } from './modules/pim-logs/pim-logs.module';
 import { ConfigsModule } from './common/configs/configs.module';
+import { ContractsModule } from './modules/contracts/contracts.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ConfigsModule } from './common/configs/configs.module';
     CargosModule,
     MetasModule,
     PimLogsModule,
+    ContractsModule,
   ],
 })
 export class AppModule {}

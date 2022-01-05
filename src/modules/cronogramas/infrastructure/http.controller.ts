@@ -7,9 +7,10 @@ import { SendBoletaCronogramas } from '../application/send-boleta-cronogramas.se
 import { CreateCronogramaDto, CreateCronogramaWithAdicionalDto } from '../application/dtos/create-cronogram.dto';
 import { ChangeCargoId } from '../application/dtos/change-cargo.dto';
 import { FilterTypeObject } from '../application/dtos/filter-type.dto';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
 @Controller('cronogramas')
+@ApiTags('cronogramas')
 export class HttpController {
   constructor(
     private sendBoletaCronogramas: SendBoletaCronogramas,

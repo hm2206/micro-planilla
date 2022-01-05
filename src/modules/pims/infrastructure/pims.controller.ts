@@ -1,9 +1,11 @@
 import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { CreatePimDto } from "../application/dtos/create-pim.dto";
 import { EditPimDto } from "../application/dtos/edit-pim.dto";
 import { PimsService } from "../application/pims.service";
 
 @Controller('pims')
+@ApiTags('pims')
 export class PimsController {
   constructor(private pimsService: PimsService) { }
   

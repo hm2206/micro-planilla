@@ -1,9 +1,11 @@
 import { Body, Controller, Param, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CustomValidation } from '../../../common/pipes/custom-validation.pipe';
 import { ProcessTypeRemuneracionService } from '../application/process-type-remuneracion.service';
 import { FilterSyncToInfos } from '../domain/type-remuneracion.dto';
 
 @Controller('typeRemuneracions')
+@ApiTags('typeRemuneracions')
 export class HttpTypeRemuneracionController {
   constructor(private processTypeRemuneracionService: ProcessTypeRemuneracionService) {}
 
@@ -12,5 +14,4 @@ export class HttpTypeRemuneracionController {
     @Body(new CustomValidation(FilterSyncToInfos)) payload) {
     return this.processTypeRemuneracionService.syncToInfos(id, payload);
   }
-
 }
