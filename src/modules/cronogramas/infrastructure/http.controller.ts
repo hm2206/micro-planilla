@@ -1,5 +1,5 @@
 import { Body, Controller, Param, Post, Query, StreamableFile  } from '@nestjs/common';
-import { CustomValidation } from 'src/common/pipes/custom-validation.pipe';
+import { CustomValidation } from '../../../common/pipes/custom-validation.pipe';
 import { CreateCronogramaService } from '../application/create-cronograma.service';
 import { ProcessCronogramasService } from '../application/process-cronogramas.service';
 import { ReportGeneralService } from '../application/report-general.service';

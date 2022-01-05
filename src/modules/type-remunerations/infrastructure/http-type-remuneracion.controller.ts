@@ -1,5 +1,5 @@
 import { Body, Controller, Param, Post } from '@nestjs/common';
-import { CustomValidation } from 'src/common/pipes/custom-validation.pipe';
+import { CustomValidation } from '../../../common/pipes/custom-validation.pipe';
 import { ProcessTypeRemuneracionService } from '../application/process-type-remuneracion.service';
 import { FilterSyncToInfos } from '../domain/type-remuneracion.dto';
 

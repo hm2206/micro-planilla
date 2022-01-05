@@ -1,5 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { SendBoletaService } from 'src/modules/historial/application/send-boleta.service';
+import { SendBoletaService } from '../../historial/application/send-boleta.service';
 import { CronogramaRepository } from '../domain/cronograma.repository';
 
 @Injectable()

@@ -1,4 +1,8 @@
-import { DatabaseProcedured, ParamProcedured, paramModeProcedured } from 'src/database/database.procedured';
+import {
+  DatabaseProcedured,
+  ParamProcedured,
+  paramModeProcedured
+} from '../../../../database/database.procedured';
 
 export class UpdateObligacionProcedured extends DatabaseProcedured {
   constructor() {
