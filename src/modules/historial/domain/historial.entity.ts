@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity('historials')
+@Entity('p_historials')
 export class HistorialEntity {
   @PrimaryGeneratedColumn()
   public id: number;

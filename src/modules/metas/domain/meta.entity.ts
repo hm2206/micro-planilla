@@ -1,7 +1,7 @@
 import { PimEntity } from "src/modules/pims/domain/pim.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity('metas')
+@Entity('p_metas')
 export class MetaEntity {
   @PrimaryGeneratedColumn()
   public id: number;

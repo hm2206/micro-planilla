@@ -1,8 +1,8 @@
-import { PimEntity } from "src/modules/pims/domain/pim.entity";
+import { ContractEntity } from "src/modules/contracts/domain/contract.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity('p_cargos')
-export class CargoEntity {
+@Entity('p_type_cargos')
+export class TypeCargoEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
@@ -13,13 +13,7 @@ export class CargoEntity {
   public description: string;
 
   @Column()
-  public extension: string;
-
-  @Column({ nullable: true })
-  public parentId: number;
-
-  @Column('boolean', { default: true })
-  public state = true;
+  public state: boolean;
 
   @CreateDateColumn()
   public createdAt: Date;
@@ -27,6 +21,6 @@ export class CargoEntity {
   @UpdateDateColumn()
   public updatedAt: Date;
 
-  @OneToMany(() => PimEntity, pim => pim.cargo)
-  public pims: PimEntity[];
-}
+  @OneToMany(() => ContractEntity, contract => contract.typeCargo)
+  public contracts: ContractEntity[];
+} 

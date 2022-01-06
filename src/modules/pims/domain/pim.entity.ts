@@ -1,9 +1,10 @@
-import { CargoEntity } from "src/modules/cargos/domain/cargo.entity";
-import { MetaEntity } from "src/modules/metas/domain/meta.entity";
-import { PimLogEntity } from "src/modules/pim-logs/domain/pim-log.entity";
+import { CargoEntity } from "../../../modules/cargos/domain/cargo.entity";
+import { MetaEntity } from "../../../modules/metas/domain/meta.entity";
+import { PimLogEntity } from "../../../modules/pim-logs/domain/pim-log.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { InfoEntity } from "../../../modules/infos/domain/info.entity";
 
-@Entity('pims')
+@Entity('p_pims')
 @Unique('unique-pims', ['code', 'metaId', 'cargoId', 'year'])
 export class PimEntity {
   @PrimaryGeneratedColumn()
@@ -41,4 +42,7 @@ export class PimEntity {
 
   @OneToMany(() => PimLogEntity, pimLog => pimLog.pim)
   public pimLogs: PimLogEntity[];
+
+  @OneToMany(() => InfoEntity, info => info.pim)
+  public infos: InfoEntity[];
 }

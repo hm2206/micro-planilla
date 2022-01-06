@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity('planillas')
+@Entity('p_planillas')
 export class PlanillaEntity {
   @PrimaryGeneratedColumn()
   public id: number;

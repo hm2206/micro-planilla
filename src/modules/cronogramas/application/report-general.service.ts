@@ -47,7 +47,7 @@ export class ReportGeneralService {
       const worksheet = workbook.addWorksheet('Sheet 1');
       // agregar title
       const currentDate = DateTime.fromISO(
-        new Date(`${cronograma.year}-${cronograma.mes}-01`).toISOString(),
+        new Date(`${cronograma.year}-${cronograma.month}-01`).toISOString(),
         { locale: "pe" }
       );
       const title = `RESUMEN ${currentDate.toFormat('LLL yyyy')}`.toUpperCase();

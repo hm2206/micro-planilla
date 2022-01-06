@@ -1,6 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { ContractEntity } from '../../../modules/contracts/domain/contract.entity';
+import { PimEntity } from '../../../modules/pims/domain/pim.entity';
 
-@Entity('infos')
+@Entity('p_infos')
 export class InfoEntity {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -34,4 +36,10 @@ export class InfoEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => ContractEntity, contract => contract.infos)
+  public contract: ContractEntity;
+
+  @ManyToOne(() => PimEntity, pim => pim.infos)
+  public pim: PimEntity;
 }

@@ -1,7 +1,7 @@
-import { PimEntity } from "src/modules/pims/domain/pim.entity";
+import { PimEntity } from "../../../modules/pims/domain/pim.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity('pim_logs')
+@Entity('p_pim_logs')
 export class PimLogEntity {
   @PrimaryGeneratedColumn()
   public id: number;

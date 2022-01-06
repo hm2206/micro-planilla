@@ -1,39 +1,33 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity('cronogramas')
+@Entity('p_cronogramas')
 export class CronogramaEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
   @Column()
-  public descripcion: string;
-
-  @Column()
   public year: number;
 
   @Column()
-  public mes: number;
+  public month: number;
 
   @Column({ default: 0 })
   public adicional: number;
 
   @Column({ default: 30 })
-  public dias: number;
+  public days: number;
 
   @Column()
-  public observacion: string;
+  public observation: string;
 
   @Column()
   public token: string;
 
   @Column()
-  public entityId: number;
+  public campusId: number;
 
   @Column()
   public planillaId: number;
-
-  @Column()
-  public sedeId: number;
 
   @Column({ default: false })
   public remanente: boolean;
@@ -41,7 +35,7 @@ export class CronogramaEntity {
   @Column('boolean', { default: false })
   public sendEmail: boolean
 
-  @Column('boolean', { default: false})
+  @Column('boolean', { default: false })
   public processing: boolean;
 
   @Column({ default: '/img/sello.png' })
