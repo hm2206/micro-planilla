@@ -5,6 +5,7 @@ import { DependencyEntity } from "../../../modules/dependencies/domain/dependenc
 import { ProfileEntity } from "../../../modules/profiles/domain/profile.entity";
 import { InfoEntity } from "../../../modules/infos/domain/info.entity";
 import { TypeCategoryEntity } from "../../../modules/type-categories/domain/type-category.entity";
+import { HourhandEntity } from "../../../modules/hourhands/domain/hourhand.entity";
 
 @Entity('p_contracts')
 @Unique('contracts', ['workId', 'resolution'])
@@ -80,4 +81,7 @@ export class ContractEntity {
 
   @ManyToOne(() => TypeCategoryEntity, typeCategory => typeCategory.contracts)
   public typeCategory: TypeCategoryEntity;
+
+  @ManyToOne(() => HourhandEntity, hourhand => hourhand.contracts)
+  public hourhand: HourhandEntity;
 }

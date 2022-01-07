@@ -2,11 +2,26 @@ import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { ContractRepository } from "../domain/contract.repository";
 import { CreateContractDto } from "./dtos/create-contract.dto";
 import { EditContractDto } from "./dtos/edit-contract.dto";
-import { FilterContractDto } from "./dtos/filters-contract.dto";
+import { FilterContractDto, GetContractDto } from "./dtos/filters-contract.dto";
 
 @Injectable()
 export class ContractsService {
   constructor(private contractRepository: ContractRepository) {}
+
+  public async getContracts(paginate: GetContractDto) {
+    const queryBuilder = this.contractRepository.createQueryBuilder('c')
+      .innerJoinAndSelect('c.work', 'w')
+      .innerJoinAndSelect('c.dependency', 'd')
+      .innerJoinAndSelect('c.profile', 'p')
+      .innerJoinAndSelect('c.typeCategory', 't')
+      .innerJoinAndSelect('c.hourhand', 'h');
+    // filtros
+    if (paginate.ids) queryBuilder.andWhereInIds(paginate.ids);
+    if (paginate.workId) queryBuilder.andWhere(`c.workId = :workId`, paginate);
+    if (paginate.state) queryBuilder.andWhere(`c.state = :state`, paginate);
+    // response
+    return await this.contractRepository.paginate(queryBuilder, paginate);
+  }
 
   public async createContract(createContractDto: CreateContractDto) {
     try {

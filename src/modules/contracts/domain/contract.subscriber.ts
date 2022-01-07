@@ -17,15 +17,26 @@ export class ContractSubscriber implements EntitySubscriberInterface<ContractEnt
   }
 
   public async afterInsert(event: InsertEvent<ContractEntity>): Promise<void> {
-    const contractEntity = event.entity;
-    if (!contractEntity.state) return;
-    this.worksService.editState(contractEntity.workId, true);
+    const contract = event.entity;
+    if (!contract.state) return;
+    this.worksService.editState(contract.workId, true);
   }
 
   public async afterUpdate(event: UpdateEvent<ContractEntity>): Promise<void> {
-    const contractEntity = event.entity;
+    const contract: ContractEntity = event.entity as any;
+    // activar work
+    if (contract.state) {
+      this.worksService.editState(contract.workId, true);
+      return;
+    }
+    // verificar si tiene contratos activos
     const count = await this.contractsService
-      .countContract({ workId: contractEntity.workId });
-    console.log(count);
+      .countContract({
+        workId: contract.workId,
+        state: true
+      });
+    // disabled work
+    const isDisabled = (count - 1) <= 0;
+    if (isDisabled) this.worksService.editState(contract.workId, false);
   }
 }

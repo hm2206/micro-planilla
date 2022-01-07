@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ContractEntity } from "../../../modules/contracts/domain/contract.entity";
 
 @Entity('p_hourhands')
 export class HourhandEntity {
@@ -19,4 +20,7 @@ export class HourhandEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @OneToMany(() => ContractEntity, contract => contract.hourhand)
+  public contracts: ContractEntity[];
 }

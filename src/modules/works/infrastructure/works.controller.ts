@@ -29,4 +29,9 @@ export class WorksController {
   public update(@Param('id') id: number, @Body() editWorkDto: EditWorkDto) {
     return this.worksService.editWork(id, editWorkDto);
   }
+
+  @Get(':id/contracts')
+  public contracts(@Param('id') id: number, @Query() paginate: PaginateDto) {
+    return this.worksService.getContracts(id, paginate);
+  }
 }
