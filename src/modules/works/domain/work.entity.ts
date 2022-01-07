@@ -28,13 +28,16 @@ export class WorkEntity {
   @Column()
   public bankId: number;
 
-  @Column({ default: true })
+  @Column({ nullable: true })
   public numberOfAccount: string;
 
   @Column('date')
   public dateOfAdmission: Date;
 
-  @Column('boolean', { default: true })
+  @Column()
+  public orderBy: string;
+
+  @Column('boolean', { default: false })
   public state: boolean;
 
   @CreateDateColumn()
@@ -48,4 +51,6 @@ export class WorkEntity {
 
   @ManyToOne(() => BankEntity, bank => bank.works)
   public bank: BankEntity;
+
+  public person: any;
 }

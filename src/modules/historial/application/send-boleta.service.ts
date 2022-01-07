@@ -38,9 +38,7 @@ export class SendBoletaService {
         const link = urlJoin(this.host, `?ClientId=${this.clientId}&ClientSecret=${this.clientSecret}&token_verify=${history.tokenVerify}`);
         // obtener persona
         this.authService.findPerson(metaData.id)
-        .subscribe({
-          next: ({ data }) => {
-            const person = data.person;
+          .then(person => {
             if (!person.email_contact) return reject(new InternalServerErrorException("El trabajador no tiene correo"))
             this.shippingService.sendMail({
               objectId: history.id,
@@ -55,9 +53,7 @@ export class SendBoletaService {
               },
               error: (err) => reject(err)
             })
-          },
-          error: (err) => reject(err)
-        });
+          }).catch(err => reject(err))
       } catch (err) {
         reject(err);
       }

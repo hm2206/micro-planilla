@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsDate, IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
+import { IsBoolean, IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 import { ContractConditionEnum } from "../../domain/contract.enum";
 
 export class CreateContractDto {
@@ -21,12 +21,7 @@ export class CreateContractDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  typeCargoId: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  typeCategoriaId: number;
+  typeCategoryId: number;
 
   @ApiProperty({ enum: ContractConditionEnum })
   @IsNotEmpty()
@@ -83,4 +78,9 @@ export class CreateContractDto {
   @IsOptional()
   @IsNumber()
   hours: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsBoolean()
+  state: boolean;
 }

@@ -1,10 +1,10 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { ContractConditionEnum } from "./contract.enum";
 import { WorkEntity } from "../../../modules/works/domain/work.entity";
 import { DependencyEntity } from "../../../modules/dependencies/domain/dependency.entity";
 import { ProfileEntity } from "../../../modules/profiles/domain/profile.entity";
-import { TypeCargoEntity } from "../../../modules/type-cargos/domain/type-cargo.entity";
 import { InfoEntity } from "../../../modules/infos/domain/info.entity";
+import { TypeCategoryEntity } from "../../../modules/type-categories/domain/type-category.entity";
 
 @Entity('p_contracts')
 @Unique('contracts', ['workId', 'resolution'])
@@ -22,10 +22,7 @@ export class ContractEntity {
   public profileId: number;
 
   @Column()
-  public typeCargoId: number;
-
-  @Column()
-  public typeCategoriaId: number;
+  public typeCategoryId: number;
 
   @Column('enum', { enum: ContractConditionEnum })
   public condition: ContractConditionEnum
@@ -69,6 +66,9 @@ export class ContractEntity {
   @UpdateDateColumn()
   public updatedAt: Date;
 
+  @OneToMany(() => InfoEntity, info => info.contract)
+  public infos: InfoEntity[];
+
   @ManyToOne(() => WorkEntity, work => work.contracts)
   public work: WorkEntity;
 
@@ -78,9 +78,6 @@ export class ContractEntity {
   @ManyToOne(() => ProfileEntity, profile => profile.contracts)
   public profile: ProfileEntity;
 
-  @ManyToOne(() => TypeCargoEntity, typeCargo => typeCargo.contracts)
-  public typeCargo: TypeCargoEntity;
-
-  @ManyToOne(() => InfoEntity, info => info.contract)
-  public infos: InfoEntity[];
+  @ManyToOne(() => TypeCategoryEntity, typeCategory => typeCategory.contracts)
+  public typeCategory: TypeCategoryEntity;
 }

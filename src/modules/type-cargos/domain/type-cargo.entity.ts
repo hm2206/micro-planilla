@@ -1,4 +1,4 @@
-import { ContractEntity } from "src/modules/contracts/domain/contract.entity";
+import { TypeCategoryEntity } from "../../../modules/type-categories/domain/type-category.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('p_type_cargos')
@@ -21,6 +21,6 @@ export class TypeCargoEntity {
   @UpdateDateColumn()
   public updatedAt: Date;
 
-  @OneToMany(() => ContractEntity, contract => contract.typeCargo)
-  public contracts: ContractEntity[];
+  @OneToMany(() => TypeCategoryEntity, typeCategory => typeCategory.typeCargo)
+  public typeCategories: TypeCategoryEntity[];
 } 

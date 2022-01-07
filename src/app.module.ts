@@ -20,6 +20,9 @@ import { TypeAportationsModule } from './modules/type-aportations/type-aportatio
 import { TypeSindicatosModule } from './modules/type-sindicatos/type-sindicatos.module';
 import { TypeDetallesModule } from './modules/type-detalles/type-detalles.module';
 import { TypeOblicationsModule } from './modules/type-oblications/type-oblications.module';
+import { AfpsModule } from './modules/afps/afps.module';
+import { TypeCategoriesModule } from './modules/type-categories/type-categories.module';
+import { HourhandsModule } from './modules/hourhands/hourhands.module';
 
 @Module({
   imports: [
@@ -43,6 +46,9 @@ import { TypeOblicationsModule } from './modules/type-oblications/type-oblicatio
     TypeSindicatosModule,
     TypeDetallesModule,
     TypeOblicationsModule,
+    AfpsModule,
+    TypeCategoriesModule,
+    HourhandsModule,
   ],
 })
 export class AppModule {}
