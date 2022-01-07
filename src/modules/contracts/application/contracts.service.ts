@@ -18,7 +18,10 @@ export class ContractsService {
     // filtros
     if (paginate.ids) queryBuilder.andWhereInIds(paginate.ids);
     if (paginate.workId) queryBuilder.andWhere(`c.workId = :workId`, paginate);
-    if (paginate.state) queryBuilder.andWhere(`c.state = :state`, paginate);
+    if (paginate.state) {
+      const state = JSON.parse(`${paginate.state}`);
+      queryBuilder.andWhere(`c.state = :state`, { state });
+    }
     // response
     return await this.contractRepository.paginate(queryBuilder, paginate);
   }

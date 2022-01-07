@@ -1,12 +1,12 @@
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { PaginateDto } from "../../../common/dto/paginate.dto";
-import { GetContractDto } from "../../../modules/contracts/application/dtos/filters-contract.dto";
 import { AuthHttpService } from "../../../client-http/application/auth-http.service";
 import { WorkEntity } from "../domain/work.entity";
 import { WorkRepository } from "../domain/work.repository";
 import { CreateWorkDto } from "./dtos/create-work.dto";
 import { EditWorkDto } from "./dtos/edit-work.dto";
 import { ContractsService } from "src/modules/contracts/application/contracts.service";
+import { GetContractsToWorkDto } from "./dtos/filter-work.dto";
 
 @Injectable()
 export class WorksService {
@@ -73,7 +73,7 @@ export class WorksService {
     }
   }
 
-  public async getContracts(id: number, paginate: GetContractDto) {
+  public async getContracts(id: number, paginate: GetContractsToWorkDto) {
     const work = await this.workRepository.findOneOrFail(id);
     return await this.contractsService.getContracts({
       ...paginate,

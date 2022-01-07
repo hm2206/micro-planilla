@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { PaginateDto } from "src/common/dto/paginate.dto";
+import { PaginateDto } from "../../../common/dto/paginate.dto";
 import { CreateWorkDto } from "../application/dtos/create-work.dto";
 import { EditWorkDto } from "../application/dtos/edit-work.dto";
+import { GetContractsToWorkDto } from "../application/dtos/filter-work.dto";
 import { WorksService } from "../application/works.service";
 
 @Controller('works')
@@ -31,7 +32,7 @@ export class WorksController {
   }
 
   @Get(':id/contracts')
-  public contracts(@Param('id') id: number, @Query() paginate: PaginateDto) {
+  public contracts(@Param('id') id: number, @Query() paginate: GetContractsToWorkDto) {
     return this.worksService.getContracts(id, paginate);
   }
 }
