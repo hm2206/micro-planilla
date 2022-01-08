@@ -1,4 +1,4 @@
-import { WorkEntity } from "src/modules/works/domain/work.entity";
+import { InfoEntity } from "../../../modules/infos/domain/info.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('p_banks')
@@ -21,6 +21,6 @@ export class BankEntity {
   @UpdateDateColumn()
   public updatedAt: Date;
 
-  @OneToMany(() => WorkEntity, work => work.bank)
-  public works: WorkEntity[];
+  @OneToMany(() => InfoEntity, info => info.bank)
+  public infos: InfoEntity[];
 }

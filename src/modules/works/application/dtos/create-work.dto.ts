@@ -34,16 +34,6 @@ export class CreateWorkDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
-  bankId: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  numberOfAccount: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
   @IsDateString()
   dateOfAdmission: Date;
 }

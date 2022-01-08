@@ -17,7 +17,7 @@ export class WorksService {
   
   public async getWorks(paginate: PaginateDto) {
     const queryBuilder = this.workRepository.createQueryBuilder('w')
-      .innerJoinAndSelect('w.bank', 'b')
+      .innerJoinAndSelect('w.afp', 'a')
       .orderBy('w.orderBy', 'ASC')
     const result = await this.workRepository
       .paginate(queryBuilder, paginate);

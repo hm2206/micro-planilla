@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { WorkEntity } from "../../../modules/works/domain/work.entity";
 
 @Entity('p_afps')
 export class AfpEntity {
@@ -49,4 +50,7 @@ export class AfpEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @OneToMany(() => WorkEntity, work => work.afp)
+  public works: WorkEntity[];
 }

@@ -1,10 +1,11 @@
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { CargosService } from "src/modules/cargos/application/cargos.service";
-import { MetasService } from "src/modules/metas/application/metas.service";
+import { CargosService } from "../../../modules/cargos/application/cargos.service";
+import { MetasService } from "../../../modules/metas/application/metas.service";
 import { PimEntity } from "../domain/pim.entity";
 import { PimRepository } from "../domain/pim.repository";
 import { ICreatePimDto } from "./dtos/create-pim.dto";
 import { IEditPimDto } from "./dtos/edit-pim.dto";
+import { GetPimDto } from "./dtos/filter-pim.dto";
 
 @Injectable()
 export class PimsService {
@@ -13,11 +14,12 @@ export class PimsService {
     private metasService: MetasService,
     private cargosService: CargosService) { }
 
-  public async getPims() {
-    return await this.pimRepository.createQueryBuilder('p')
+  public async getPims(paginate: GetPimDto) {
+    const queryBuilder = this.pimRepository.createQueryBuilder('p')
       .innerJoinAndSelect('p.cargo', 'c')
       .innerJoinAndSelect('p.meta', 'm')
-      .getMany();
+    if (paginate.year) queryBuilder.andWhere('p.year = :year', paginate);
+    return await this.pimRepository.paginate(queryBuilder, paginate);
   }
   
   public async createPim(createPimDto: ICreatePimDto): Promise<PimEntity> {

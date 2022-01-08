@@ -1,5 +1,5 @@
-import { BankEntity } from "src/modules/banks/domain/bank.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AfpEntity } from "../../../modules/afps/domain/afp.entity";
 import { ContractEntity } from "../../../modules/contracts/domain/contract.entity";
 
 @Entity('p_works')
@@ -25,16 +25,10 @@ export class WorkEntity {
   @Column({ nullable: true })
   public numberOfEssalud: string;
 
-  @Column()
-  public bankId: number;
-
-  @Column({ nullable: true })
-  public numberOfAccount: string;
-
   @Column('date')
   public dateOfAdmission: Date;
 
-  @Column()
+  @Column({ nullable: true })
   public orderBy: string;
 
   @Column('boolean', { default: false })
@@ -46,11 +40,11 @@ export class WorkEntity {
   @UpdateDateColumn()
   public updatedAt: Date;
 
+  @ManyToOne(() => AfpEntity, afp => afp.works)
+  public afp: AfpEntity;
+
   @OneToMany(() => ContractEntity, contract => contract.work)
   public contracts: ContractEntity[];
-
-  @ManyToOne(() => BankEntity, bank => bank.works)
-  public bank: BankEntity;
 
   public person: any;
 }

@@ -32,7 +32,7 @@ export class ProcessHistorialService {
       const ids: any = new Collection(historial).pluck('infoId').toArray();
       const filterInfos = { ids };
       // actualizar infos
-      await this.processInfosService.updateMassive(filterInfos, payload);
+      // await this.processInfosService.updateMassive(filterInfos, payload);
     }
     // result
     return { process: true };

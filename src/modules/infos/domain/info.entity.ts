@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { ContractEntity } from '../../../modules/contracts/domain/contract.entity';
+import { PlanillaEntity } from '../../../modules/planillas/domain/planilla.entity';
 import { PimEntity } from '../../../modules/pims/domain/pim.entity';
+import { BankEntity } from '../../../modules/banks/domain/bank.entity';
 
 @Entity('p_infos')
 export class InfoEntity {
@@ -16,20 +18,26 @@ export class InfoEntity {
   @Column()
   public pimId: number;
 
+  @Column()
+  public bankId: number;
+
+  @Column({ nullable: true })
+  public numberOfAccount: string;
+
   @Column('boolean', { default: true })
-  public isCheck = true;
+  public isCheck: boolean;
 
   @Column('boolean', { default: true })
   public isPay: boolean;
     
   @Column('boolean', { default: true })
-  public isEmail = true;
+  public isEmail: boolean;
 
   @Column('boolean', { default: true })
   public isSync: boolean;
 
   @Column('boolean', { default: true })
-  public state = true;
+  public state: boolean;
 
   @CreateDateColumn()
   public createdAt: Date;
@@ -40,6 +48,12 @@ export class InfoEntity {
   @ManyToOne(() => ContractEntity, contract => contract.infos)
   public contract: ContractEntity;
 
+  @ManyToOne(() => PlanillaEntity, planilla => planilla.infos)
+  public planilla: PlanillaEntity;
+
   @ManyToOne(() => PimEntity, pim => pim.infos)
   public pim: PimEntity;
+
+  @ManyToOne(() => BankEntity, bank => bank.infos)
+  public bank: BankEntity;
 }
