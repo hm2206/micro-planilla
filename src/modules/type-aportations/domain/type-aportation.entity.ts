@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { InfoTypeAportationEntity } from "../../../modules/info-type-aportations/domain/info-type-aportation.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('p_type_aportations')
 export class TypeAportationEntity {
@@ -12,15 +13,15 @@ export class TypeAportationEntity {
   public name: string;
 
   @Column('decimal', { precision: 12, scale: 2, default: 0 })
-  public porcentaje: number;
+  public percent: number;
 
   @Column('decimal', { precision: 12, scale: 2, default: 0 })
-  public minimo: number;
+  public min: number;
 
   @Column('decimal', { precision: 12, scale: 2, default: 0 })
   public default: number;
 
-  @Column()
+  @Column({ unique: true })
   public extension: string;
 
   @Column('boolean', { default: true })
@@ -31,4 +32,7 @@ export class TypeAportationEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @OneToMany(() => InfoTypeAportationEntity, info => info.typeAportation)
+  public infos: InfoTypeAportationEntity[];
 }

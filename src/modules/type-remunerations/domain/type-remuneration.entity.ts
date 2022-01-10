@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { InfoTypeRemunerationEntity } from 'src/modules/info-type-remunerations/domain/info-type-remuneration.entity';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity('p_type_remuneracions')
+@Entity('p_type_remunerations')
 export class TypeRemunerationEntity {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -34,4 +35,7 @@ export class TypeRemunerationEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @OneToMany(() => InfoTypeRemunerationEntity, info => info.typeRemuneration)
+  public infos: InfoTypeRemunerationEntity[];
 }

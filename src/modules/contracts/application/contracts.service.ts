@@ -71,9 +71,10 @@ export class ContractsService {
   }
 
   public async findInfos(id: number, paginate: PaginateDto) {
+    const contract = await this.contractRepository.findOneOrFail(id);
     return await this.infosService.getInfos({
       ...paginate,
-      contractId: id
+      contractId: contract.id
     });
   }
 }

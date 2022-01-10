@@ -1,8 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { ContractEntity } from '../../../modules/contracts/domain/contract.entity';
 import { PlanillaEntity } from '../../../modules/planillas/domain/planilla.entity';
 import { PimEntity } from '../../../modules/pims/domain/pim.entity';
 import { BankEntity } from '../../../modules/banks/domain/bank.entity';
+import { InfoTypeRemunerationEntity } from '../../../modules/info-type-remunerations/domain/info-type-remuneration.entity';
+import { InfoTypeDiscountEntity } from '../../../modules/info-type-discounts/domain/info-type-discount.entity';
+import { InfoTypeAportationEntity } from '../../../modules/info-type-aportations/domain/info-type-aportation.entity';
 
 @Entity('p_infos')
 export class InfoEntity {
@@ -56,4 +59,13 @@ export class InfoEntity {
 
   @ManyToOne(() => BankEntity, bank => bank.infos)
   public bank: BankEntity;
+
+  @OneToMany(() => InfoTypeRemunerationEntity, typeRemuneration => typeRemuneration.info)
+  public typeRemunerations: InfoTypeRemunerationEntity[];
+
+  @OneToMany(() => InfoTypeDiscountEntity, typeDiscount => typeDiscount.info)
+  public typeDiscounts: InfoTypeDiscountEntity[];
+
+  @OneToMany(() => InfoTypeAportationEntity, typeAportation => typeAportation.info)
+  public typeAportations: InfoTypeAportationEntity[];
 }

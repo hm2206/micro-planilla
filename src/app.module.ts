@@ -23,6 +23,10 @@ import { TypeOblicationsModule } from './modules/type-oblications/type-oblicatio
 import { AfpsModule } from './modules/afps/afps.module';
 import { TypeCategoriesModule } from './modules/type-categories/type-categories.module';
 import { HourhandsModule } from './modules/hourhands/hourhands.module';
+import { InfoTypeRemunerationsModule } from './modules/info-type-remunerations/info-type-remunerations.module';
+import { InfoTypeDiscountsModule } from './modules/info-type-discounts/info-type-discounts.module';
+import { InfoTypeAportationsModule } from './modules/info-type-aportations/info-type-aportations.module';
+import { InfoTypeSindicatosModule } from './modules/info-type-sindicatos/info-type-sindicatos.module';
 
 @Module({
   imports: [
@@ -49,6 +53,10 @@ import { HourhandsModule } from './modules/hourhands/hourhands.module';
     AfpsModule,
     TypeCategoriesModule,
     HourhandsModule,
+    InfoTypeRemunerationsModule,
+    InfoTypeDiscountsModule,
+    InfoTypeAportationsModule,
+    InfoTypeSindicatosModule,
   ],
 })
 export class AppModule {}
