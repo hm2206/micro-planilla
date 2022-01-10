@@ -19,11 +19,13 @@ import { UpdateSindicatoProcedured } from '../modules/cronogramas/domain/procedu
 import { UpdateAportacionProcedured } from '../modules/cronogramas/domain/procedured/update-aportacion.procedured';
 import { UpdateDescuentoEscalafonProcedured } from '../modules/cronogramas/domain/procedured/update-descuento-escalafon.procedured';
 import { AddRemuneracionInfosProcedure } from '../modules/type-remunerations/domain/procedured/add-remuneracion-infos.procedured';
+import { AddConfigInfosProcedure } from 'src/modules/infos/domain/procedured/add-config-infos.procedured';
 
 @Injectable()
 export class Seeder {
   async seed() {
     (new AddInfosProcedured).up();
+    (new AddConfigInfosProcedure).up();
     (new AddRemuneracionesProcedured).up();
     (new AddDescuentosProcedured).up();
     (new ConfigAfpProcedured).up();

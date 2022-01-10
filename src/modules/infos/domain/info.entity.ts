@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany, Unique } from 'typeorm';
 import { ContractEntity } from '../../../modules/contracts/domain/contract.entity';
 import { PlanillaEntity } from '../../../modules/planillas/domain/planilla.entity';
 import { PimEntity } from '../../../modules/pims/domain/pim.entity';
@@ -8,6 +8,7 @@ import { InfoTypeDiscountEntity } from '../../../modules/info-type-discounts/dom
 import { InfoTypeAportationEntity } from '../../../modules/info-type-aportations/domain/info-type-aportation.entity';
 
 @Entity('p_infos')
+@Unique('p_infos', ['contractId', 'planillaId'])
 export class InfoEntity {
   @PrimaryGeneratedColumn()
   public id: number;

@@ -27,6 +27,9 @@ import { InfoTypeRemunerationsModule } from './modules/info-type-remunerations/i
 import { InfoTypeDiscountsModule } from './modules/info-type-discounts/info-type-discounts.module';
 import { InfoTypeAportationsModule } from './modules/info-type-aportations/info-type-aportations.module';
 import { InfoTypeSindicatosModule } from './modules/info-type-sindicatos/info-type-sindicatos.module';
+import { ConfigTypeDiscountsModule } from './modules/config-type-discounts/config-type-discounts.module';
+import { ConfigTypeRemunerationsModule } from './modules/config-type-remunerations/config-type-remunerations.module';
+import { ConfigTypeAportationsModule } from './modules/config-type-aportations/config-type-aportations.module';
 
 @Module({
   imports: [
@@ -57,6 +60,9 @@ import { InfoTypeSindicatosModule } from './modules/info-type-sindicatos/info-ty
     InfoTypeDiscountsModule,
     InfoTypeAportationsModule,
     InfoTypeSindicatosModule,
+    ConfigTypeDiscountsModule,
+    ConfigTypeRemunerationsModule,
+    ConfigTypeAportationsModule,
   ],
 })
 export class AppModule {}

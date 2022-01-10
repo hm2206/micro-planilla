@@ -2,6 +2,7 @@ import { InternalServerErrorException } from "@nestjs/common";
 import { ContractsService } from "src/modules/contracts/application/contracts.service";
 import { Connection, EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent } from "typeorm";
 import { InfoEntity } from "./info.entity";
+import { AddConfigInfosProcedure } from "./procedured/add-config-infos.procedured";
 
 @EventSubscriber()
 export class InfoSubscriber implements EntitySubscriberInterface {
@@ -18,6 +19,12 @@ export class InfoSubscriber implements EntitySubscriberInterface {
   public async beforeInsert(event: InsertEvent<InfoEntity>): Promise<void> {
     const info = event.entity;
     await this.validateSave(info);
+  }
+
+  public async afterInsert(event: InsertEvent<InfoEntity>): Promise<void> {
+    const info: InfoEntity = event.entity as any;
+    // agregar configuración
+    (new AddConfigInfosProcedure).call(info.id);
   }
 
   public async beforeUpdate(event: UpdateEvent<InfoEntity>): Promise<void> {
