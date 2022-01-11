@@ -6,6 +6,7 @@ import { BankEntity } from '../../../modules/banks/domain/bank.entity';
 import { InfoTypeRemunerationEntity } from '../../../modules/info-type-remunerations/domain/info-type-remuneration.entity';
 import { InfoTypeDiscountEntity } from '../../../modules/info-type-discounts/domain/info-type-discount.entity';
 import { InfoTypeAportationEntity } from '../../../modules/info-type-aportations/domain/info-type-aportation.entity';
+import { HistorialEntity } from '../../../modules/historial/domain/historial.entity';
 
 @Entity('p_infos')
 @Unique('p_infos', ['contractId', 'planillaId'])
@@ -69,4 +70,7 @@ export class InfoEntity {
 
   @OneToMany(() => InfoTypeAportationEntity, typeAportation => typeAportation.info)
   public typeAportations: InfoTypeAportationEntity[];
+
+  @OneToMany(() => HistorialEntity, history => history.info)
+  public historials: HistorialEntity[];
 }

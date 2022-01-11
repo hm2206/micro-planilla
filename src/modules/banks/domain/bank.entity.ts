@@ -1,5 +1,6 @@
-import { InfoEntity } from "../../../modules/infos/domain/info.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { InfoEntity } from "../../../modules/infos/domain/info.entity";
+import { HistorialEntity } from "../../../modules/historial/domain/historial.entity";
 
 @Entity('p_banks')
 export class BankEntity {
@@ -23,4 +24,7 @@ export class BankEntity {
 
   @OneToMany(() => InfoEntity, info => info.bank)
   public infos: InfoEntity[];
+
+  @OneToMany(() => HistorialEntity, history => history.bank)
+  public historials: HistorialEntity[];
 }

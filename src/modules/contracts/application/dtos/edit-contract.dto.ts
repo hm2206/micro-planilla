@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsBoolean, IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
+import { IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 import { ContractConditionEnum } from "../../domain/contract.enum";
 
 export class EditContractDto {
@@ -68,9 +68,4 @@ export class EditContractDto {
   @IsOptional()
   @IsNumber()
   hours: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsBoolean()
-  state: boolean;
 }

@@ -1,6 +1,12 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Unique, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CronogramaEntity } from '../../../modules/cronogramas/domain/cronograma.entity';
+import { InfoEntity } from '../../../modules/infos/domain/info.entity';
+import { PimEntity } from '../../../modules/pims/domain/pim.entity';
+import { AfpEntity } from '../../../modules/afps/domain/afp.entity';
+import { BankEntity } from '../../../modules/banks/domain/bank.entity';
 
 @Entity('p_historials')
+@Unique('u_historials', ['cronogramaId', 'infoId'])
 export class HistorialEntity {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -13,12 +19,6 @@ export class HistorialEntity {
 
   @Column()
   public pimId: number;
-
-  @Column()
-  public dependenciaId: number;
-
-  @Column()
-  public perfilId: number;
 
   @Column()
   public afpId: number;
@@ -48,9 +48,9 @@ export class HistorialEntity {
   public plaza: string;
 
   @Column('boolean', { default: false })
-  public sendEmail = false;
+  public sendEmail: boolean;
 
-  @Column('boolean')
+  @Column('boolean', { default: true })
   public isEmail: boolean;
 
   @Column({ nullable: true })
@@ -62,12 +62,29 @@ export class HistorialEntity {
   @Column()
   public days: number;
 
-  @Column('boolean')
-  public state = true;
+  @Column('boolean', { default: true })
+  public state: boolean;
 
   @CreateDateColumn()
   public createdAt: Date;
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => CronogramaEntity, cronograma => cronograma.historials, {
+    onDelete: 'CASCADE'
+  })
+  public cronograma: CronogramaEntity
+
+  @ManyToOne(() => InfoEntity, info => info.historials)
+  public info: InfoEntity;
+
+  @ManyToOne(() => PimEntity, pim => pim.historials)
+  public pim: PimEntity;
+
+  @ManyToOne(() => AfpEntity, afp => afp.historials)
+  public afp: AfpEntity;
+
+  @ManyToOne(() => BankEntity, bank => bank.historials)
+  public bank: BankEntity;
 }

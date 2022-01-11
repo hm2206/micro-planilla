@@ -1,9 +1,9 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { AddHistorialsProcedured } from 'src/modules/historial/domain/procedured/add-historials.procedured';
 import { CreateCronogramaDto, CreateCronogramaWithAdicionalDto } from '../application/dtos/create-cronogram.dto';
 import { CronogramaEntity } from '../domain/cronograma.entity';
 import { CronogramaRepository } from '../domain/cronograma.repository';
 import { AddDescuentosProcedured } from '../domain/procedured/add-descuentos.procedured';
-import { AddInfosProcedured } from '../domain/procedured/add-infos.procedured';
 import { AddRemuneracionesProcedured } from '../domain/procedured/add-remuneraciones.procedured';
 import { CopyCronogramaProcedured } from '../domain/procedured/copy-cronograma.procedured';
 import { ProcessCronogramasService } from './process-cronogramas.service';
@@ -37,7 +37,7 @@ export class CreateCronogramaService {
         const newCronograma = this.cronogramaRepository.create(payload)
         const cronograma = await this.cronogramaRepository.save(newCronograma);
         // processar datos
-        await (new AddInfosProcedured).call(cronograma.id);
+        await (new AddHistorialsProcedured).call(cronograma.id);
         await (new AddRemuneracionesProcedured).call(cronograma.id);
         await (new AddDescuentosProcedured).call(cronograma.id);
         await this.processCronogramasService.processing(cronograma.id);

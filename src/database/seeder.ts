@@ -19,31 +19,36 @@ import { UpdateSindicatoProcedured } from '../modules/cronogramas/domain/procedu
 import { UpdateAportacionProcedured } from '../modules/cronogramas/domain/procedured/update-aportacion.procedured';
 import { UpdateDescuentoEscalafonProcedured } from '../modules/cronogramas/domain/procedured/update-descuento-escalafon.procedured';
 import { AddRemuneracionInfosProcedure } from '../modules/type-remunerations/domain/procedured/add-remuneracion-infos.procedured';
-import { AddConfigInfosProcedure } from 'src/modules/infos/domain/procedured/add-config-infos.procedured';
+
+import { AddConfigInfosProcedure } from '../modules/infos/domain/procedured/add-config-infos.procedured';
+import { AddHistorialsProcedured } from '../modules/historial/domain/procedured/add-historials.procedured';
+import { CalcDaysHistorialsProcedured } from 'src/modules/historial/domain/procedured/calc-days-historials.procedured';
 
 @Injectable()
 export class Seeder {
   async seed() {
-    (new AddInfosProcedured).up();
     (new AddConfigInfosProcedure).up();
-    (new AddRemuneracionesProcedured).up();
-    (new AddDescuentosProcedured).up();
-    (new ConfigAfpProcedured).up();
-    (new AddAportacionesProcedured).up();
-    (new ConfigEdadProcedured).up();
-    (new ConfigPagoProcedured).up();
-    (new UpdateCalcRemuneracionDiaProcedured).up();
-    (new ClearPayProcedured).up();
-    (new AddObligacionProcedured).up();
-    (new UpdateObligacionProcedured).up();
-    (new UpdateAfpAporteProcedured).up();
-    (new UpdateAfpPrimaProcedured).up();
-    (new UpdateAfpTypeProcedured).up();
-    (new AddSindicatoProcedured).up();
-    (new UpdateSindicatoProcedured).up();
-    (new UpdateAportacionProcedured).up();
-    (new UpdateDescuentoEscalafonProcedured).up();
-    (new CopyCronogramaProcedured).up();
-    (new AddRemuneracionInfosProcedure).up();
+    (new AddHistorialsProcedured).up();
+    (new CalcDaysHistorialsProcedured).up();
+    // (new AddInfosProcedured).up();
+    // (new AddRemuneracionesProcedured).up();
+    // (new AddDescuentosProcedured).up();
+    // (new ConfigAfpProcedured).up();
+    // (new AddAportacionesProcedured).up();
+    // (new ConfigEdadProcedured).up();
+    // (new ConfigPagoProcedured).up();
+    // (new UpdateCalcRemuneracionDiaProcedured).up();
+    // (new ClearPayProcedured).up();
+    // (new AddObligacionProcedured).up();
+    // (new UpdateObligacionProcedured).up();
+    // (new UpdateAfpAporteProcedured).up();
+    // (new UpdateAfpPrimaProcedured).up();
+    // (new UpdateAfpTypeProcedured).up();
+    // (new AddSindicatoProcedured).up();
+    // (new UpdateSindicatoProcedured).up();
+    // (new UpdateAportacionProcedured).up();
+    // (new UpdateDescuentoEscalafonProcedured).up();
+    // (new CopyCronogramaProcedured).up();
+    // (new AddRemuneracionInfosProcedure).up();
   }
 }

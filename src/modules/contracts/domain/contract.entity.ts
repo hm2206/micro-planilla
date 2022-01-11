@@ -6,6 +6,7 @@ import { ProfileEntity } from "../../../modules/profiles/domain/profile.entity";
 import { InfoEntity } from "../../../modules/infos/domain/info.entity";
 import { TypeCategoryEntity } from "../../../modules/type-categories/domain/type-category.entity";
 import { HourhandEntity } from "../../../modules/hourhands/domain/hourhand.entity";
+import { DateTime } from "luxon";
 
 @Entity('p_contracts')
 @Unique('contracts', ['workId', 'resolution'])
@@ -66,6 +67,16 @@ export class ContractEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+  
+  public calcState(): boolean {
+    const isNotTerminationDate = !this.terminationDate;
+    if (isNotTerminationDate) return true;
+    // calcular diferencia
+    const currentDate = DateTime.now();
+    const terminationDate = DateTime.fromSQL(`${this.terminationDate}`);
+    const diff = terminationDate.diff(currentDate, 'day').valueOf();
+    return diff > 0;
+  }
 
   @OneToMany(() => InfoEntity, info => info.contract)
   public infos: InfoEntity[];

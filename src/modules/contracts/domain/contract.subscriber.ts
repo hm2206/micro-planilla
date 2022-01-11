@@ -18,12 +18,14 @@ export class ContractSubscriber implements EntitySubscriberInterface<ContractEnt
 
   public async afterInsert(event: InsertEvent<ContractEntity>): Promise<void> {
     const contract = event.entity;
+    contract.state = contract.calcState();
     if (!contract.state) return;
     this.worksService.editState(contract.workId, true);
   }
 
   public async afterUpdate(event: UpdateEvent<ContractEntity>): Promise<void> {
     const contract: ContractEntity = event.entity as any;
+    contract.state = contract.calcState();
     // activar work
     if (contract.state) {
       this.worksService.editState(contract.workId, true);

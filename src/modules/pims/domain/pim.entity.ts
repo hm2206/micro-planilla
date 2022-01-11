@@ -3,6 +3,7 @@ import { MetaEntity } from "../../../modules/metas/domain/meta.entity";
 import { PimLogEntity } from "../../../modules/pim-logs/domain/pim-log.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { InfoEntity } from "../../../modules/infos/domain/info.entity";
+import { HistorialEntity } from "../../../modules/historial/domain/historial.entity";
 
 @Entity('p_pims')
 @Unique('unique-pims', ['code', 'metaId', 'cargoId', 'year'])
@@ -45,4 +46,7 @@ export class PimEntity {
 
   @OneToMany(() => InfoEntity, info => info.pim)
   public infos: InfoEntity[];
+
+  @OneToMany(() => HistorialEntity, history => history.pim)
+  public historials: HistorialEntity[];
 }

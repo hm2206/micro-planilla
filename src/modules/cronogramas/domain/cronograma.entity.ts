@@ -1,5 +1,6 @@
 import { PlanillaEntity } from '../../../modules/planillas/domain/planilla.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import { HistorialEntity } from '../../../modules/historial/domain/historial.entity';
 
 @Entity('p_cronogramas')
 @Unique('u_cronogramas', ['year', 'month', 'campusId', 'planillaId', 'adicional'])
@@ -12,6 +13,9 @@ export class CronogramaEntity {
 
   @Column()
   public month: number;
+
+  @Column({ default: 30 })
+  public numberOfDays: number;
 
   @Column({ default: 0 })
   public adicional: number;
@@ -54,4 +58,9 @@ export class CronogramaEntity {
 
   @ManyToOne(() => PlanillaEntity, planilla => planilla.cronogramas)
   public planilla: PlanillaEntity;
+
+  @OneToMany(() => HistorialEntity, historial => historial.cronograma, {
+    cascade: true
+  })
+  public historials: HistorialEntity[];
 }
