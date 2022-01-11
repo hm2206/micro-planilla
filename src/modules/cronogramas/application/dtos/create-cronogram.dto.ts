@@ -1,6 +1,7 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, MaxLength } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
-import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsBoolean, IsNotEmpty, IsNumber, IsOptional, MaxLength
+} from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateCronogramaDto {
   @ApiProperty()
@@ -10,33 +11,28 @@ export class CreateCronogramaDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber({ allowNaN: true, maxDecimalPlaces: 0 })
-  public mes: number;
+  @IsNumber({ maxDecimalPlaces: 0 })
+  public month: number;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  public dias: number;
-
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @MaxLength(255)
-  public observacion: string;
+  public observation?: string;
+  
+  @ApiProperty()
+  @IsNotEmpty()
+  public campusId: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   public planillaId: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  public entityId: number;
 }
 
-export class CreateCronogramaWithAdicionalDto extends PartialType(CreateCronogramaDto) {
+export class CreateCronogramaWithAdicionalDto extends CreateCronogramaDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
+  @IsBoolean()
   public adicional: number;
 
   @ApiProperty()

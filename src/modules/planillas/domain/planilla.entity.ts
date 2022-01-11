@@ -1,5 +1,6 @@
 import { InfoEntity } from '../../../modules/infos/domain/info.entity';
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CronogramaEntity } from '../../../modules/cronogramas/domain/cronograma.entity';
 
 @Entity('p_planillas')
 export class PlanillaEntity {
@@ -35,4 +36,7 @@ export class PlanillaEntity {
 
   @OneToMany(() => InfoEntity, info => info.planilla)
   public infos: InfoEntity[];
+
+  @OneToMany(() => CronogramaEntity, cronograma => cronograma.planilla)
+  public cronogramas: CronogramaEntity[];
 }

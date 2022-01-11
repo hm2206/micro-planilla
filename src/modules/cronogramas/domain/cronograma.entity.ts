@@ -1,6 +1,8 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { PlanillaEntity } from '../../../modules/planillas/domain/planilla.entity';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
 
 @Entity('p_cronogramas')
+@Unique('u_cronogramas', ['year', 'month', 'campusId', 'planillaId', 'adicional'])
 export class CronogramaEntity {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -14,10 +16,7 @@ export class CronogramaEntity {
   @Column({ default: 0 })
   public adicional: number;
 
-  @Column({ default: 30 })
-  public days: number;
-
-  @Column()
+  @Column({ nullable: true })
   public observation: string;
 
   @Column()
@@ -29,6 +28,9 @@ export class CronogramaEntity {
   @Column()
   public planillaId: number;
 
+  @Column({ default: 0 })
+  public selloId: number;
+
   @Column({ default: false })
   public remanente: boolean;
 
@@ -37,9 +39,6 @@ export class CronogramaEntity {
 
   @Column('boolean', { default: false })
   public processing: boolean;
-
-  @Column({ default: '/img/sello.png' })
-  public sello: string
 
   @Column({ default: 0 })
   public countToken: number;
@@ -52,4 +51,7 @@ export class CronogramaEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date; 
+
+  @ManyToOne(() => PlanillaEntity, planilla => planilla.cronogramas)
+  public planilla: PlanillaEntity;
 }

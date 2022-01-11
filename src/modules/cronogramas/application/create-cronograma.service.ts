@@ -20,23 +20,22 @@ export class CreateCronogramaService {
       if (isAdicional) {
         // obtener cronogramas;
         const countAdicional = await this.cronogramaRepository.createQueryBuilder()
-          .where(`entity_id = ${payload.entityId}`)
-          .andWhere(`planilla_id = ${payload.planillaId}`)
-          .andWhere(`year = ${payload.year}`)
-          .andWhere(`mes = ${payload.mes}`)
+          .where(`campusId = :campusId`, payload)
+          .andWhere(`planillaId = :planillaId`, payload)
+          .andWhere(`year = :year`, payload)
+          .andWhere(`month = :month`, payload)
           .getCount();
         // validar creación de adicional
         if (!countAdicional) throw new InternalServerErrorException("No se puede crear adicional");
         payload.adicional = countAdicional;
-        payload.remanente = new Boolean(payload.remanente).valueOf();
-        const tmpCronograma = this.cronogramaRepository.create(payload)
-        const cronograma = await this.cronogramaRepository.save(tmpCronograma);
+        const newCronograma = this.cronogramaRepository.create(payload)
+        const cronograma = await this.cronogramaRepository.save(newCronograma);
         await this.processCronogramasService.processing(cronograma.id);
         return cronograma;
       } else {
         payload.remanente = false;
-        const tmpCronograma = this.cronogramaRepository.create(payload)
-        const cronograma = await this.cronogramaRepository.save(tmpCronograma);
+        const newCronograma = this.cronogramaRepository.create(payload)
+        const cronograma = await this.cronogramaRepository.save(newCronograma);
         // processar datos
         await (new AddInfosProcedured).call(cronograma.id);
         await (new AddRemuneracionesProcedured).call(cronograma.id);

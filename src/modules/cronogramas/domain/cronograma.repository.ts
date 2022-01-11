@@ -1,9 +1,19 @@
-import { Repository, EntityRepository } from 'typeorm';
+import { EntityRepository, Repository, SelectQueryBuilder } from "typeorm";
+import {
+  paginate,
+  Pagination,
+  IPaginationOptions,
+} from 'nestjs-typeorm-paginate';
 import { CronogramaEntity } from './cronograma.entity';
 import { FilterTypeObject } from '../application/dtos/filter-type.dto';
 
 @EntityRepository(CronogramaEntity)
 export class CronogramaRepository extends Repository<CronogramaEntity> {
+  public paginate(
+    queryBuilder: SelectQueryBuilder<CronogramaEntity>,
+    options: IPaginationOptions): Promise<Pagination<CronogramaEntity>> {
+    return paginate<CronogramaEntity>(queryBuilder, options);
+  }
 
   public getTypeRemunerations(id: number, filter?: FilterTypeObject): Promise<any> {
     const columns = [
@@ -76,5 +86,4 @@ export class CronogramaRepository extends Repository<CronogramaEntity> {
     .getRawOne()
     return parseInt(total);
   }
-
 }
