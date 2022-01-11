@@ -1,4 +1,4 @@
-import { ContractEntity } from "src/modules/contracts/domain/contract.entity";
+import { ContractEntity } from "../../../modules/contracts/domain/contract.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('p_profiles')

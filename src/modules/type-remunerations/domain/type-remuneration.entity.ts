@@ -1,4 +1,4 @@
-import { InfoTypeRemunerationEntity } from 'src/modules/info-type-remunerations/domain/info-type-remuneration.entity';
+import { InfoTypeRemunerationEntity } from '../../../modules/info-type-remunerations/domain/info-type-remuneration.entity';
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('p_type_remunerations')

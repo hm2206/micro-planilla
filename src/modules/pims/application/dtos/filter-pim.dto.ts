@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsNumberString, IsOptional } from "class-validator";
-import { PaginateDto } from "src/common/dto/paginate.dto";
+import { PaginateDto } from "../../../../common/dto/paginate.dto";
 
 
 export class GetPimDto extends PaginateDto{

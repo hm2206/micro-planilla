@@ -1,4 +1,4 @@
-import { PimEntity } from "src/modules/pims/domain/pim.entity";
+import { PimEntity } from "../../../modules/pims/domain/pim.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('p_metas')

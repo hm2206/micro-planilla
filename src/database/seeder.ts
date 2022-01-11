@@ -22,7 +22,7 @@ import { AddRemuneracionInfosProcedure } from '../modules/type-remunerations/dom
 
 import { AddConfigInfosProcedure } from '../modules/infos/domain/procedured/add-config-infos.procedured';
 import { AddHistorialsProcedured } from '../modules/historial/domain/procedured/add-historials.procedured';
-import { CalcDaysHistorialsProcedured } from 'src/modules/historial/domain/procedured/calc-days-historials.procedured';
+import { CalcDaysHistorialsProcedured } from '../modules/historial/domain/procedured/calc-days-historials.procedured';
 
 @Injectable()
 export class Seeder {

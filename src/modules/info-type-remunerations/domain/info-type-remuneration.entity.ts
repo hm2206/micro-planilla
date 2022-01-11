@@ -1,6 +1,6 @@
 import { InfoEntity } from "../../../modules/infos/domain/info.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
-import { TypeRemunerationEntity } from "src/modules/type-remunerations/domain/type-remuneration.entity";
+import { TypeRemunerationEntity } from "../../../modules/type-remunerations/domain/type-remuneration.entity";
 
 @Entity('p_info_type_remunerations')
 @Unique('unique-info-type-remunerations', ['infoId', 'typeRemunerationId'])

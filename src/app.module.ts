@@ -18,7 +18,7 @@ import { TypeCargosModule } from './modules/type-cargos/type-cargos.module';
 import { TypeDiscountsModule } from './modules/type-discounts/type-discounts.module';
 import { TypeAportationsModule } from './modules/type-aportations/type-aportations.module';
 import { TypeSindicatosModule } from './modules/type-sindicatos/type-sindicatos.module';
-import { TypeDetallesModule } from './modules/type-detalles/type-detalles.module';
+import { TypeDetailsModule } from './modules/type-details/type-details.module';
 import { TypeOblicationsModule } from './modules/type-oblications/type-oblications.module';
 import { AfpsModule } from './modules/afps/afps.module';
 import { TypeCategoriesModule } from './modules/type-categories/type-categories.module';
@@ -30,6 +30,12 @@ import { InfoTypeSindicatosModule } from './modules/info-type-sindicatos/info-ty
 import { ConfigTypeDiscountsModule } from './modules/config-type-discounts/config-type-discounts.module';
 import { ConfigTypeRemunerationsModule } from './modules/config-type-remunerations/config-type-remunerations.module';
 import { ConfigTypeAportationsModule } from './modules/config-type-aportations/config-type-aportations.module';
+import { RemunerationsModule } from './modules/remunerations/remunerations.module';
+import { DiscountsModule } from './modules/discounts/discounts.module';
+import { AportationsModule } from './modules/aportations/aportations.module';
+import { SindicatosModule } from './modules/sindicatos/sindicatos.module';
+import { ObligationsModule } from './modules/obligations/obligations.module';
+import { DetailsModule } from './modules/details/details.module';
 
 @Module({
   imports: [
@@ -51,7 +57,7 @@ import { ConfigTypeAportationsModule } from './modules/config-type-aportations/c
     TypeDiscountsModule,
     TypeAportationsModule,
     TypeSindicatosModule,
-    TypeDetallesModule,
+    TypeDetailsModule,
     TypeOblicationsModule,
     AfpsModule,
     TypeCategoriesModule,
@@ -63,6 +69,12 @@ import { ConfigTypeAportationsModule } from './modules/config-type-aportations/c
     ConfigTypeDiscountsModule,
     ConfigTypeRemunerationsModule,
     ConfigTypeAportationsModule,
+    RemunerationsModule,
+    DiscountsModule,
+    AportationsModule,
+    SindicatosModule,
+    ObligationsModule,
+    DetailsModule,
   ],
 })
 export class AppModule {}

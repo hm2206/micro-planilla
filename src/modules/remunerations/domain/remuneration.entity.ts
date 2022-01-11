@@ -1,26 +1,29 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity('p_type_sindicatos')
-export class TypeSindicatoEntity {
+@Entity('p_remunerations')
+export class RemunerationEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
   @Column()
-  public name: string;
+  public historialId: number;
+
+  @Column()
+  public typeRemunerationId: number;
 
   @Column('decimal', { precision: 12, scale: 2 })
   public amount: number;
 
-  @Column('decimal', { precision: 12, scale: 2 })
-  public percent: number;
+  @Column('boolean')
+  public isBase: boolean;
 
-  @Column()
-  public typeDiscountId: number;
+  @Column('boolean')
+  public bonification: boolean;
 
-  @Column('boolean', { default: false })
-  public isPercent: boolean;
+  @Column('boolean')
+  public isEdit: boolean;
 
-  @Column('boolean', { default: true })
+  @Column('boolean')
   public state: boolean;
 
   @CreateDateColumn()
