@@ -25,6 +25,11 @@ export class ContractsController {
     return this.contractsService.editContract(id, editContractDto);
   }
 
+  @Get(':id/work')
+  public work(@Param('id') id: number) {
+    return this.contractsService.findWork(id);
+  }
+
   @Get(':id/infos')
   public infos(@Param('id') id: number, @Query() paginate: PaginateDto) {
     return this.contractsService.findInfos(id, paginate);

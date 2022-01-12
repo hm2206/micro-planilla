@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientHttpModule } from '../../client-http/client-http.module';
 import { ContractsModule } from '../contracts/contracts.module';
@@ -9,9 +9,9 @@ import { WorksController } from './infrastructure/works.controller';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([WorkRepository]),
     ClientHttpModule,
     forwardRef(() => ContractsModule),
-    TypeOrmModule.forFeature([WorkRepository])
   ],
   providers: [WorksService, WorkSubscription],
   controllers: [WorksController],

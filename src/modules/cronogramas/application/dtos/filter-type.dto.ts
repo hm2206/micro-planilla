@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsNumberString, IsOptional } from 'class-validator';
+import { IsBooleanString, IsNumber, IsNumberString, IsOptional } from 'class-validator';
 import { PaginateDto } from 'src/common/dto/paginate.dto';
 
 export class FilterTypeObject {
@@ -23,7 +23,16 @@ export class GetCronogramaDto extends PaginateDto {
   @IsNumberString()
   month?: number;
 
-  campusId?: number;
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsNumberString()
   planillaId?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBooleanString()
+  state?: boolean;
+
+  campusId?: number;
   principal?: boolean;                                                                                                                                                                                                                                                                                                                                                                                        
 }

@@ -45,6 +45,15 @@ export class InfosService {
     }
   }
 
+  public async findInfo(id: number) {
+    return await this.infoRepository.createQueryBuilder('inf')
+      .innerJoinAndSelect('inf.contract', 'cont')
+      .innerJoinAndSelect('inf.planilla', 'pla')
+      .innerJoinAndSelect('inf.pim', 'pim')
+      .where(`inf.id = ${id}`)
+      .getOneOrFail();
+  }
+
   public async findTypeRemunerations(id: number, paginate: PaginateDto) {
     const info = await this.infoRepository.findOneOrFail(id);
     return await this.infoTypeRemunerationsService.getInfoTypeRemunerations({

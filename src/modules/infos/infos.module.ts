@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ContractsModule } from '../contracts/contracts.module';
 import { InfoTypeAportationsModule } from '../info-type-aportations/info-type-aportations.module';
@@ -12,11 +12,11 @@ import { InfosController } from './infrastructure/infos.controller';
 
 @Module({
   imports: [
-    ContractsModule,
+    TypeOrmModule.forFeature([InfoRepository]),
     InfoTypeRemunerationsModule,
     InfoTypeDiscountsModule,
     InfoTypeAportationsModule,
-    TypeOrmModule.forFeature([InfoRepository])
+    forwardRef(() => ContractsModule),
   ],
   providers: [
     ProcessInfosService,

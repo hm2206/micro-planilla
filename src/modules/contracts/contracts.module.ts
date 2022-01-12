@@ -9,9 +9,9 @@ import { ContractsController } from './infrastructure/contracts.controller';
 
 @Module({
   imports: [
-    WorksModule,
-    forwardRef(() => InfoModule),
     TypeOrmModule.forFeature([ContractRepository]),
+    forwardRef(() => WorksModule),
+    forwardRef(() => InfoModule),
   ],
   providers: [
     ContractsService,

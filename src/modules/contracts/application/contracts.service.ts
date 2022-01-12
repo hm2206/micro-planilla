@@ -1,4 +1,5 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, InternalServerErrorException } from "@nestjs/common";
+import { WorksService } from "../../../modules/works/application/works.service";
 import { PaginateDto } from "../../../common/dto/paginate.dto";
 import { InfosService } from "../../../modules/infos/application/infos.service";
 import { ContractRepository } from "../domain/contract.repository";
@@ -9,7 +10,10 @@ import { FilterContractDto, GetContractDto } from "./dtos/filters-contract.dto";
 @Injectable()
 export class ContractsService {
   constructor(
+    @Inject(forwardRef(() => InfosService))
     private infosService: InfosService,
+    @Inject(forwardRef(() => WorksService))
+    private worksService: WorksService,
     private contractRepository: ContractRepository) { }
 
   public async getContracts(paginate: GetContractDto) {
@@ -59,7 +63,7 @@ export class ContractsService {
     } catch (error) {
       throw new InternalServerErrorException;
     }
-  }
+  } 
 
   public async countContract(filter: FilterContractDto): Promise<number> {
     const queryBuilder = this.contractRepository.createQueryBuilder('c');
@@ -76,5 +80,10 @@ export class ContractsService {
       ...paginate,
       contractId: contract.id
     });
+  }
+
+  public async findWork(id: number) {
+    const contract = await this.contractRepository.findOneOrFail(id);
+    return await this.worksService.findWork(contract.workId);
   }
 }

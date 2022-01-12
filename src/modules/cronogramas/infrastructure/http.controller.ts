@@ -8,6 +8,7 @@ import { ChangeCargoId } from '../application/dtos/change-cargo.dto';
 import { FilterTypeObject, GetCronogramaDto } from '../application/dtos/filter-type.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CronogramasService } from '../application/cronogramas.service';
+import { PaginateDto } from 'src/common/dto/paginate.dto';
 
 @Controller('cronogramas')
 @ApiTags('cronogramas')
@@ -44,6 +45,11 @@ export class HttpController {
   @Get(':id')
   public show(@Param('id') id: number) {
     return this.cronogramasService.findCronograma(id);
+  }
+
+  @Get(':id/historials')
+  public historials(@Param('id') id: number, @Query() paginate: PaginateDto) {
+    return this.cronogramasService.findHistorials(id, paginate);
   }
 
   @Post(':id/clone')

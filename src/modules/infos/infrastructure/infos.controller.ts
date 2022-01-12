@@ -15,6 +15,11 @@ export class InfosController {
     return this.infosService.createInfo(createInfoDto);
   }
 
+  @Get(':id')
+  public show(@Param('id') id: number) {
+    return this.infosService.findInfo(id);
+  }
+
   @Put(':id')
   public update(@Param('id') id: number, @Body() editInfoDto: EditInfoDto) {
     return this.infosService.editInfo(id, editInfoDto);

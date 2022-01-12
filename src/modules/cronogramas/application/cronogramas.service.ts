@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { PaginateDto } from 'src/common/dto/paginate.dto';
+import { HistorialService } from 'src/modules/historial/application/historial.service';
 import { CronogramaRepository } from '../domain/cronograma.repository';
 import { GetCronogramaDto } from './dtos/filter-type.dto';
 
 @Injectable()
 export class CronogramasService {
-  constructor(private cronogramaRepository: CronogramaRepository) {}
+  constructor(
+    private historialRepository: HistorialService,
+    private cronogramaRepository: CronogramaRepository) { }
 
   public async getCronogramas(paginate: GetCronogramaDto) {
     const queryBuilder = this.cronogramaRepository.createQueryBuilder('c')
@@ -13,6 +17,11 @@ export class CronogramasService {
     if (paginate.month) queryBuilder.andWhere("c.month = :month", paginate);
     if (paginate.planillaId) queryBuilder.andWhere("c.planillaId = :planillaId", paginate);
     if (paginate.campusId) queryBuilder.andWhere("c.campusId = :campusId", paginate);
+    if (typeof paginate.state != 'undefined') {
+      const state = JSON.parse(`${paginate.state}`);
+      queryBuilder.andWhere(`c.state = ${state}`);
+    }
+    // filtrar por planilla principal
     if (typeof paginate.principal != 'undefined') {
       queryBuilder.andWhere("p.principal = :principal", paginate);
     }
@@ -31,6 +40,17 @@ export class CronogramasService {
   }
 
   public async findCronograma(id: number) {
-    return await this.cronogramaRepository.findOneOrFail(id);
+    const cronograma = this.cronogramaRepository.createQueryBuilder('cro')
+      .innerJoinAndSelect('cro.planilla', 'pla')
+      .where('cro.id = :id', { id });
+    return await cronograma.getOneOrFail();
+  }
+
+  public async findHistorials(id: number, paginate: PaginateDto) { 
+    const cronograma = await this.cronogramaRepository.findOneOrFail(id);
+    return await this.historialRepository.getHistorial({
+      ...paginate,
+      cronogramaId: cronograma.id
+    })
   }
 }

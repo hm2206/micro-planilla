@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { ApiQuery, ApiTags } from "@nestjs/swagger";
-import { PaginateDto } from "src/common/dto/paginate.dto";
+import { ApiTags } from "@nestjs/swagger";
+import { GetPlanillasDto } from "../application/dtos/filter-planillas.dto";
 import { PlanillasService } from "../application/planillas.service";
 
 @Controller('planillas')
@@ -9,8 +9,7 @@ export class PlanillasController {
   constructor(private planillasService: PlanillasService) { }
   
   @Get()
-  @ApiQuery({ type: [PaginateDto] })
-  public index(@Query() paginate: PaginateDto) {
+  public index(@Query() paginate: GetPlanillasDto) {
     return this.planillasService.getPlanillas(paginate);
   }
 }
