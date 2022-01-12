@@ -5,15 +5,11 @@ import { PaginateDto } from 'src/common/dto/paginate.dto';
 export class FilterTypeObject {
   @IsOptional()
   @IsNumber()
-  public cargo_id?: number
+  public pimId?: number
 
   @IsOptional()
   @IsNumber()
-  public type_categoria_id?: number
-
-  @IsOptional()
-  @IsNumber()
-  public meta_id?: number
+  public typeCategoryId?: number
 }
 
 export class GetCronogramaDto extends PaginateDto {

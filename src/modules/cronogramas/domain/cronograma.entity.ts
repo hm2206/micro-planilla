@@ -63,4 +63,6 @@ export class CronogramaEntity {
     cascade: true
   })
   public historials: HistorialEntity[];
+
+  public historialsCount!: number;
 }

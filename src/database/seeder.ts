@@ -27,9 +27,9 @@ import { CalcDaysHistorialsProcedured } from '../modules/historial/domain/proced
 @Injectable()
 export class Seeder {
   async seed() {
-    (new AddConfigInfosProcedure).up();
-    (new AddHistorialsProcedured).up();
-    (new CalcDaysHistorialsProcedured).up();
+    await (new AddConfigInfosProcedure).up();
+    await (new AddHistorialsProcedured).up();
+    await (new CalcDaysHistorialsProcedured).up();
     // (new AddInfosProcedured).up();
     // (new AddRemuneracionesProcedured).up();
     // (new AddDescuentosProcedured).up();

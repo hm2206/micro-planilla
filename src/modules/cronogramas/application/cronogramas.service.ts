@@ -16,7 +16,18 @@ export class CronogramasService {
     if (typeof paginate.principal != 'undefined') {
       queryBuilder.andWhere("p.principal = :principal", paginate);
     }
-    return await this.cronogramaRepository.paginate(queryBuilder, paginate);
+    // result
+    const result = await this.cronogramaRepository.paginate(queryBuilder, paginate);
+    // add historialsCounts
+    const cronogramaIds: number[] = result.items.pluck('id').toArray();
+    const historialCount = await this.cronogramaRepository.getCountHistorial(cronogramaIds);
+    result.items.map(item => {
+      const total = historialCount.items.where('id', item.id).first()?.total || 0;
+      item.historialsCount = parseInt(`${total}`);
+      return item;
+    })
+    // response
+    return result;
   }
 
   public async findCronograma(id: number) {

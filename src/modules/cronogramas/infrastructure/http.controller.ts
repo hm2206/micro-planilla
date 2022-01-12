@@ -62,12 +62,12 @@ export class HttpController {
     return this.proccessCronogramaService.processing(id);
   }
 
-  @Post(':id/report/general.xlsx')
-  public async reportGeneralExcel(
-    @Param('id') id: number, @Query() query: FilterTypeObject): Promise<StreamableFile> {
-    const file = await this.reportGeneral.excel(id, query);
-    return new StreamableFile(file);
-  }
+  // @Post(':id/report/general.xlsx')
+  // public async reportGeneralExcel(
+  //   @Param('id') id: number, @Query() query: FilterTypeObject): Promise<StreamableFile> {
+  //   const file = await this.reportGeneral.excel(id, query);
+  //   return new StreamableFile(file);
+  // }
 
   @Post(':id/sendMail')
   public sendMail(@Param('id') id: number) {
