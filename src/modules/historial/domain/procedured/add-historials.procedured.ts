@@ -33,7 +33,7 @@ export class AddHistorialsProcedured extends DatabaseProcedured {
       isPrimaSeguro, numberOfEssalud, bankId, numberOfAccount, isCheck, plaza, isPay, days)
       SELECT cro.id, inf.id as infoId, inf.pimId, w.afpId, w.affiliationOfDate, w.numberOfCussp,
       w.isPrimaSeguro, w.numberOfEssalud, inf.bankId, inf.numberOfAccount, inf.isCheck, 
-      cont.plaza, inf.isPay, cro.numberOfDays
+      cont.plaza, inf.isPay, cro.calcOfDays
       FROM p_infos as inf
       INNER JOIN p_contracts as cont ON inf.contractId = cont.id
       INNER JOIN p_works as w ON w.id = cont.workId

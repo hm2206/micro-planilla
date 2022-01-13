@@ -17,6 +17,9 @@ export class CronogramaEntity {
   @Column({ default: 30 })
   public numberOfDays: number;
 
+  @Column({ default: 30 })
+  public calcOfDays: number;
+
   @Column({ default: 0 })
   public adicional: number;
 
