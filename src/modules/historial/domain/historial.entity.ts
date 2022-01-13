@@ -50,9 +50,6 @@ export class HistorialEntity {
   @Column('boolean', { default: false })
   public sendEmail: boolean;
 
-  @Column('boolean', { default: true })
-  public isEmail: boolean;
-
   @Column({ nullable: true })
   public tokenVerify : string;
 

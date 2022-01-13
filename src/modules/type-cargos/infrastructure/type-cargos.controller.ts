@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Param, Query } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { PaginateDto } from "src/common/dto/paginate.dto";
 import { TypeCargosService } from "../application/type-cargos.service";
@@ -11,5 +11,10 @@ export class TypeCargosController {
   @Get()
   public index(@Query() paginate: PaginateDto) {
     return this.typeCargosService.getTypeCargos(paginate);
+  }
+
+  @Get(':id')
+  public show(@Param('id') id: number) {
+    return this.typeCargosService.findTypeCargo(id);
   }
 }

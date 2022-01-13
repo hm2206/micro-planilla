@@ -6,8 +6,12 @@ import { TypeCargoRepository } from "../domain/type-cargo.repository";
 export class TypeCargosService {
   constructor(private typeCargoRepository: TypeCargoRepository) { }
   
-  public getTypeCargos(paginate: PaginateDto) {
+  public async getTypeCargos(paginate: PaginateDto) {
     const queryBuilder = this.typeCargoRepository.createQueryBuilder('t');
-    return this.typeCargoRepository.paginate(queryBuilder, paginate);
+    return await this.typeCargoRepository.paginate(queryBuilder, paginate);
+  }
+
+  public async findTypeCargo(id: number) {
+    return await this.typeCargoRepository.findOneOrFail(id);
   }
 }
