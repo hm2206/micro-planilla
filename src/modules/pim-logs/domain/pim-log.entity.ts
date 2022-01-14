@@ -10,7 +10,7 @@ export class PimLogEntity {
   public pimId: number;
 
   @Column('decimal', { default: 0, precision: 12, scale: 2 })
-  public money: number;
+  public amount: number;
 
   @Column('date')
   public date: Date;
@@ -27,6 +27,8 @@ export class PimLogEntity {
   @UpdateDateColumn()
   public updatedAt: Date;
 
-  @ManyToOne(() => PimEntity, pim => pim.pimLogs)
+  @ManyToOne(() => PimEntity, pim => pim.pimLogs, {
+    onDelete: 'CASCADE'
+  })
   public pim: PimEntity;
 }

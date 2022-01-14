@@ -13,7 +13,7 @@ export class RabbitMqController {
     // process
     try {
       const data = { sendEmail: true };
-      await this.historialService.update(payload, data as any);
+      await this.historialService.editHistorial(payload, data as any);
       channel.ack(originalMsg);
     } catch (error) {
       channel.ack(originalMsg);

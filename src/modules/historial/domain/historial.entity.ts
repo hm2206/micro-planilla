@@ -59,6 +59,9 @@ export class HistorialEntity {
   @Column()
   public days: number;
 
+  @Column('text', { nullable: true })
+  public observation: string;
+
   @Column('boolean', { default: true })
   public state: boolean;
 

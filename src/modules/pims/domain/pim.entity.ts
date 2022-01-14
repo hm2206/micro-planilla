@@ -24,7 +24,7 @@ export class PimEntity {
   public year: number;
 
   @Column('decimal', { default: 0, precision: 12, scale: 2 })
-  public money: number;
+  public amount: number;
 
   @Column('boolean', { default: true })
   public state = true;
@@ -41,7 +41,9 @@ export class PimEntity {
   @ManyToOne(() => MetaEntity, meta => meta.pims)
   public meta: MetaEntity;
 
-  @OneToMany(() => PimLogEntity, pimLog => pimLog.pim)
+  @OneToMany(() => PimLogEntity, pimLog => pimLog.pim, {
+    cascade: true
+  })
   public pimLogs: PimLogEntity[];
 
   @OneToMany(() => InfoEntity, info => info.pim)

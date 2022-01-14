@@ -18,7 +18,7 @@ export class PimSubscriber implements EntitySubscriberInterface<PimEntity> {
     const pimEntity = event.entity;
     this.pimLogsService.createPimLog({
       pimId: pimEntity.id,
-      money: pimEntity.money,
+      amount: pimEntity.amount,
       date: new Date(),
       isDefault: true
     });
@@ -28,7 +28,7 @@ export class PimSubscriber implements EntitySubscriberInterface<PimEntity> {
     const pimEntity = event.entity;
     this.pimLogsService.createPimLog({
       pimId: pimEntity.id,
-      money: pimEntity.money,
+      amount: pimEntity.amount,
       date: new Date(),
       isDefault: false
     });

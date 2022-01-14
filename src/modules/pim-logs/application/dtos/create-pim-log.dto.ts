@@ -1,6 +1,6 @@
 export interface ICreatePimLogDto {
   pimId: number;
-  money: number;
+  amount: number;
   date: Date;
   isDefault: boolean;
 }

@@ -30,10 +30,10 @@ export class AddHistorialsProcedured extends DatabaseProcedured {
     return (
       `
       INSERT INTO p_historials(cronogramaId, infoId, pimId, afpId, affiliationOfDate, numberOfCussp, 
-      isPrimaSeguro, numberOfEssalud, bankId, numberOfAccount, isCheck, plaza, isPay, days)
+      isPrimaSeguro, numberOfEssalud, bankId, numberOfAccount, isCheck, plaza, isPay, days, observation)
       SELECT cro.id, inf.id as infoId, inf.pimId, w.afpId, w.affiliationOfDate, w.numberOfCussp,
       w.isPrimaSeguro, w.numberOfEssalud, inf.bankId, inf.numberOfAccount, inf.isCheck, 
-      cont.plaza, inf.isPay, cro.calcOfDays
+      cont.plaza, inf.isPay, cro.calcOfDays, inf.observation
       FROM p_infos as inf
       INNER JOIN p_contracts as cont ON inf.contractId = cont.id
       INNER JOIN p_works as w ON w.id = cont.workId

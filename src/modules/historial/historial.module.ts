@@ -8,6 +8,8 @@ import { SendBoletaService } from './application/send-boleta.service';
 import { HistorialRepository } from './domain/historial.repository';
 import { HistorialService } from './application/historial.service';
 import { RabbitMqController } from './infrastructure/rabbitmq.crontroller';
+import { HttpController } from './infrastructure/http.controller';
+import { HistorialSubscriber } from './domain/historial.subscriber';
 
 @Module({
   imports: [
@@ -17,11 +19,15 @@ import { RabbitMqController } from './infrastructure/rabbitmq.crontroller';
     InfoModule,
   ],
   providers: [
+    HistorialSubscriber,
     HistorialService,
     SendBoletaService, 
     ProcessHistorialService
   ],
-  controllers: [RabbitMqController],
+  controllers: [
+    HttpController,
+    RabbitMqController
+  ],
   exports: [
     HistorialService,
     SendBoletaService, 

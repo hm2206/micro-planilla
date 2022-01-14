@@ -1,4 +1,5 @@
 import { InternalServerErrorException } from "@nestjs/common";
+import { ValidateChecked } from "src/common/utils/validate-checked";
 import { ContractsService } from "src/modules/contracts/application/contracts.service";
 import { Connection, EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent } from "typeorm";
 import { InfoEntity } from "./info.entity";
@@ -33,8 +34,7 @@ export class InfoSubscriber implements EntitySubscriberInterface {
   }
 
   private async validateSave(info: InfoEntity, edit = false) {
-    const isNotAccount = !info.numberOfAccount;
-    info.isCheck = isNotAccount ? true : info.isCheck;
+    info.isCheck = (new ValidateChecked(info.numberOfAccount)).compare(info.isCheck);
     // validar syncronización
     if (!edit) {
       const contract = await this.contractsService.findContract(info.contractId);

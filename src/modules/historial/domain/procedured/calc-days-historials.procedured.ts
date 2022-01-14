@@ -40,7 +40,7 @@ export class CalcDaysHistorialsProcedured extends DatabaseProcedured {
         INNER JOIN p_infos as inf ON inf.id = h.infoId
         INNER JOIN p_contracts as cont ON cont.id = inf.contractId
         WHERE inf.isSync = 1 AND cont.terminationDate is not null
-        AND cro.id = 4
+        AND cro.id = ${this.params()[0].name}
       ) as up ON up.id = his.id
       SET his.days = IF(up.days >= up.numberOfDays, up.calcOfDays, IF(up.days < 0, 0, up.days));
       `

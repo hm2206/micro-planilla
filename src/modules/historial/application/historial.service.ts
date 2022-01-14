@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { HistorialRepository } from '../domain/historial.repository';
-import { HistorialEntity } from '../domain/historial.entity';
 import { GetHistorialsDto } from './dtos/filter-historials.dto';
+import { UpdateHistorialDto } from './dtos/update-historial.dto';
 
 @Injectable()
 export class HistorialService {
@@ -28,9 +28,13 @@ export class HistorialService {
     return await this.historialRepository.paginate(queryBuilder, paginate);
   }
 
-  public async update(id, payload: HistorialEntity) {
-    const history = await this.historialRepository.findOneOrFail(id);
-    await this.historialRepository.update(history.id, payload);
-    return { process: true };
+  public async editHistorial(id, payload: UpdateHistorialDto) {
+    try {
+      const history = await this.historialRepository.findOneOrFail(id);
+      const partial = Object.assign(history, payload);
+      return await this.historialRepository.save(partial);
+    } catch (error) {
+      throw new InternalServerErrorException;
+    }
   }
 }

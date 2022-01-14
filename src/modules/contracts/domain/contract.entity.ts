@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ContractConditionEnum } from "./contract.enum";
 import { WorkEntity } from "../../../modules/works/domain/work.entity";
 import { DependencyEntity } from "../../../modules/dependencies/domain/dependency.entity";
@@ -9,7 +9,6 @@ import { HourhandEntity } from "../../../modules/hourhands/domain/hourhand.entit
 import { DateTime } from "luxon";
 
 @Entity('p_contracts')
-@Unique('contracts', ['workId', 'resolution'])
 export class ContractEntity {
   @PrimaryGeneratedColumn()
   public id: number;

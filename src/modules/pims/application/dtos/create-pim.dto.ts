@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsNumber, IsNumberString, IsString, Length, MaxLength } from "class-validator";
 
 export interface ICreatePimDto {
@@ -5,30 +6,34 @@ export interface ICreatePimDto {
   metaId: number;
   cargoId: number;
   year: number;
-  money: number;
+  amount: number;
 }
 
 export class CreatePimDto implements ICreatePimDto {
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   @MaxLength(4)
   code: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   metaId: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   cargoId: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumberString()
   @Length(4)
   year: number;
 
+  @ApiProperty()
   @IsNotEmpty()
-  @IsNumberString()
-  @MaxLength(12)
-  money: number;
+  @IsNumber({ maxDecimalPlaces: 2 })
+  amount: number;
 }

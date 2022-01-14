@@ -1,23 +1,26 @@
-import { IsBoolean, IsNotEmpty, IsNumberString, IsString, MaxLength } from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsBoolean, IsNotEmpty, IsNumber, IsString, MaxLength } from "class-validator";
 
 export interface IEditPimDto {
   code: string;
-  money: number;
+  amount: number;
   state: boolean;
 }
 
 export class EditPimDto {
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   @MaxLength(4)
   code: string;
 
+  @ApiProperty()
   @IsNotEmpty()
-  @IsNumberString()
-  @MaxLength(12)
-  money: number;
+  @IsNumber({ maxDecimalPlaces: 2 })
+  amount: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsBoolean()
-  public state: boolean;
+  state: boolean;
 }

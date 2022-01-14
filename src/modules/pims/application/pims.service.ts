@@ -18,6 +18,9 @@ export class PimsService {
     const queryBuilder = this.pimRepository.createQueryBuilder('p')
       .innerJoinAndSelect('p.cargo', 'c')
       .innerJoinAndSelect('p.meta', 'm')
+      .orderBy('p.year', 'DESC')
+      .addOrderBy('p.code', 'ASC')
+      .addOrderBy('c.extension', 'ASC')
     if (paginate.year) queryBuilder.andWhere('p.year = :year', paginate);
     return await this.pimRepository.paginate(queryBuilder, paginate);
   }
@@ -45,7 +48,6 @@ export class PimsService {
       const partial = Object.assign(pim, editPimDto);
       return await this.pimRepository.save(partial);
     } catch (error) {
-      console.log(error);
       throw new InternalServerErrorException();
     }
   }

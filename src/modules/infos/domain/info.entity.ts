@@ -41,6 +41,9 @@ export class InfoEntity {
   @Column('boolean', { default: true })
   public isSync: boolean;
 
+  @Column('text', { nullable: true })
+  public observation: string;
+
   @Column('boolean', { default: true })
   public state: boolean;
 
