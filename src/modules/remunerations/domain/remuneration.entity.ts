@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { HistorialEntity } from "../../../modules/historial/domain/historial.entity";
+import { TypeRemunerationEntity } from "../../../modules/type-remunerations/domain/type-remuneration.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('p_remunerations')
 export class RemunerationEntity {
@@ -18,7 +20,7 @@ export class RemunerationEntity {
   public isBase: boolean;
 
   @Column('boolean')
-  public bonification: boolean;
+  public isBonification: boolean;
 
   @Column('boolean')
   public isEdit: boolean;
@@ -31,4 +33,14 @@ export class RemunerationEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => HistorialEntity,
+    history => history.remunerations, {
+    onDelete: 'CASCADE'
+  })
+  public historial: HistorialEntity;
+
+  @ManyToOne(() => TypeRemunerationEntity,
+    typeRemuneration => typeRemuneration.remunerations)
+  public typeRemuneration: TypeRemunerationEntity;
 }

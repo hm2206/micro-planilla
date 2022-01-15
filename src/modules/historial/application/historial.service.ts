@@ -1,11 +1,15 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { RemunerationsService } from 'src/modules/remunerations/application/remunerations.service';
+import { PaginateDto } from '../../../common/dto/paginate.dto';
 import { HistorialRepository } from '../domain/historial.repository';
 import { GetHistorialsDto } from './dtos/filter-historials.dto';
 import { UpdateHistorialDto } from './dtos/update-historial.dto';
 
 @Injectable()
 export class HistorialService {
-  constructor(private historialRepository: HistorialRepository) {}
+  constructor(
+    private remunerationsService: RemunerationsService,
+    private historialRepository: HistorialRepository) { }
 
   public async getHistorial(paginate: GetHistorialsDto) {
     const queryBuilder = this.historialRepository.createQueryBuilder('his')
@@ -36,5 +40,13 @@ export class HistorialService {
     } catch (error) {
       throw new InternalServerErrorException;
     }
+  }
+
+  public async findRemunerations(id: number, paginate: PaginateDto) {
+    const historial = await this.historialRepository.findOneOrFail(id);
+    return await this.remunerationsService.getRemunerations({
+      ...paginate,
+      historialId: historial.id
+    });
   }
 }

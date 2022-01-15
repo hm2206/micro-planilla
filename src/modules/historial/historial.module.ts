@@ -10,12 +10,14 @@ import { HistorialService } from './application/historial.service';
 import { RabbitMqController } from './infrastructure/rabbitmq.crontroller';
 import { HttpController } from './infrastructure/http.controller';
 import { HistorialSubscriber } from './domain/historial.subscriber';
+import { RemunerationsModule } from '../remunerations/remunerations.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([HistorialRepository]),
     ClientHttpModule,
     MicroservicesModule,
+    RemunerationsModule,
     InfoModule,
   ],
   providers: [

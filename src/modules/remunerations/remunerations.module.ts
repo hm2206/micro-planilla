@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RemunerationEntity } from './domain/remuneration.entity';
+import { RemunerationsService } from './application/remunerations.service';
+import { RemunerationRepository } from './domain/remuneration.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([RemunerationEntity])],
+  imports: [TypeOrmModule.forFeature([RemunerationRepository])],
+  providers: [RemunerationsService],
+  exports: [RemunerationsService],
 })
 export class RemunerationsModule {}

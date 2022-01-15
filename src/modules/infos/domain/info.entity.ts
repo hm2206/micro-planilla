@@ -9,7 +9,7 @@ import { InfoTypeAportationEntity } from '../../../modules/info-type-aportations
 import { HistorialEntity } from '../../../modules/historial/domain/historial.entity';
 
 @Entity('p_infos')
-@Unique('p_infos', ['contractId', 'planillaId'])
+@Unique('p_infos', ['contractId', 'planillaId', 'pim'])
 export class InfoEntity {
   @PrimaryGeneratedColumn()
   public id: number;
