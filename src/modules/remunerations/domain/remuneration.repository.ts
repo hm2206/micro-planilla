@@ -11,4 +11,8 @@ export class RemunerationRepository extends Repository<RemunerationEntity> {
     const result = await paginate<RemunerationEntity>(queryBuilder, options);
     return new PaginateCollection(result);
   }
+
+  public scopeIsBase(isBase: boolean) {
+    return this.createQueryBuilder('r').where(`r.isBase = ${isBase}`);
+  }
 }

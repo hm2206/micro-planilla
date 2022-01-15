@@ -18,13 +18,14 @@ export class HistorialService {
       .innerJoinAndSelect('his.pim', 'pim')
       .innerJoinAndSelect('his.afp', 'afp')
       .innerJoinAndSelect('his.bank', 'bank')
+      .innerJoin('inf.contract', 'cont')
+      .innerJoin('cont.work', 'w')
+      .orderBy('w.orderBy', 'ASC')
     if (paginate.cronogramaId) queryBuilder.where(`his.cronogramaId = ${paginate.cronogramaId}`);
     // buscar trabajador
     if (paginate.querySearch) {
       const searchArray = paginate.querySearch.split(" ");
       const realSearch = [];
-      queryBuilder.innerJoin('inf.contract', 'cont')
-        .innerJoin('cont.work', 'w')
       // búsqueda avanzada
       searchArray.forEach(q => realSearch.push(`w.orderBy like '%${q}%'`));
       queryBuilder.andWhere(`(${realSearch.join(' OR ')})`);
@@ -48,5 +49,31 @@ export class HistorialService {
       ...paginate,
       historialId: historial.id
     });
+  }
+
+  public async findResume(id: number) {
+    const historial = await this.historialRepository.findOneOrFail(id);
+    // obtener total bruto
+    const [calcTotal] = await this.remunerationsService.getCalcTotal({
+      historialId: historial.id
+    })
+    // obtener base imponible
+    const [calcIsBase] = await this.remunerationsService.getCalcIsBase({
+      historialId: historial.id
+    });
+    // calc
+    const totalRemuneration = parseFloat(`${calcTotal?.amount || 0}`);
+    const totalBase = parseFloat(`${calcIsBase?.amount || 0}`)
+    const totalDiscount = parseFloat(`0.00`)
+    const totalAportation = parseFloat(`0.00`)
+    const totalNeto = totalRemuneration - totalDiscount;
+    // response
+    return {
+      totalRemuneration,
+      totalBase,
+      totalDiscount,
+      totalAportation,
+      totalNeto
+    }
   }
 }

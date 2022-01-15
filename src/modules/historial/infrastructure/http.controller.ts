@@ -18,4 +18,9 @@ export class HttpController {
   public remunerations(@Param('id') id: number, @Query() paginate: PaginateDto) {
     return this.historialsService.findRemunerations(id, paginate);
   }
+
+  @Get(':id/resume')
+  public resume(@Param('id') id: number) {
+    return this.historialsService.findResume(id);
+  }
 }
