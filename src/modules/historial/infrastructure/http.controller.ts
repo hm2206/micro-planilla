@@ -10,13 +10,21 @@ export class HttpController {
   constructor(private historialsService: HistorialService) { }
   
   @Put(':id')
-  public update(@Param('id') id: number, @Body() payload: UpdateHistorialDto) {
+  public update(@Param('id') id: number,
+    @Body() payload: UpdateHistorialDto) {
     return this.historialsService.editHistorial(id, payload);
   }
 
   @Get(':id/remunerations')
-  public remunerations(@Param('id') id: number, @Query() paginate: PaginateDto) {
+  public remunerations(@Param('id') id: number,
+    @Query() paginate: PaginateDto) {
     return this.historialsService.findRemunerations(id, paginate);
+  }
+
+  @Get(':id/discounts')
+  public discounts(@Param('id') id: number,
+    @Query() paginate: PaginateDto) {
+    return this.historialsService.findDiscounts(id, paginate);
   }
 
   @Get(':id/resume')

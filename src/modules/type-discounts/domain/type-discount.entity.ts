@@ -1,5 +1,6 @@
-import { InfoTypeDiscountEntity } from "../../../modules/info-type-discounts/domain/info-type-discount.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { InfoTypeDiscountEntity } from "../../../modules/info-type-discounts/domain/info-type-discount.entity";
+import { DiscountEntity } from "../../../modules/discounts/domain/discount.entity";
 
 @Entity('p_type_discounts')
 export class TypeDiscountEntity {
@@ -39,6 +40,11 @@ export class TypeDiscountEntity {
   @UpdateDateColumn()
   public updatedAt: Date;
 
-  @OneToMany(() => InfoTypeDiscountEntity, info => info.typeDiscount)
+  @OneToMany(() => InfoTypeDiscountEntity,
+    info => info.typeDiscount)
   public infos: InfoTypeDiscountEntity[];
+
+  @OneToMany(() => DiscountEntity,
+    discount => discount.typeDiscount)
+  public discounts: DiscountEntity[];
 }

@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { HistorialEntity } from "src/modules/historial/domain/historial.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { TypeDiscountEntity } from "../../../modules/type-discounts/domain/type-discount.entity";
 
 @Entity('p_discounts')
 export class DiscountEntity {
@@ -11,11 +13,17 @@ export class DiscountEntity {
   @Column()
   public typeDiscountId: number;
 
+  @Column('decimal', { precision: 12, scale: 2 })
+  public amount: number;
+
   @Column('boolean')
   public isEdit: boolean;
 
   @Column('boolean')
   public isModify: boolean;
+
+  @Column('boolean', { default: false })
+  public isSync: boolean;
 
   @Column('boolean')
   public state: boolean;
@@ -25,5 +33,14 @@ export class DiscountEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
-  
+
+  @ManyToOne(() => TypeDiscountEntity,
+    typeDiscount => typeDiscount.discounts)
+  public typeDiscount: TypeDiscountEntity;
+
+  @ManyToOne(() => HistorialEntity,
+    historial => historial.discounts, {
+      onDelete: 'CASCADE'
+  })
+  public historial: HistorialEntity;
 }

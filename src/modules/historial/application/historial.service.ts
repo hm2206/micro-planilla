@@ -1,4 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { DiscountsService } from 'src/modules/discounts/application/discounts.service';
 import { RemunerationsService } from 'src/modules/remunerations/application/remunerations.service';
 import { PaginateDto } from '../../../common/dto/paginate.dto';
 import { HistorialRepository } from '../domain/historial.repository';
@@ -9,6 +10,7 @@ import { UpdateHistorialDto } from './dtos/update-historial.dto';
 export class HistorialService {
   constructor(
     private remunerationsService: RemunerationsService,
+    private discountsService: DiscountsService,
     private historialRepository: HistorialRepository) { }
 
   public async getHistorial(paginate: GetHistorialsDto) {
@@ -46,6 +48,14 @@ export class HistorialService {
   public async findRemunerations(id: number, paginate: PaginateDto) {
     const historial = await this.historialRepository.findOneOrFail(id);
     return await this.remunerationsService.getRemunerations({
+      ...paginate,
+      historialId: historial.id
+    });
+  }
+
+  public async findDiscounts(id: number, paginate: PaginateDto) {
+    const historial = await this.historialRepository.findOneOrFail(id);
+    return await this.discountsService.getDiscounts({
       ...paginate,
       historialId: historial.id
     });

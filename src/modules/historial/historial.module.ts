@@ -11,6 +11,7 @@ import { RabbitMqController } from './infrastructure/rabbitmq.crontroller';
 import { HttpController } from './infrastructure/http.controller';
 import { HistorialSubscriber } from './domain/historial.subscriber';
 import { RemunerationsModule } from '../remunerations/remunerations.module';
+import { DiscountsModule } from '../discounts/discounts.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { RemunerationsModule } from '../remunerations/remunerations.module';
     ClientHttpModule,
     MicroservicesModule,
     RemunerationsModule,
+    DiscountsModule,
     InfoModule,
   ],
   providers: [
