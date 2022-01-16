@@ -1,5 +1,6 @@
 import { HistorialEntity } from "src/modules/historial/domain/historial.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AffiliationEntity } from "src/modules/affiliations/domain/affiliation.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TypeDiscountEntity } from "../../../modules/type-discounts/domain/type-discount.entity";
 
 @Entity('p_discounts')
@@ -37,6 +38,12 @@ export class DiscountEntity {
   @ManyToOne(() => TypeDiscountEntity,
     typeDiscount => typeDiscount.discounts)
   public typeDiscount: TypeDiscountEntity;
+
+  @OneToMany(() => AffiliationEntity,
+    affiliation => affiliation.discount, {
+      cascade: true
+  })
+  public affiliations: AffiliationEntity[];
 
   @ManyToOne(() => HistorialEntity,
     historial => historial.discounts, {

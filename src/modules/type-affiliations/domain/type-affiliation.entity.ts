@@ -1,7 +1,13 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  PrimaryGeneratedColumn
+} from "typeorm";
 
-@Entity('p_type_sindicatos')
-export class TypeSindicatoEntity {
+@Entity('p_type_affiliations')
+export class TypeAffiliationEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
@@ -19,6 +25,9 @@ export class TypeSindicatoEntity {
 
   @Column('boolean', { default: false })
   public isPercent: boolean;
+
+  @Column('boolean', { default: true })
+  public isSync: boolean;
 
   @Column('boolean', { default: true })
   public state: boolean;

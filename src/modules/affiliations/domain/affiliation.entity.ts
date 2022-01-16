@@ -1,7 +1,8 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { DiscountEntity } from "../../../modules/discounts/domain/discount.entity";
 
-@Entity('p_sindicatos')
-export class SindicatoEntity {
+@Entity('p_afiliations')
+export class AffiliationEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
@@ -9,7 +10,7 @@ export class SindicatoEntity {
   public discountId: number;
 
   @Column()
-  public typeSindicatoId: number;
+  public infoTypeAffiliationId: number;
 
   @Column('boolean')
   public isPercent: boolean;
@@ -28,4 +29,10 @@ export class SindicatoEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => DiscountEntity,
+    discount => discount.affiliations, {
+      onDelete: 'CASCADE'    
+  }) 
+  public discount: DiscountEntity;
 }
