@@ -1,7 +1,8 @@
+import { InfoTypeAffiliationEntity } from "src/modules/info-type-affiliations/domain/info-type-affiliation.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { DiscountEntity } from "../../../modules/discounts/domain/discount.entity";
 
-@Entity('p_afiliations')
+@Entity('p_affiliations')
 export class AffiliationEntity {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -35,4 +36,8 @@ export class AffiliationEntity {
       onDelete: 'CASCADE'    
   }) 
   public discount: DiscountEntity;
+
+  @ManyToOne(() => InfoTypeAffiliationEntity,
+    infoTypeAffiliation => infoTypeAffiliation.affiliations)
+  public infoTypeAffiliation: InfoTypeAffiliationEntity;
 }

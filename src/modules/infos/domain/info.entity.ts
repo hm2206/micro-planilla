@@ -7,6 +7,8 @@ import { InfoTypeRemunerationEntity } from '../../../modules/info-type-remunerat
 import { InfoTypeDiscountEntity } from '../../../modules/info-type-discounts/domain/info-type-discount.entity';
 import { InfoTypeAportationEntity } from '../../../modules/info-type-aportations/domain/info-type-aportation.entity';
 import { HistorialEntity } from '../../../modules/historial/domain/historial.entity';
+import { InfoTypeAffiliationEntity } from '../../../modules/info-type-affiliations/domain/info-type-affiliation.entity';
+import { TypeObligationEntity } from '../../../modules/type-oblications/domain/type-obligation.entity';
 
 @Entity('p_infos')
 @Unique('p_infos', ['contractId', 'planillaId', 'pim'])
@@ -76,4 +78,12 @@ export class InfoEntity {
 
   @OneToMany(() => HistorialEntity, history => history.info)
   public historials: HistorialEntity[];
+
+  @OneToMany(() => InfoTypeAffiliationEntity,
+    typeAffiliation => typeAffiliation.info)
+  public typeAffiliations: InfoTypeAffiliationEntity[];
+
+  @OneToMany(() => TypeObligationEntity,
+    typeObligation => typeObligation.info)
+  public typeObligations: TypeObligationEntity[];
 }

@@ -1,9 +1,11 @@
+import { InfoTypeAffiliationEntity } from "../../../modules/info-type-affiliations/domain/info-type-affiliation.entity";
 import {
   Entity,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  OneToMany
 } from "typeorm";
 
 @Entity('p_type_affiliations')
@@ -37,4 +39,8 @@ export class TypeAffiliationEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @OneToMany(() => InfoTypeAffiliationEntity,
+    info => info.typeAffiliation)
+  public infos: InfoTypeAffiliationEntity[];
 }

@@ -1,4 +1,8 @@
-import { EntityRepository, Repository, SelectQueryBuilder } from "typeorm";
+import {
+  EntityRepository,
+  Repository,
+  SelectQueryBuilder
+} from "typeorm";
 import {
   paginate,
   Pagination,

@@ -1,6 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { TypeAffiliationEntity } from "../../../modules/type-affiliations/domain/type-affiliation.entity";
+import { InfoEntity } from "../../../modules/infos/domain/info.entity";
+import { AffiliationEntity } from "../../../modules/affiliations/domain/affiliation.entity";
 
 @Entity('p_info_type_affiliations')
+@Unique('u_info_type_affiliations', ['infoId', 'typeAffiliationId'])
 export class InfoTypeAffiliationEntity {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -31,4 +35,16 @@ export class InfoTypeAffiliationEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => InfoEntity,
+    info => info.typeAffiliations)
+  public info: InfoEntity;
+
+  @ManyToOne(() => TypeAffiliationEntity,
+    typeAffiliation => typeAffiliation.infos)
+  public typeAffiliation: TypeAffiliationEntity; 
+
+  @OneToMany(() => AffiliationEntity,
+    affiliation => affiliation.infoTypeAffiliation)
+  public affiliations: AffiliationEntity[];
 }

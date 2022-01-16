@@ -33,6 +33,12 @@ export class HttpController {
     return this.historialsService.findAportations(id, paginate);
   }
 
+  @Get(':id/affiliations')
+  public affiliations(@Param('id') id: number,
+    @Query() paginate: PaginateDto) {
+    return this.historialsService.findAffiliations(id, paginate);
+  }
+
   @Get(':id/resume')
   public resume(@Param('id') id: number) {
     return this.historialsService.findResume(id);

@@ -1,5 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TypeObligationMode } from "./type-obligation.enum";
+import { InfoEntity } from "../../../modules/infos/domain/info.entity";
+import { TypeDiscountEntity } from "../../../modules/type-discounts/domain/type-discount.entity";
 
 @Entity('p_type_obligations')
 export class TypeObligationEntity {
@@ -24,8 +26,11 @@ export class TypeObligationEntity {
   @Column()
   public bankId: number;
 
-  @Column()
+  @Column({ nullable: true })
   public numberOfAccount: string;
+
+  @Column('boolean')
+  public isCheck: boolean;
 
   @Column('boolean', { default: true })
   public isPercent: boolean;
@@ -36,20 +41,23 @@ export class TypeObligationEntity {
   @Column('decimal', { precision: 12, scale: 2 })
   public amount: number;
 
-  @Column({ default: true })
+  @Column('text')
   public observation: string;
 
-  @Column('date')
-  public startDate: Date;
-
-  @Column('date', { nullable: true })
-  public overDate: Date;
-
-  @Column('enum', { enum: TypeObligationMode, default: TypeObligationMode.DEFAULT })
+  @Column('enum', {
+    enum: TypeObligationMode,
+    default: TypeObligationMode.DEFAULT
+  })
   public mode: TypeObligationMode
+  
+  @Column('date', { nullable: true })
+  public terminationDate: Date;
+
+  @Column('boolean', { default: true })
+  public isOver: boolean;
 
   @Column('boolean', { default: false })
-  public bonification: boolean;
+  public isBonification: boolean;
 
   @Column()
   public orderBy: string;
@@ -62,4 +70,12 @@ export class TypeObligationEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => InfoEntity,
+    info => info.typeObligations)
+  public info: InfoEntity;
+
+  @ManyToOne(() => TypeDiscountEntity,
+    typeDiscount => typeDiscount.typeObligations)
+  public typeDiscount: TypeDiscountEntity;
 }

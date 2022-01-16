@@ -7,6 +7,12 @@ export class ObligationEntity {
   public id: number;
 
   @Column()
+  public typeObligationId: number;
+
+  @Column()
+  public discountId: number;
+
+  @Column()
   public documentTypeId: number;
 
   @Column()
@@ -15,8 +21,14 @@ export class ObligationEntity {
   @Column()
   public bankId: number;
 
-  @Column()
-  public numberOfAccount: number;
+  @Column({ nullable: true })
+  public numberOfAccount: string;
+
+  @Column('boolean')
+  public isCheck: boolean;
+
+  @Column('boolean', { default: true })
+  public isPercent: boolean;
 
   @Column('decimal', { precision: 12, scale: 2 })
   public percent: number;
@@ -24,17 +36,17 @@ export class ObligationEntity {
   @Column('decimal', { precision: 12, scale: 2 })
   public amount: number;
 
-  @Column({ default: true })
+  @Column('text')
   public observation: string;
 
-  @Column('boolean', { default: true })
-  public isPorcentaje: boolean;
-
-  @Column('enum', { enum: TypeObligationMode, default: TypeObligationMode.DEFAULT })
+  @Column('enum', {
+    enum: TypeObligationMode,
+    default: TypeObligationMode.DEFAULT
+  })
   public mode: TypeObligationMode
 
   @Column('boolean', { default: false })
-  public bonification: boolean;
+  public isBonification: boolean;
 
   @Column('boolean', { default: true })
   public state: boolean;

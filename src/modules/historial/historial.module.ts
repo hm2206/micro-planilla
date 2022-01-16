@@ -13,6 +13,7 @@ import { HistorialSubscriber } from './domain/historial.subscriber';
 import { RemunerationsModule } from '../remunerations/remunerations.module';
 import { DiscountsModule } from '../discounts/discounts.module';
 import { AportationsModule } from '../aportations/aportations.module';
+import { AffiliationsModule } from '../affiliations/affiliations.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AportationsModule } from '../aportations/aportations.module';
     RemunerationsModule,
     DiscountsModule,
     AportationsModule,
+    AffiliationsModule,
     InfoModule,
   ],
   providers: [
