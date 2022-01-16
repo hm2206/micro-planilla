@@ -39,6 +39,12 @@ export class HttpController {
     return this.historialsService.findAffiliations(id, paginate);
   }
 
+  @Get(':id/obligations')
+  public obligations(@Param('id') id: number,
+    @Query() paginate: PaginateDto) {
+    return this.historialsService.findObligations(id, paginate);
+  }
+
   @Get(':id/resume')
   public resume(@Param('id') id: number) {
     return this.historialsService.findResume(id);

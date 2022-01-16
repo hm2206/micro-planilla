@@ -14,6 +14,7 @@ import { RemunerationsModule } from '../remunerations/remunerations.module';
 import { DiscountsModule } from '../discounts/discounts.module';
 import { AportationsModule } from '../aportations/aportations.module';
 import { AffiliationsModule } from '../affiliations/affiliations.module';
+import { ObligationsModule } from '../obligations/obligations.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AffiliationsModule } from '../affiliations/affiliations.module';
     DiscountsModule,
     AportationsModule,
     AffiliationsModule,
+    ObligationsModule,
     InfoModule,
   ],
   providers: [

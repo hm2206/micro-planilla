@@ -2,6 +2,7 @@ import { HistorialEntity } from "src/modules/historial/domain/historial.entity";
 import { AffiliationEntity } from "src/modules/affiliations/domain/affiliation.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TypeDiscountEntity } from "../../../modules/type-discounts/domain/type-discount.entity";
+import { ObligationEntity } from "../../../modules/obligations/domain/obligation.entity";
 
 @Entity('p_discounts')
 export class DiscountEntity {
@@ -50,4 +51,8 @@ export class DiscountEntity {
       onDelete: 'CASCADE'
   })
   public historial: HistorialEntity;
+
+  @OneToMany(() => ObligationEntity,
+    obligation => obligation.discount)
+  public obligations: ObligationEntity[];
 }

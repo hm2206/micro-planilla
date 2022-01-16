@@ -1,5 +1,7 @@
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TypeObligationMode } from "../../../modules/type-oblications/domain/type-obligation.enum";
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { TypeObligationEntity } from "../../../modules/type-oblications/domain/type-obligation.entity";
+import { DiscountEntity } from "../../../modules/discounts/domain/discount.entity";
 
 @Entity('p_obligations')
 export class ObligationEntity {
@@ -56,4 +58,12 @@ export class ObligationEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => TypeObligationEntity,
+    typeObligation => typeObligation.obligations)
+  public typeObligation: TypeObligationEntity;
+
+  @ManyToOne(() => DiscountEntity,
+    discount => discount.obligations)
+  public discount: DiscountEntity;
 }
