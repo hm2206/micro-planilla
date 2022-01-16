@@ -25,7 +25,7 @@ export class InfoTypeAffiliationEntity {
   public isOver: boolean;
 
   @Column('boolean', { default: true })
-  public isSync: boolean;
+  public isEdit: boolean;
 
   @Column('boolean', { default: true })
   public state: boolean;

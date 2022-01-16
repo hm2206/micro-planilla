@@ -23,6 +23,9 @@ export class AffiliationEntity {
   public amount: number;
 
   @Column('boolean', { default: true })
+  public isEdit: boolean;
+
+  @Column('boolean', { default: true })
   public state: boolean;
 
   @CreateDateColumn()

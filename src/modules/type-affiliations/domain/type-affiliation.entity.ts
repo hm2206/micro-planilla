@@ -29,7 +29,7 @@ export class TypeAffiliationEntity {
   public isPercent: boolean;
 
   @Column('boolean', { default: true })
-  public isSync: boolean;
+  public isEdit: boolean;
 
   @Column('boolean', { default: true })
   public state: boolean;
