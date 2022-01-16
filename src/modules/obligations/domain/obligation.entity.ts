@@ -15,7 +15,7 @@ export class ObligationEntity {
   public discountId: number;
 
   @Column()
-  public documentTypeId: number;
+  public documentTypeId: string;
 
   @Column()
   public documentNumber: string;

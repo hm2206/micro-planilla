@@ -19,7 +19,7 @@ export class TypeObligationEntity {
   public typeDiscountId: number;
 
   @Column()
-  public documentTypeId: number;
+  public documentTypeId: string;
 
   @Column()
   public documentNumber: string;
