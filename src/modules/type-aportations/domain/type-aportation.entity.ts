@@ -1,5 +1,6 @@
-import { InfoTypeAportationEntity } from "../../../modules/info-type-aportations/domain/info-type-aportation.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { InfoTypeAportationEntity } from "../../../modules/info-type-aportations/domain/info-type-aportation.entity";
+import { AportationEntity } from "../../../modules/aportations/domain/aportation.entity";
 
 @Entity('p_type_aportations')
 export class TypeAportationEntity {
@@ -33,6 +34,11 @@ export class TypeAportationEntity {
   @UpdateDateColumn()
   public updatedAt: Date;
 
-  @OneToMany(() => InfoTypeAportationEntity, info => info.typeAportation)
+  @OneToMany(() => InfoTypeAportationEntity,
+    info => info.typeAportation)
   public infos: InfoTypeAportationEntity[];
+
+  @OneToMany(() => AportationEntity,
+    aportation => aportation.typeAportation)
+  public aportations: AportationEntity[];
 }

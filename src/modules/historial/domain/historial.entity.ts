@@ -6,6 +6,7 @@ import { AfpEntity } from '../../../modules/afps/domain/afp.entity';
 import { BankEntity } from '../../../modules/banks/domain/bank.entity';
 import { RemunerationEntity } from '../../../modules/remunerations/domain/remuneration.entity';
 import { DiscountEntity } from '../../../modules/discounts/domain/discount.entity';
+import { AportationEntity } from '../../../modules/aportations/domain/aportation.entity';
 
 @Entity('p_historials')
 @Unique('u_historials', ['cronogramaId', 'infoId'])
@@ -106,4 +107,10 @@ export class HistorialEntity {
       cascade: true
   })
   public discounts: DiscountEntity[];
+
+  @OneToMany(() => AportationEntity,
+    aportation => aportation.historial, {
+    cascade: true
+  })
+  public aportations: AportationEntity[];
 }

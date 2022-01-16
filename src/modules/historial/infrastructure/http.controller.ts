@@ -27,6 +27,12 @@ export class HttpController {
     return this.historialsService.findDiscounts(id, paginate);
   }
 
+  @Get(':id/aportations')
+  public aportations(@Param('id') id: number,
+    @Query() paginate: PaginateDto) {
+    return this.historialsService.findAportations(id, paginate);
+  }
+
   @Get(':id/resume')
   public resume(@Param('id') id: number) {
     return this.historialsService.findResume(id);

@@ -1,6 +1,8 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { HistorialEntity } from "../../../modules/historial/domain/historial.entity";
+import { TypeAportationEntity } from "../../../modules/type-aportations/domain/type-aportation.entity";
 
-@Entity('p_remunerations')
+@Entity('p_aportations')
 export class AportationEntity {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -9,19 +11,19 @@ export class AportationEntity {
   public historialId: number;
 
   @Column()
-  public typeRemunerationId: number;
+  public typeAportationId: number;
+
+  @Column('decimal', { precision: 12, scale: 2 })
+  public percent: number;
+
+  @Column('decimal', { precision: 12, scale: 2 })
+  public min: number;
+
+  @Column('decimal', { precision: 12, scale: 2 })
+  public default: number;
 
   @Column('decimal', { precision: 12, scale: 2 })
   public amount: number;
-
-  @Column('boolean')
-  public isBase: boolean;
-
-  @Column('boolean')
-  public isBonification: boolean;
-
-  @Column('boolean')
-  public isEdit: boolean;
 
   @Column('boolean', { default: true })
   public state: boolean;
@@ -31,4 +33,14 @@ export class AportationEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => HistorialEntity,
+    historial => historial.aportations, {
+      onDelete: 'CASCADE'
+  })
+  public historial: HistorialEntity;
+
+  @ManyToOne(() => TypeAportationEntity,
+    typeAportation => typeAportation.aportations)
+  public typeAportation: TypeAportationEntity;
 }

@@ -12,6 +12,7 @@ import { HttpController } from './infrastructure/http.controller';
 import { HistorialSubscriber } from './domain/historial.subscriber';
 import { RemunerationsModule } from '../remunerations/remunerations.module';
 import { DiscountsModule } from '../discounts/discounts.module';
+import { AportationsModule } from '../aportations/aportations.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DiscountsModule } from '../discounts/discounts.module';
     MicroservicesModule,
     RemunerationsModule,
     DiscountsModule,
+    AportationsModule,
     InfoModule,
   ],
   providers: [

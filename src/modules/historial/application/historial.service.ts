@@ -1,4 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { AportationsService } from 'src/modules/aportations/application/aportations.service';
 import { DiscountsService } from 'src/modules/discounts/application/discounts.service';
 import { RemunerationsService } from 'src/modules/remunerations/application/remunerations.service';
 import { PaginateDto } from '../../../common/dto/paginate.dto';
@@ -11,6 +12,7 @@ export class HistorialService {
   constructor(
     private remunerationsService: RemunerationsService,
     private discountsService: DiscountsService,
+    private aportationsService: AportationsService,
     private historialRepository: HistorialRepository) { }
 
   public async getHistorial(paginate: GetHistorialsDto) {
@@ -61,6 +63,14 @@ export class HistorialService {
     });
   }
 
+  public async findAportations(id: number, paginate: PaginateDto) {
+    const historial = await this.historialRepository.findOneOrFail(id);
+    return await this.aportationsService.getAportations({
+      ...paginate,
+      historialId: historial.id
+    })
+  }
+
   public async findResume(id: number) {
     const historial = await this.historialRepository.findOneOrFail(id);
     // obtener total bruto
@@ -71,11 +81,19 @@ export class HistorialService {
     const [calcIsBase] = await this.remunerationsService.getCalcIsBase({
       historialId: historial.id
     });
+    // obtener discounts
+    const [calcDiscount] = await this.discountsService.getCalcDiscount({
+      historialId: historial.id
+    });
+    // obtener aportations
+    const [calcAportation] = await this.aportationsService.getCalcAportation({
+      historialId: historial.id
+    });
     // calc
     const totalRemuneration = parseFloat(`${calcTotal?.amount || 0}`);
-    const totalBase = parseFloat(`${calcIsBase?.amount || 0}`)
-    const totalDiscount = parseFloat(`0.00`)
-    const totalAportation = parseFloat(`0.00`)
+    const totalBase = parseFloat(`${calcIsBase?.amount || 0}`);
+    const totalDiscount = parseFloat(`${calcDiscount?.amount || 0}`);
+    const totalAportation = parseFloat(`${calcAportation?.amount || 0}`);
     const totalNeto = totalRemuneration - totalDiscount;
     // response
     return {
