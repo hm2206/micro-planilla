@@ -53,7 +53,7 @@ export class CalcAfpsProcedured extends DatabaseProcedured {
         AND cro.remanente = 0
         WHERE his.cronogramaId = ${this.getParam('pCronogramaId')} 
         and rem.isBase = 1
-        GROUP BY his.id, af.primaPercent, dis.typeDiscountId, his.isPrimaSeguro, af.primaLimite) as afp_prima
+        GROUP BY dis.id, af.primaPercent, dis.typeDiscountId, his.isPrimaSeguro, af.primaLimit) as afp_prima
         SET u_dis.amount = afp_prima.calculo
         WHERE u_dis.id = afp_prima.id AND u_dis.isEdit = 0;
       `
@@ -75,7 +75,7 @@ export class CalcAfpsProcedured extends DatabaseProcedured {
         AND cro.remanente = 0
         WHERE his.cronogramaId = ${this.getParam('pCronogramaId')} 
         AND rem.isBase = 1
-        GROUP BY his.id, af.aportPercent, dis.typeDiscountId) as afp_aporte
+        GROUP BY dis.id, af.aportPercent, dis.typeDiscountId) as afp_aporte
         SET u_dis.amount = afp_aporte.calculo
         WHERE u_dis.id = afp_aporte.id 
         AND u_dis.isEdit = 0;
@@ -93,10 +93,10 @@ export class CalcAfpsProcedured extends DatabaseProcedured {
         AND af.cronogramaId = ${this.getParam('pCronogramaId')}
         INNER JOIN p_remunerations as rem ON rem.historialId = his.id
         INNER JOIN p_discounts as dis ON dis.typeDiscountId = af.typeDiscountId 
-        AND des.historialId = his.id
+        AND dis.historialId = his.id
         WHERE his.cronogramaId = ${this.getParam('pCronogramaId')} 
         AND rem.isBase = 1
-        GROUP BY des.id, af.percent) as type_afp
+        GROUP BY dis.id, af.percent) as type_afp
         SET u_dis.amount = type_afp.calculo
         WHERE u_dis.id = type_afp.id 
         AND u_dis.isEdit = 0;

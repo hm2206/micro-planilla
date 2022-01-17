@@ -38,7 +38,7 @@ export class CalcConfigCronogramaProcedured extends DatabaseProcedured {
   private queryAfps() {
     return (
       `
-        INSERT INTO p_config_afps(afpId, cronogramaId, typeDiscountId, percent, aportDiscountId, aport,
+        INSERT INTO p_config_afps(afpId, cronogramaId, typeDiscountId, percent, aportDiscountId, aportPercent,
         primaDiscountId, primaPercent, primaLimit)
         SELECT af.id, ${this.getParam('pCronogramaId')}, af.typeDiscountId, 
         af.percent, af.aportDiscountId, af.aportPercent,
@@ -68,7 +68,7 @@ export class CalcConfigCronogramaProcedured extends DatabaseProcedured {
         FROM p_type_pays as type
         INNER JOIN p_cronogramas as cro ON cro.planillaId = type.planillaId
         WHERE NOT EXISTS
-        (SELECT null FROM p_config_pays as con WHERE con.cronogramaId = ${this.getParam('pCronogramaId')} AND con.type_pago_id = type.id)
+        (SELECT null FROM p_config_pays as con WHERE con.cronogramaId = ${this.getParam('pCronogramaId')} AND con.typePayId = type.id)
         AND cro.id = ${this.getParam('pCronogramaId')} AND type.state = 1;
         UPDATE p_config_pays as con
         INNER JOIN p_cronogramas as cro ON cro.id = con.cronogramaId

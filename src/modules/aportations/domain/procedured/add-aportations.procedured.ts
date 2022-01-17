@@ -75,15 +75,18 @@ export class AddAportationsProcedured extends DatabaseProcedured {
         INNER JOIN (SELECT apo.id, (con.uit * con.percent) / 100 as amountLimit,
         (SELECT sum(rem.amount) FROM p_remunerations as rem 
         WHERE rem.historialId = his.id and rem.isBase = 1) as base
-        FROM p_config_aportations as con INNER JOIN p_historials as his 
-        ON his.cargoId = con.cargoId AND his.isPay = 1
+        FROM p_config_aportation_max as con 
+        INNER JOIN p_contracts as cont ON cont.typeCategoryId = con.typeCategoryId
+        INNER JOIN p_infos as inf ON inf.contractId = cont.id
+        INNER JOIN p_historials as his ON his.infoId = inf.id
+        AND his.isPay = 1
         INNER JOIN p_cronogramas as cro ON cro.id = his.cronogramaId 
         and con.\`year\` = cro.\`year\`
         INNER JOIN p_aportations as apo ON apo.historialId = his.id 
         AND apo.typeAportationId = con.typeAportationId
         WHERE his.cronogramaId = ${this.getParam('pCronogramaId')}
         HAVING base > amountLimit) as calc on calc.id = a.id
-        SET a.monto = (calc.amountLimit * a.percent) / 100;
+        SET a.amount = (calc.amountLimit * a.percent) / 100;
       `
     )
   }

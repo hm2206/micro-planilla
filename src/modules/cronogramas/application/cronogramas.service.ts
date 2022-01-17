@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { PaginateDto } from 'src/common/dto/paginate.dto';
 import { HistorialService } from 'src/modules/historial/application/historial.service';
 import { CronogramaRepository } from '../domain/cronograma.repository';
@@ -52,5 +52,14 @@ export class CronogramasService {
       ...paginate,
       cronogramaId: cronograma.id
     })
+  }
+
+  public async findDelete(id: number) {
+    try {
+      await this.cronogramaRepository.delete(id);
+      return { process: true }
+    } catch (error) {
+      throw new InternalServerErrorException;
+    }
   }
 }

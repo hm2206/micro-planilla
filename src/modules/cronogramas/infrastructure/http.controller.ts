@@ -1,11 +1,11 @@
-import { Body, Controller, Get, Param, Post, Query, StreamableFile  } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query  } from '@nestjs/common';
 import { CreateCronogramaService } from '../application/create-cronograma.service';
 import { ProcessCronogramasService } from '../application/process-cronogramas.service';
 import { ReportGeneralService } from '../application/report-general.service';
 import { SendBoletaCronogramas } from '../application/send-boleta-cronogramas.service';
 import { CreateCronogramaDto, CreateCronogramaWithAdicionalDto } from '../application/dtos/create-cronogram.dto';
 import { ChangeCargoId } from '../application/dtos/change-cargo.dto';
-import { FilterTypeObject, GetCronogramaDto } from '../application/dtos/filter-type.dto';
+import { GetCronogramaDto } from '../application/dtos/filter-type.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CronogramasService } from '../application/cronogramas.service';
 import { PaginateDto } from 'src/common/dto/paginate.dto';
@@ -78,5 +78,10 @@ export class HttpController {
   @Post(':id/sendMail')
   public sendMail(@Param('id') id: number) {
     return this.sendBoletaCronogramas.sendMail(id);
+  }
+
+  @Delete(':id')
+  public delete(@Param('id') id: number) {
+    return this.cronogramasService.findDelete(id);
   }
 }

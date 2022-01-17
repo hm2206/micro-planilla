@@ -12,11 +12,11 @@ import { AddRemunerationsProcedured } from '../modules/remunerations/domain/proc
 import { AddDiscountsProcedured } from '../modules/discounts/domain/procedured/add-discounts.procedured';
 import { AddAportationsProcedured } from '../modules/aportations/domain/procedured/add-aportations.procedured';
 import { CalcRemunerationsProcedured } from '../modules/remunerations/domain/procedured/calc-remuneration.procedured';
-import { CalcAfpsProcedured } from 'src/modules/discounts/domain/procedured/calc-afps.procedured';
-import { CalcConfigCronogramaProcedured } from 'src/modules/cronogramas/domain/procedured/calc-config-cronograma.procedured';
-import { CalcObligationsProcedured } from 'src/modules/obligations/domain/procedured/calc-obligations.procedured';
-import { CalcAffiliationsProcedured } from 'src/modules/affiliations/domain/procedured/calc-affiliations.procedured';
-import { CalcDiscountsProcedured } from 'src/modules/discounts/domain/procedured/calc-discounts.procedured';
+import { CalcAfpsProcedured } from '../modules/afps/domain/procedured/calc-afps.procedured';
+import { CalcConfigCronogramaProcedured } from '../modules/cronogramas/domain/procedured/calc-config-cronograma.procedured';
+import { CalcObligationsProcedured } from '../modules/obligations/domain/procedured/calc-obligations.procedured';
+import { CalcAffiliationsProcedured } from '../modules/affiliations/domain/procedured/calc-affiliations.procedured';
+import { CalcDiscountsProcedured } from '../modules/discounts/domain/procedured/calc-discounts.procedured';
 
 @Injectable()
 export class Seeder {

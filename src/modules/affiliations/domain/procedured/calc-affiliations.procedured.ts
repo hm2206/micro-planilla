@@ -52,7 +52,7 @@ export class CalcAffiliationsProcedured extends DatabaseProcedured {
     return (
       `
         UPDATE p_info_type_affiliations as it
-        SET it.state = 0, it.updatedAt = CURRENT_TIMESTAMP()
+        SET it.state = 0
         AND it.state = 1
         AND it.isOver = 1
         AND it.terminationDate <= DATE(NOW()); 

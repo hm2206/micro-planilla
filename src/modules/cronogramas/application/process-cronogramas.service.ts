@@ -3,7 +3,7 @@ import { CronogramaRepository } from '../domain/cronograma.repository';
 import { CalcConfigCronogramaProcedured } from '../domain/procedured/calc-config-cronograma.procedured';
 import { AddAportationsProcedured } from '../../aportations/domain/procedured/add-aportations.procedured';
 import { CalcRemunerationsProcedured } from '../../remunerations/domain/procedured/calc-remuneration.procedured';
-import { CalcAfpsProcedured } from '../../../modules/discounts/domain/procedured/calc-afps.procedured';
+import { CalcAfpsProcedured } from '../../afps/domain/procedured/calc-afps.procedured';
 import { FilterTypeObject } from '../application/dtos/filter-type.dto';
 import { ProcessHistorialService } from '../../historial/application/process-historial.service';
 import { CalcObligationsProcedured } from '../../../modules/obligations/domain/procedured/calc-obligations.procedured';
@@ -24,6 +24,7 @@ export class ProcessCronogramasService {
       await (new CalcAfpsProcedured).call(id);
       await (new CalcDiscountsProcedured).call(id);
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException("No se pudó procesar el cronograma!");
     }
   }

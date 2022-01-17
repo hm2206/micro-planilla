@@ -52,7 +52,7 @@ export class CalcObligationsProcedured extends DatabaseProcedured {
     return (
       `
         UPDATE p_type_obligations as t
-        SET t.state = 0, t.updatedAt = CURRENT_TIMESTAMP()
+        SET t.state = 0
         AND t.state = 1
         AND t.isOver = 1
         AND t.terminationDate <= DATE(NOW());
@@ -138,7 +138,7 @@ export class CalcObligationsProcedured extends DatabaseProcedured {
       `
         UPDATE p_obligations as obl
         INNER JOIN p_discounts as dis ON dis.id = obl.discountId
-        INNER JOIN historials as his ON his.id = dis.historialId
+        INNER JOIN p_historials as his ON his.id = dis.historialId
         SET obl.amount = 0
         WHERE his.cronogramaId = ${this.getParam('pCronogramaId')}
         AND his.isPay = 0;
