@@ -64,6 +64,8 @@ export class ObligationEntity {
   public typeObligation: TypeObligationEntity;
 
   @ManyToOne(() => DiscountEntity,
-    discount => discount.obligations)
+    discount => discount.obligations, {
+      onDelete: 'CASCADE'    
+  })
   public discount: DiscountEntity;
 }

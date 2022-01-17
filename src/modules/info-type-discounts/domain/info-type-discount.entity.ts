@@ -1,8 +1,9 @@
 import { InfoEntity } from "../../../modules/infos/domain/info.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { TypeDiscountEntity } from "../../../modules/type-discounts/domain/type-discount.entity";
 
 @Entity('p_info_type_discounts')
+@Unique('u_info_type_discounts', ['infoId', 'typeDiscountId'])
 export class InfoTypeDiscountEntity {
   @PrimaryGeneratedColumn()
   public id: number;

@@ -33,6 +33,7 @@ export class CalcDiscountsProcedured extends DatabaseProcedured {
         ${this.queryVerifyIsEditAffiliation()}
         ${this.queryCalc()}
         ${this.queryCalcIsNotPay()}
+        ${this.querySync()}
       `
     )
   }
@@ -91,6 +92,23 @@ export class CalcDiscountsProcedured extends DatabaseProcedured {
         SET amount = 0
         WHERE his.cronogramaId = ${this.getParam('pCronogramaId')}
         AND his.isPay = 0;
+      `
+    )
+  }
+
+  private querySync() {
+    return (
+      `
+        UPDATE p_discounts as dis 
+        INNER JOIN p_historials as his ON his.id = dis.historialId
+        INNER JOIN p_cronogramas as cro ON cro.id = his.cronogramaId
+        AND cro.remanente = 0
+        INNER JOIN p_info_type_discounts as it
+        ON it.infoId = his.infoId 
+        AND it.typeDiscountId = dis.typeDiscountId
+        SET it.amount = dis.amount
+        WHERE cro.id = ${this.getParam('pCronogramaId')}
+        AND dis.isSync = 1;
       `
     )
   }

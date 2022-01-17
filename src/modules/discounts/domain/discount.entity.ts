@@ -21,13 +21,10 @@ export class DiscountEntity {
   @Column('boolean')
   public isEdit: boolean;
 
-  @Column('boolean')
-  public isModify: boolean;
-
   @Column('boolean', { default: false })
   public isSync: boolean;
 
-  @Column('boolean')
+  @Column('boolean', { default: true })
   public state: boolean;
 
   @CreateDateColumn()
@@ -53,6 +50,8 @@ export class DiscountEntity {
   public historial: HistorialEntity;
 
   @OneToMany(() => ObligationEntity,
-    obligation => obligation.discount)
+    obligation => obligation.discount, {
+      cascade: true
+  })
   public obligations: ObligationEntity[];
 }

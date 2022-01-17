@@ -34,6 +34,7 @@ export class CalcAffiliationsProcedured extends DatabaseProcedured {
         ${this.queryAdd()}
         ${this.queryCalc()}
         ${this.queryCalcIsNotPay()}
+        ${this.querySync()}
       `
     )
   }
@@ -44,6 +45,10 @@ export class CalcAffiliationsProcedured extends DatabaseProcedured {
         UPDATE p_info_type_affiliations as it
         SET isOver = IF(it.terminationDate, 1, 0)
         WHERE it.state = 1;
+
+        UPDATE p_info_type_affiliations as it
+        SET it.state = 1
+        WHERE it.isOver = 0;
       `
     )
   }
@@ -53,7 +58,7 @@ export class CalcAffiliationsProcedured extends DatabaseProcedured {
       `
         UPDATE p_info_type_affiliations as it
         SET it.state = 0
-        AND it.state = 1
+        WHERE it.state = 1
         AND it.isOver = 1
         AND it.terminationDate <= DATE(NOW()); 
       `
@@ -114,6 +119,22 @@ export class CalcAffiliationsProcedured extends DatabaseProcedured {
         SET af.amount = 0
         WHERE his.cronogramaId = ${this.getParam('pCronogramaId')}
         AND his.isPay = 0;
+      `
+    )
+  }
+
+  private querySync() {
+    return (
+      `
+        UPDATE p_info_type_affiliations as  it
+        INNER JOIN p_affiliations as af 
+        ON af.infoTypeAffiliationId = it.id
+        INNER JOIN p_discounts as dis ON dis.id = af.discountId
+        INNER JOIN p_historials as his ON his.id = dis.historialId
+        INNER JOIN p_cronogramas as cro ON cro.id = his.cronogramaId
+        AND cro.remanente = 0
+        SET it.amount = af.amount
+        WHERE cro.id = ${this.getParam('pCronogramaId')};
       `
     )
   }

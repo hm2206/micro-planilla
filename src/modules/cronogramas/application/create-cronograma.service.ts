@@ -44,6 +44,7 @@ export class CreateCronogramaService {
         return cronograma
       }
     } catch (err) {
+      console.log(err);
       throw new InternalServerErrorException(err.message);
     }
   }

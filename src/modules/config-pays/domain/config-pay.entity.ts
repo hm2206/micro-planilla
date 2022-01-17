@@ -1,5 +1,6 @@
-import { TypePayModeEnum } from "src/modules/type-pays/domain/type-pay.enum";
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { CronogramaEntity } from "src/modules/cronogramas/domain/cronograma.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { TypePayModeEnum } from "../../../modules/type-pays/domain/type-pay.enum";
 
 @Entity('p_config_pays')
 export class ConfigPayEntity {
@@ -38,4 +39,10 @@ export class ConfigPayEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => CronogramaEntity,
+    cronograma => cronograma.configPays, {
+      onDelete: 'CASCADE'
+  })
+  public cronograma: CronogramaEntity;
 }

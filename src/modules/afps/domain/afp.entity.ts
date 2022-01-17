@@ -1,6 +1,7 @@
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { HistorialEntity } from "../../../modules/historial/domain/historial.entity";
 import { WorkEntity } from "../../../modules/works/domain/work.entity";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ConfigAfpEntity } from "../../../modules/config-afps/domain/config-afp.entity";
 
 @Entity('p_afps')
 export class AfpEntity {
@@ -57,4 +58,8 @@ export class AfpEntity {
 
   @OneToMany(() => HistorialEntity, history => history.afp)
   public historials: HistorialEntity[];
+
+  @OneToMany(() => ConfigAfpEntity,
+    configAfp => configAfp.afp)
+  public configAfps: ConfigAfpEntity[];
 }

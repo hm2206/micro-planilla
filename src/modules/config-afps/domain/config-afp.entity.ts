@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AfpEntity } from "../../../modules/afps/domain/afp.entity";
+import { CronogramaEntity } from "../../../modules/cronogramas/domain/cronograma.entity";
 
 @Entity('p_config_afps') 
 export class ConfigAfpEntity {
@@ -40,4 +42,14 @@ export class ConfigAfpEntity {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @ManyToOne(() => AfpEntity,
+    afp => afp.configAfps)
+  public afp: AfpEntity;
+
+  @ManyToOne(() => CronogramaEntity,
+    cronograma => cronograma.configAfps, {
+      onDelete: 'CASCADE'
+  })
+  public cronograma: CronogramaEntity;
 }

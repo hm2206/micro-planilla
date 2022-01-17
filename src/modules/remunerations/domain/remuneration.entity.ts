@@ -25,7 +25,7 @@ export class RemunerationEntity {
   @Column('boolean')
   public isEdit: boolean;
 
-  @Column('boolean')
+  @Column('boolean', { default: true })
   public state: boolean;
 
   @CreateDateColumn()

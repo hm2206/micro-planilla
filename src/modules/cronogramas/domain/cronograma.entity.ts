@@ -1,6 +1,8 @@
-import { PlanillaEntity } from '../../../modules/planillas/domain/planilla.entity';
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
 import { HistorialEntity } from '../../../modules/historial/domain/historial.entity';
+import { PlanillaEntity } from '../../../modules/planillas/domain/planilla.entity';
+import { ConfigAfpEntity } from '../../../modules/config-afps/domain/config-afp.entity';
+import { ConfigPayEntity } from '../../../modules/config-pays/domain/config-pay.entity';
 
 @Entity('p_cronogramas')
 @Unique('u_cronogramas', ['year', 'month', 'campusId', 'planillaId', 'adicional'])
@@ -66,6 +68,15 @@ export class CronogramaEntity {
     cascade: true
   })
   public historials: HistorialEntity[];
-
   public historialsCount!: number;
+
+  @OneToMany(() => ConfigAfpEntity,
+    configAfp => configAfp.cronograma, {
+      cascade: true
+  })
+  public configAfps: ConfigAfpEntity[];
+
+  @OneToMany(() => ConfigPayEntity,
+    configPay => configPay.cronograma)
+  public configPays: ConfigPayEntity[];
 }

@@ -35,6 +35,7 @@ export class CalcObligationsProcedured extends DatabaseProcedured {
         ${this.queryCalcWithoutLawAndWithBonification()}
         ${this.queryCalcWithoutLawAndWithoutBonification()}
         ${this.queryCalcIsNotPay()}
+        ${this.querySyncConfig()}
       `
     )
   }
@@ -44,6 +45,9 @@ export class CalcObligationsProcedured extends DatabaseProcedured {
       `
         UPDATE p_type_obligations as t
         set t.isOver = IF(t.terminationDate, 1, 0);
+        UPDATE p_type_obligations as t
+        set t.state = 1
+        WHERE t.isOver = 0;
       `
     )
   }
@@ -53,7 +57,7 @@ export class CalcObligationsProcedured extends DatabaseProcedured {
       `
         UPDATE p_type_obligations as t
         SET t.state = 0
-        AND t.state = 1
+        WHERE t.state = 1
         AND t.isOver = 1
         AND t.terminationDate <= DATE(NOW());
       `
@@ -142,6 +146,31 @@ export class CalcObligationsProcedured extends DatabaseProcedured {
         SET obl.amount = 0
         WHERE his.cronogramaId = ${this.getParam('pCronogramaId')}
         AND his.isPay = 0;
+      `
+    )
+  }
+
+  private querySyncConfig() {
+    return (
+      `
+        UPDATE p_type_obligations as type
+        INNER JOIN p_obligations as obl ON obl.typeObligationId = type.id
+        INNER JOIN p_discounts as dis ON dis.id = obl.discountId
+        INNER JOIN p_historials as his ON his.id = dis.historialId 
+        INNER JOIN p_cronogramas as cro ON cro.id = his.cronogramaId
+        AND cro.remanente = 0
+        SET type.documentTypeId = obl.documentTypeId,
+        type.documentNumber = obl.documentNumber,
+        type.bankId = obl.bankId,
+        type.isCheck = obl.isCheck,
+        type.numberOfAccount = obl.numberOfAccount,
+        type.isPercent = obl.isPercent,
+        type.percent = obl.percent,
+        type.amount = obl.amount,
+        type.mode = obl.mode,
+        type.isBonification = obl.isBonification,
+        type.observation = obl.observation
+        WHERE his.cronogramaId = ${this.getParam('pCronogramaId')};
       `
     )
   }
