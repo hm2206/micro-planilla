@@ -34,6 +34,11 @@ export class DatabaseProcedured implements BaseProcedured {
     return [];
   }
 
+  public getParam(key: string): string {
+    const result = this.params().find(p => p.name == key);
+    return result?.name || "";
+  }
+
   public query() {
     return ``;
   }

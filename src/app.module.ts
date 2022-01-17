@@ -34,6 +34,9 @@ import { DiscountsModule } from './modules/discounts/discounts.module';
 import { AportationsModule } from './modules/aportations/aportations.module';
 import { AffiliationsModule } from './modules/affiliations/affiliations.module';
 import { ObligationsModule } from './modules/obligations/obligations.module';
+import { ConfigAfpsModule } from './modules/config-afps/config-afps.module';
+import { ConfigPaysModule } from './modules/config-pays/config-pays.module';
+import { TypePaysModule } from './modules/type-pays/type-pays.module';
 
 @Module({
   imports: [
@@ -71,6 +74,9 @@ import { ObligationsModule } from './modules/obligations/obligations.module';
     AportationsModule,
     AffiliationsModule,
     ObligationsModule,
+    ConfigAfpsModule,
+    ConfigPaysModule,
+    TypePaysModule,
   ],
 })
 export class AppModule {}

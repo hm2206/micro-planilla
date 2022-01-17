@@ -3,8 +3,8 @@ import { AddHistorialsProcedured } from 'src/modules/historial/domain/procedured
 import { CreateCronogramaDto, CreateCronogramaWithAdicionalDto } from '../application/dtos/create-cronogram.dto';
 import { CronogramaEntity } from '../domain/cronograma.entity';
 import { CronogramaRepository } from '../domain/cronograma.repository';
-import { AddDescuentosProcedured } from '../domain/procedured/add-descuentos.procedured';
-import { AddRemuneracionesProcedured } from '../domain/procedured/add-remuneraciones.procedured';
+import { AddDiscountsProcedured } from '../../discounts/domain/procedured/add-discounts.procedured';
+import { AddRemunerationsProcedured } from '../../remunerations/domain/procedured/add-remunerations.procedured';
 import { CopyCronogramaProcedured } from '../domain/procedured/copy-cronograma.procedured';
 import { ProcessCronogramasService } from './process-cronogramas.service';
 
@@ -38,8 +38,8 @@ export class CreateCronogramaService {
         const cronograma = await this.cronogramaRepository.save(newCronograma);
         // processar datos
         await (new AddHistorialsProcedured).call(cronograma.id);
-        await (new AddRemuneracionesProcedured).call(cronograma.id);
-        await (new AddDescuentosProcedured).call(cronograma.id);
+        await (new AddRemunerationsProcedured).call(cronograma.id);
+        await (new AddDiscountsProcedured).call(cronograma.id);
         await this.processCronogramasService.processing(cronograma.id);
         return cronograma
       }
