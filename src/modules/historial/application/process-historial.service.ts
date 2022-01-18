@@ -1,15 +1,13 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { HistorialRepository } from '../domain/historial.repository';
 import { FilterTypeObject, UpdateHistorial } from '../domain/historial.dto';
-import { ProcessInfosService } from '../../infos/application/process-infos.service';
 import { InfosService } from '../../../modules/infos/application/infos.service';
 import { AddHistorialIdsProcedured } from '../domain/procedured/add-historial-ids.procedured';
 
 @Injectable()
 export class ProcessHistorialService {
   constructor(private historialRepository: HistorialRepository,
-    private infosService: InfosService,
-    private processInfosService: ProcessInfosService) {}
+    private infosService: InfosService) {}
 
   public async createMassive(cronogramaId: number, infoIds: number[]) {
     await (new AddHistorialIdsProcedured()).call(cronogramaId, infoIds);

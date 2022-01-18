@@ -28,7 +28,7 @@ export class AddHistorialIdsProcedured extends DatabaseProcedured {
   }
 
   public call(cronogramaId: number, pHistorialIds: any[]): Promise<any> {
-    return super.call(cronogramaId, pHistorialIds.join(', '));
+    return super.call(cronogramaId, `"${pHistorialIds.join(', ')}"`);
   }
 
   public query() {

@@ -18,7 +18,7 @@ export class ContractsService {
 
   public async getContracts(paginate: GetContractDto) {
     const queryBuilder = this.contractRepository.createQueryBuilder('c')
-      .innerJoinAndSelect('c.work', 'w')
+      .innerJoin('c.work', 'w')
       .innerJoinAndSelect('c.dependency', 'd')
       .innerJoinAndSelect('c.profile', 'p')
       .innerJoinAndSelect('c.typeCategory', 't')
@@ -32,7 +32,22 @@ export class ContractsService {
       queryBuilder.andWhere(`c.state = :state`, { state });
     }
     // response
-    return await this.contractRepository.paginate(queryBuilder, paginate);
+    const result = await this.contractRepository.paginate(queryBuilder, paginate);
+    // obtener works
+    const workIds: number[] = result.items.pluck('workId').toArray();
+    const works = await this.worksService.getWorks({
+      page: 1,
+      limit: paginate.limit,
+      ids: workIds
+    });
+    // setting
+    for (const item of result.items) {
+      item.work = works.items
+        .where('id', item.workId)
+        .first() as any;
+    }
+    // response
+    return result;
   }
 
   public async createContract(createContractDto: CreateContractDto) {

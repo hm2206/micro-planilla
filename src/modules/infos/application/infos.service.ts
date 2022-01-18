@@ -1,8 +1,10 @@
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { PaginateDto } from "src/common/dto/paginate.dto";
+import { ContractsService } from "src/modules/contracts/application/contracts.service";
 import { InfoTypeAportationsService } from "src/modules/info-type-aportations/application/info-type-aportations.service";
 import { InfoTypeDiscountsService } from "src/modules/info-type-discounts/application/info-type-discounts.service";
 import { InfoTypeRemunerationsService } from "src/modules/info-type-remunerations/application/info-type-remunerations.service";
+import { InfoEntity } from "../domain/info.entity";
 import { InfoRepository } from '../domain/info.repository';
 import { CreateInfoDto } from "./dtos/create-info.dto";
 import { EditInfoDto } from "./dtos/edit-info.dto";
@@ -11,6 +13,7 @@ import { GetInfosDto } from './dtos/filtros-infos.dto';
 @Injectable()
 export class InfosService {
   constructor(
+    private contractsService: ContractsService,
     private infoTypeDiscountsService: InfoTypeDiscountsService,
     private infoTypeRemunerationsService: InfoTypeRemunerationsService,
     private infoTypeAportationsService: InfoTypeAportationsService,
@@ -18,19 +21,54 @@ export class InfosService {
 
   public async getInfos(filters: GetInfosDto) {
     const queryBuilder = this.infoRepository.createQueryBuilder('i')
-      .innerJoinAndSelect('i.contract', 'c')
       .innerJoinAndSelect('i.bank', 'b')
       .innerJoinAndSelect('i.planilla', 'pla')
-      .innerJoinAndSelect('i.pim', 'p');
+      .innerJoinAndSelect('i.pim', 'p')
+      .innerJoin('i.contract', 'c')
+      .innerJoin('c.work', 'w')
+      .orderBy('w.orderBy', 'ASC');
     if (filters.contractId) queryBuilder.andWhere('i.contractId = :contractId', filters);
     if (filters.planillaId) queryBuilder.andWhere('i.planillaId = :planillaId', filters);
     if (filters.ids) queryBuilder.andWhereInIds(filters.ids);
+    if (filters.querySearch) queryBuilder.andWhere(`w.orderBy like '%${filters.querySearch}%'`);
     if (typeof filters.state != 'undefined') {
       const state = JSON.parse(`${filters.state}`);
       queryBuilder.andWhere(`i.state = ${state}`);
     }
+    // except
+    if (filters?.exceptCronogramaId) {
+      queryBuilder.andWhere((query) => {
+        const sql = query.subQuery()
+          .select('h.id')
+          .from(InfoEntity, 'inf')
+          .innerJoin('inf.historials', 'h')
+          .where(`h.cronogramaId = ${filters.exceptCronogramaId}`)
+          .andWhere('inf.id = i.id')
+          .getSql();
+        // query result
+        return `
+          NOT EXISTS ${sql}
+        `;
+      });
+    }
     // response
-    return await this.infoRepository.paginate(queryBuilder, filters);
+    const result = await this.infoRepository.paginate(queryBuilder, filters);
+    // obtener contracts
+    const contractIds: number[] = result.items
+      .pluck('contractId').toArray()
+    const contracts = await this.contractsService.getContracts({
+      limit: filters.limit,
+      page: filters.page,
+      ids: contractIds
+    })
+    // settings
+    for (const item of result.items) {
+      item.contract = contracts.items
+        .where('id', item.contractId)
+        .first();
+    }
+    // response
+    return result;
   }
 
   public async createInfo(createInfo: CreateInfoDto) { 

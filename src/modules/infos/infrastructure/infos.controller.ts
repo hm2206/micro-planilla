@@ -3,6 +3,7 @@ import { ApiTags } from "@nestjs/swagger";
 import { PaginateDto } from "src/common/dto/paginate.dto";
 import { CreateInfoDto } from "../application/dtos/create-info.dto";
 import { EditInfoDto } from "../application/dtos/edit-info.dto";
+import { GetInfosDto } from "../application/dtos/filtros-infos.dto";
 import { InfosService } from "../application/infos.service";
 
 @Controller('infos')
@@ -10,6 +11,11 @@ import { InfosService } from "../application/infos.service";
 export class InfosController {
   constructor(private infosService: InfosService) { }
   
+  @Get()
+  public index(@Query() filter: GetInfosDto) {
+    return this.infosService.getInfos(filter);
+  }
+
   @Post()
   public store(@Body() createInfoDto: CreateInfoDto) {
     return this.infosService.createInfo(createInfoDto);

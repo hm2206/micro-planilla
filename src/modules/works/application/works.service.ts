@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, InternalServerErrorException } from "@nestjs/common";
 import { PaginateDto } from "../../../common/dto/paginate.dto";
 import { AuthHttpService } from "../../../client-http/application/auth-http.service";
 import { WorkEntity } from "../domain/work.entity";
@@ -11,6 +11,7 @@ import { GetContractsToWorkDto } from "./dtos/filter-work.dto";
 @Injectable()
 export class WorksService {
   constructor(
+    @Inject(forwardRef(() => ContractsService))
     private contractsService: ContractsService,
     private authHttpService: AuthHttpService,
     private workRepository: WorkRepository) { }

@@ -3,6 +3,7 @@ import { IsBooleanString, IsNumber, IsNumberString, IsOptional } from 'class-val
 import { PaginateDto } from 'src/common/dto/paginate.dto';
 
 export class FilterTypeObject {
+  @ApiPropertyOptional()
   @IsOptional()
   @IsNumber()
   public pimId?: number
@@ -38,6 +39,7 @@ export class GetCronogramaDto extends PaginateDto {
 }
 
 export class FilterRemoveHistorialDto extends FilterTypeObject {
+  @ApiPropertyOptional({ isArray: true, type: Number })
   @IsOptional()
   @IsNumber({}, { each: true })
   public ids?: number[]

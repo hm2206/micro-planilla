@@ -4,32 +4,31 @@ import { AportationsService } from '../../../modules/aportations/application/apo
 import { DiscountsService } from '../../../modules/discounts/application/discounts.service';
 import { ObligationsService } from '../../../modules/obligations/application/obligations.service';
 import { RemunerationsService } from '../../../modules/remunerations/application/remunerations.service';
-import { WorksService } from '../../../modules/works/application/works.service';
 import { PaginateDto } from '../../../common/dto/paginate.dto';
 import { HistorialRepository } from '../domain/historial.repository';
 import { GetHistorialsDto } from './dtos/filter-historials.dto';
 import { UpdateHistorialDto } from './dtos/update-historial.dto';
+import { InfosService } from '../../../modules/infos/application/infos.service';
 
 @Injectable()
 export class HistorialService {
   constructor(
+    private infosService: InfosService,
     private remunerationsService: RemunerationsService,
     private discountsService: DiscountsService,
     private aportationsService: AportationsService,
     private affiliationsService: AffiliationsService,
     private obligationsService: ObligationsService,
-    private worksService: WorksService,
     private historialRepository: HistorialRepository) { }
 
   public async getHistorial(paginate: GetHistorialsDto) {
     const queryBuilder = this.historialRepository.createQueryBuilder('his')
       .innerJoinAndSelect('his.cronograma', 'cro')
-      .innerJoinAndSelect('his.info', 'inf')
       .innerJoinAndSelect('his.pim', 'pim')
       .innerJoinAndSelect('his.afp', 'afp')
       .innerJoinAndSelect('his.bank', 'bank')
-      .innerJoinAndSelect('inf.contract', 'cont')
-      .innerJoinAndSelect('cont.typeCategory', 'cat')
+      .innerJoin('his.info', 'inf')
+      .innerJoin('inf.contract', 'cont')
       .innerJoin('cont.work', 'w')
       .orderBy('w.orderBy', 'ASC')
     if (paginate.cronogramaId) queryBuilder.where(`his.cronogramaId = ${paginate.cronogramaId}`);
@@ -45,17 +44,19 @@ export class HistorialService {
     const result = await this.historialRepository
       .paginate(queryBuilder, paginate);
     // obtener works
-    const workIds: number[] = result.items
-      .pluck("info.contract.workId")
+    const infoIds: number[] = result.items
+      .pluck("infoId")
       .toArray();
-    const works = await this.worksService.getWorks({
-      ...paginate,
-      ids: workIds
+    const infos = await this.infosService.getInfos({
+      page: 1,
+      limit: paginate.limit,
+      ids: infoIds
     })
     // setting
     for (const item of result.items) {
-      const work = works.items.where('id', item?.info?.contract?.workId).first();
-      item.info.contract.work = work;
+      item.info = infos.items
+        .where('id', item.infoId)
+        .first() as any;
     }
     // response
     return result;
