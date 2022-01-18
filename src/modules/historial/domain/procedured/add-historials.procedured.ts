@@ -39,6 +39,7 @@ export class AddHistorialsProcedured extends DatabaseProcedured {
       INNER JOIN p_works as w ON w.id = cont.workId
       INNER JOIN p_cronogramas as cro ON cro.id = ${this.params()[0].name}
       WHERE inf.state = 1
+      AND inf.planillaId = cro.planillaId
       AND NOT EXISTS(SELECT null FROM p_historials as h WHERE h.infoId = inf.id 
       AND h.cronogramaId = cro.id);
       `

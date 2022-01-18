@@ -3,9 +3,9 @@ import { CreateCronogramaService } from '../application/create-cronograma.servic
 import { ProcessCronogramasService } from '../application/process-cronogramas.service';
 import { ReportGeneralService } from '../application/report-general.service';
 import { SendBoletaCronogramas } from '../application/send-boleta-cronogramas.service';
-import { CreateCronogramaDto, CreateCronogramaWithAdicionalDto } from '../application/dtos/create-cronogram.dto';
+import { CreateCronogramaWithAdicionalDto } from '../application/dtos/create-cronogram.dto';
 import { ChangeCargoId } from '../application/dtos/change-cargo.dto';
-import { GetCronogramaDto } from '../application/dtos/filter-type.dto';
+import { FilterRemoveHistorialDto, GetCronogramaDto } from '../application/dtos/filter-type.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CronogramasService } from '../application/cronogramas.service';
 import { PaginateDto } from 'src/common/dto/paginate.dto';
@@ -47,25 +47,38 @@ export class HttpController {
     return this.cronogramasService.findCronograma(id);
   }
 
-  @Get(':id/historials')
-  public historials(@Param('id') id: number, @Query() paginate: PaginateDto) {
-    return this.cronogramasService.findHistorials(id, paginate);
-  }
-
-  @Post(':id/clone')
-  public clone(@Param('id') id: number,
-    @Body() payload: CreateCronogramaDto) {
-    return this.createCronogramaService.clone(id, payload);
+  @Delete(':id')
+  public delete(@Param('id') id: number) {
+    return this.cronogramasService.findDelete(id);
   }
 
   @Post(':id/changeCargo')
-  public changeCargo(@Param('id') id: number, @Body() payload: ChangeCargoId) {
+  public changeCargo(@Param('id') id: number,
+    @Body() payload: ChangeCargoId) {
     return this.proccessCronogramaService.changeCargo(id, payload.targetCargoId, payload);
   }
 
   @Post(':id/process')
   public process(@Param('id') id: number) {
     return this.proccessCronogramaService.processing(id);
+  }
+
+  @Get(':id/historials')
+  public historials(@Param('id') id: number,
+    @Query() paginate: PaginateDto) {
+    return this.cronogramasService.findHistorials(id, paginate);
+  }
+
+  @Post(':id/historials')
+  public add(@Param('id') id: number,
+    @Body('ids') infoIds: number[]) {
+    return this.proccessCronogramaService.addHistorials(id, infoIds);
+  }
+
+  @Delete(':id/historials')
+  public remove(@Param('id') id: number,
+    @Body() payload: FilterRemoveHistorialDto) {
+    return this.proccessCronogramaService.removeHistorials(id, payload);
   }
 
   // @Post(':id/report/general.xlsx')
@@ -78,10 +91,5 @@ export class HttpController {
   @Post(':id/sendMail')
   public sendMail(@Param('id') id: number) {
     return this.sendBoletaCronogramas.sendMail(id);
-  }
-
-  @Delete(':id')
-  public delete(@Param('id') id: number) {
-    return this.cronogramasService.findDelete(id);
   }
 }

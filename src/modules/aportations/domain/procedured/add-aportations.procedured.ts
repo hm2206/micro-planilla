@@ -46,7 +46,12 @@ export class AddAportationsProcedured extends DatabaseProcedured {
         INNER JOIN p_historials as his ON his.infoId = inf.infoId
         INNER JOIN p_cronogramas as cro ON cro.id = his.cronogramaId 
         AND cro.remanente = 0
-        WHERE his.cronogramaId = ${this.getParam('pCronogramaId')};
+        WHERE his.cronogramaId = ${this.getParam('pCronogramaId')}
+        AND NOT EXISTS (
+          SELECT null FROM p_aportations as apo 
+          WHERE apo.historialId = his.id
+          AND apo.typeAportationId = type.id
+        );
       `
     )
   }

@@ -29,9 +29,9 @@ export class AddDiscountsProcedured extends DatabaseProcedured {
   public query() {
     return (
       `
-        INSERT INTO p_discounts(historialId, typeDiscountId, amount, isEdit, isModify)
+        INSERT INTO p_discounts(historialId, typeDiscountId, amount, isEdit)
         SELECT his.id, type.id, IF(cro.remanente = 1, 0,  c.amount), 
-        IF(cro.remanente = 1, 1, type.isEdit), 0 as isModify
+        IF(cro.remanente = 1, 1, type.isEdit)
         FROM p_historials as his
         INNER JOIN p_info_type_discounts as c ON c.infoId = his.infoId
         INNER JOIN p_type_discounts as type ON type.id = c.typeDiscountId

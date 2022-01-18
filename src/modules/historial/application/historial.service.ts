@@ -1,9 +1,10 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { AffiliationsService } from 'src/modules/affiliations/application/affiliations.service';
-import { AportationsService } from 'src/modules/aportations/application/aportations.service';
-import { DiscountsService } from 'src/modules/discounts/application/discounts.service';
-import { ObligationsService } from 'src/modules/obligations/application/obligations.service';
-import { RemunerationsService } from 'src/modules/remunerations/application/remunerations.service';
+import { AffiliationsService } from '../../../modules/affiliations/application/affiliations.service';
+import { AportationsService } from '../../../modules/aportations/application/aportations.service';
+import { DiscountsService } from '../../../modules/discounts/application/discounts.service';
+import { ObligationsService } from '../../../modules/obligations/application/obligations.service';
+import { RemunerationsService } from '../../../modules/remunerations/application/remunerations.service';
+import { WorksService } from '../../../modules/works/application/works.service';
 import { PaginateDto } from '../../../common/dto/paginate.dto';
 import { HistorialRepository } from '../domain/historial.repository';
 import { GetHistorialsDto } from './dtos/filter-historials.dto';
@@ -17,6 +18,7 @@ export class HistorialService {
     private aportationsService: AportationsService,
     private affiliationsService: AffiliationsService,
     private obligationsService: ObligationsService,
+    private worksService: WorksService,
     private historialRepository: HistorialRepository) { }
 
   public async getHistorial(paginate: GetHistorialsDto) {
@@ -26,7 +28,8 @@ export class HistorialService {
       .innerJoinAndSelect('his.pim', 'pim')
       .innerJoinAndSelect('his.afp', 'afp')
       .innerJoinAndSelect('his.bank', 'bank')
-      .innerJoin('inf.contract', 'cont')
+      .innerJoinAndSelect('inf.contract', 'cont')
+      .innerJoinAndSelect('cont.typeCategory', 'cat')
       .innerJoin('cont.work', 'w')
       .orderBy('w.orderBy', 'ASC')
     if (paginate.cronogramaId) queryBuilder.where(`his.cronogramaId = ${paginate.cronogramaId}`);
@@ -38,7 +41,24 @@ export class HistorialService {
       searchArray.forEach(q => realSearch.push(`w.orderBy like '%${q}%'`));
       queryBuilder.andWhere(`(${realSearch.join(' OR ')})`);
     }
-    return await this.historialRepository.paginate(queryBuilder, paginate);
+    // result
+    const result = await this.historialRepository
+      .paginate(queryBuilder, paginate);
+    // obtener works
+    const workIds: number[] = result.items
+      .pluck("info.contract.workId")
+      .toArray();
+    const works = await this.worksService.getWorks({
+      ...paginate,
+      ids: workIds
+    })
+    // setting
+    for (const item of result.items) {
+      const work = works.items.where('id', item?.info?.contract?.workId).first();
+      item.info.contract.work = work;
+    }
+    // response
+    return result;
   }
 
   public async editHistorial(id, payload: UpdateHistorialDto) {

@@ -5,4 +5,5 @@ export class GetInfosDto extends PaginateDto {
   contractId?: number;
   planillaId?: number;
   pimId?: number;
+  state?: boolean;
 }

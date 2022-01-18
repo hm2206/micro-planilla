@@ -15,6 +15,7 @@ import { DiscountsModule } from '../discounts/discounts.module';
 import { AportationsModule } from '../aportations/aportations.module';
 import { AffiliationsModule } from '../affiliations/affiliations.module';
 import { ObligationsModule } from '../obligations/obligations.module';
+import { WorksModule } from '../works/works.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ObligationsModule } from '../obligations/obligations.module';
     AffiliationsModule,
     ObligationsModule,
     InfoModule,
+    WorksModule,
   ],
   providers: [
     HistorialSubscriber,

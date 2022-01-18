@@ -36,3 +36,9 @@ export class GetCronogramaDto extends PaginateDto {
   campusId?: number;
   principal?: boolean;                                                                                                                                                                                                                                                                                                                                                                                        
 }
+
+export class FilterRemoveHistorialDto extends FilterTypeObject {
+  @IsOptional()
+  @IsNumber({}, { each: true })
+  public ids?: number[]
+}

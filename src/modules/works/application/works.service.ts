@@ -19,6 +19,7 @@ export class WorksService {
     const queryBuilder = this.workRepository.createQueryBuilder('w')
       .innerJoinAndSelect('w.afp', 'a')
       .orderBy('w.orderBy', 'ASC')
+    if (paginate.ids) queryBuilder.andWhereInIds(paginate?.ids);
     const result = await this.workRepository
       .paginate(queryBuilder, paginate);
     // datos

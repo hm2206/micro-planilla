@@ -1,8 +1,9 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { HistorialEntity } from "../../../modules/historial/domain/historial.entity";
 import { TypeAportationEntity } from "../../../modules/type-aportations/domain/type-aportation.entity";
 
 @Entity('p_aportations')
+@Unique('u_aportations', ['historialId', 'typeAportationId'])
 export class AportationEntity {
   @PrimaryGeneratedColumn()
   public id: number;

@@ -1,16 +1,17 @@
 import { EntityRepository, Repository, SelectQueryBuilder } from "typeorm";
 import {
   paginate,
-  Pagination,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
 import { WorkEntity } from "./work.entity";
+import { PaginateCollection } from "src/common/utils/collection-entity";
 
 @EntityRepository(WorkEntity)
 export class WorkRepository extends Repository<WorkEntity> {
-  public paginate(
+  public async paginate(
     queryBuilder: SelectQueryBuilder<WorkEntity>,
-    options: IPaginationOptions): Promise<Pagination<WorkEntity>> {
-    return paginate<WorkEntity>(queryBuilder, options);
+    options: IPaginationOptions): Promise<PaginateCollection<WorkEntity>> {
+    const result = await paginate<WorkEntity>(queryBuilder, options);
+    return new PaginateCollection(result);
   }
 }

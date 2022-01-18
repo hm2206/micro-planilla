@@ -22,7 +22,14 @@ export class InfosService {
       .innerJoinAndSelect('i.bank', 'b')
       .innerJoinAndSelect('i.planilla', 'pla')
       .innerJoinAndSelect('i.pim', 'p');
-    if (filters.contractId) queryBuilder.andWhere('contractId = :contractId', filters);
+    if (filters.contractId) queryBuilder.andWhere('i.contractId = :contractId', filters);
+    if (filters.planillaId) queryBuilder.andWhere('i.planillaId = :planillaId', filters);
+    if (filters.ids) queryBuilder.andWhereInIds(filters.ids);
+    if (typeof filters.state != 'undefined') {
+      const state = JSON.parse(`${filters.state}`);
+      queryBuilder.andWhere(`i.state = ${state}`);
+    }
+    // response
     return await this.infoRepository.paginate(queryBuilder, filters);
   }
 

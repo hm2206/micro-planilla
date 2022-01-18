@@ -13,10 +13,13 @@ export class UpdateHistorial {
 
 export class FilterTypeObject {
   @IsOptional()
+  public ids?: number[];
+
+  @IsOptional()
   public cronogramaId?: number
 
   @IsOptional()
-  public cargoId?: number
+  public pimId?: number
 
   @IsOptional()
   public typeCategoriaId?: number

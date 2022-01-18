@@ -17,6 +17,7 @@ import { CalcConfigCronogramaProcedured } from '../modules/cronogramas/domain/pr
 import { CalcObligationsProcedured } from '../modules/obligations/domain/procedured/calc-obligations.procedured';
 import { CalcAffiliationsProcedured } from '../modules/affiliations/domain/procedured/calc-affiliations.procedured';
 import { CalcDiscountsProcedured } from '../modules/discounts/domain/procedured/calc-discounts.procedured';
+import { AddHistorialIdsProcedured } from 'src/modules/historial/domain/procedured/add-historial-ids.procedured';
 
 @Injectable()
 export class Seeder {
@@ -24,6 +25,7 @@ export class Seeder {
     await (new AddConfigInfosProcedure).up();
     await (new CalcConfigCronogramaProcedured).up();
     await (new AddHistorialsProcedured).up();
+    await (new AddHistorialIdsProcedured).up();
     await (new CalcDaysHistorialsProcedured).up();
     await (new AddRemunerationsProcedured).up();
     await (new CalcRemunerationsProcedured).up();

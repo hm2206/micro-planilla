@@ -5,12 +5,12 @@ export class PaginateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumberString()
-  public page = "1";
+  public page: any = "1";
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumberString()
-  public limit = "30";
+  public limit: any = "30";
 
   @ApiPropertyOptional()
   @IsOptional()
