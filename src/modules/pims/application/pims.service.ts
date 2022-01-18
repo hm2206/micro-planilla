@@ -1,4 +1,5 @@
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { PimLogsService } from "../../../modules/pim-logs/application/pim-logs.service";
 import { CargosService } from "../../../modules/cargos/application/cargos.service";
 import { MetasService } from "../../../modules/metas/application/metas.service";
 import { PimEntity } from "../domain/pim.entity";
@@ -12,6 +13,7 @@ export class PimsService {
   constructor(
     private pimRepository: PimRepository,
     private metasService: MetasService,
+    private pimLogsService: PimLogsService,
     private cargosService: CargosService) { }
 
   public async getPims(paginate: GetPimDto) {
@@ -45,10 +47,34 @@ export class PimsService {
   public async editPim(id: number, editPimDto: IEditPimDto): Promise<PimEntity> {
     try {
       const pim = await this.pimRepository.findOneOrFail(id);
+      // validar modificación del monto
+      if (pim.amount != editPimDto.amount) {
+        // validar monto executado
+        const executedAmount = parseFloat(`${pim.executedAmount}`);
+        if (executedAmount > 0) throw new InternalServerErrorException(
+          `No se puede modificar el monto, el pim está en ejecución`
+        )
+        // validar logs
+        const isLogs = await this.pimLogsService.isPimLogExecute(pim.id);
+        if (isLogs) throw new InternalServerErrorException(`
+          No se puede modificar el monto
+        `);
+      }
+      // update
       const partial = Object.assign(pim, editPimDto);
       return await this.pimRepository.save(partial);
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException(error);
+    }
+  }
+
+  public async editPimAmount(id: number, amount: number) {
+    try {
+      const pim = await this.pimRepository.findOneOrFail(id);
+      const partial = Object.assign(pim, { amount });
+      return await this.pimRepository.save(partial);
+    } catch (error) {
+      throw new InternalServerErrorException;
     }
   }
 

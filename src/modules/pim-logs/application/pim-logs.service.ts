@@ -11,7 +11,7 @@ export class PimLogsService {
       const newPimLog = this.pimLogRepository.create(createPimLogDto);
       return await this.pimLogRepository.save(newPimLog);
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException(error);
     }
   }
 
