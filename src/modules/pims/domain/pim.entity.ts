@@ -26,6 +26,10 @@ export class PimEntity {
   @Column('decimal', { default: 0, precision: 12, scale: 2 })
   public amount: number;
 
+  @Column('decimal', { default: 0, precision: 12, scale: 2 })
+  public executedAmount: number;
+  public diffAmount = 0;
+
   @Column('boolean', { default: true })
   public state = true;
 

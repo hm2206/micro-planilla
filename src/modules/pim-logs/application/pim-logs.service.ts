@@ -14,4 +14,12 @@ export class PimLogsService {
       throw new InternalServerErrorException();
     }
   }
+
+  public async isPimLogExecute(pimId: number): Promise<boolean> {
+    const logs = await this.pimLogRepository.createQueryBuilder('l')
+      .where(`l.pimId = ${pimId}`)
+      .where(`l.isDefault = 0`)
+      .getCount();
+    return logs > 0;
+  }
 }

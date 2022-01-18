@@ -44,7 +44,7 @@ export class PimsService {
 
   public async editPim(id: number, editPimDto: IEditPimDto): Promise<PimEntity> {
     try {
-      const pim = await this.findPim(id);
+      const pim = await this.pimRepository.findOneOrFail(id);
       const partial = Object.assign(pim, editPimDto);
       return await this.pimRepository.save(partial);
     } catch (error) {
