@@ -1,10 +1,4 @@
 import { Injectable } from '@nestjs/common';
-// import { AddInfosProcedured } from '../modules/cronogramas/domain/procedured/add-infos.procedured';
-// import { CopyCronogramaProcedured } from '../modules/cronogramas/domain/procedured/copy-cronograma.procedured';
-// import { UpdateAportacionProcedured } from '../modules/cronogramas/domain/procedured/update-aportacion.procedured';
-// import { UpdateDescuentoEscalafonProcedured } from '../modules/cronogramas/domain/procedured/update-descuento-escalafon.procedured';
-// import { AddRemuneracionInfosProcedure } from '../modules/type-remunerations/domain/procedured/add-remuneracion-infos.procedured';
-
 import { AddConfigInfosProcedure } from '../modules/infos/domain/procedured/add-config-infos.procedured';
 import { AddHistorialsProcedured } from '../modules/historial/domain/procedured/add-historials.procedured';
 import { CalcDaysHistorialsProcedured } from '../modules/historial/domain/procedured/calc-days-historials.procedured';
@@ -17,8 +11,10 @@ import { CalcConfigCronogramaProcedured } from '../modules/cronogramas/domain/pr
 import { CalcObligationsProcedured } from '../modules/obligations/domain/procedured/calc-obligations.procedured';
 import { CalcAffiliationsProcedured } from '../modules/affiliations/domain/procedured/calc-affiliations.procedured';
 import { CalcDiscountsProcedured } from '../modules/discounts/domain/procedured/calc-discounts.procedured';
-import { AddHistorialIdsProcedured } from 'src/modules/historial/domain/procedured/add-historial-ids.procedured';
-import { CalcPimYearProcedured } from 'src/modules/pims/domain/procedured/calc-pim-year.procedured';
+import { AddHistorialIdsProcedured } from '../modules/historial/domain/procedured/add-historial-ids.procedured';
+import { CalcPimYearProcedured } from '../modules/pims/domain/procedured/calc-pim-year.procedured';
+import { DisabledContractsProcedured } from '../modules/contracts/domain/procedured/disabled-contracts.procedured';
+import { DisabledInfosProcedured } from '../modules/infos/domain/procedured/disabled-infos.procedured';
 
 @Injectable()
 export class Seeder {
@@ -37,5 +33,7 @@ export class Seeder {
     await (new CalcDiscountsProcedured).up();
     await (new AddAportationsProcedured).up();
     await (new CalcPimYearProcedured).up();
+    await (new DisabledContractsProcedured).up();
+    await (new DisabledInfosProcedured).up();
   }
 }
