@@ -4,13 +4,12 @@ import { AxiosRequestConfig } from 'axios';
 import { InputGetFile } from '../client-http.dto';
 import { Observable } from 'rxjs';
 import ObjectId from 'bson-objectid';
-import { StorageManager } from '@slynova/flydrive';
-import { pathUpload } from '../../common/configs/storage.config';
+import { StoragesService } from '../../common/storages/storages.service';
 
 @Injectable()
 export class ClientHttpService {
   constructor(
-    private storage: StorageManager,
+    private storagesService: StoragesService,
     private httpService: HttpService) {}
 
   public async download({ url, dir, extname }: InputGetFile, config?: AxiosRequestConfig): Promise<Observable<any>> {
@@ -21,8 +20,8 @@ export class ClientHttpService {
           try {
             const filename = `${new ObjectId().toHexString()}.${extname}`;
             const relativePath = `${dir}/${filename}`;
-            const realPath = pathUpload(relativePath);
-            await this.storage.disk().put(relativePath, response.data);
+            const realPath = this.storagesService.pathStorage(relativePath);
+            await this.storagesService.disk().put(relativePath, response.data);
             subscriber.next({
               filename,
               relativePath,

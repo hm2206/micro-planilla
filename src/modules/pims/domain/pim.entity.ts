@@ -49,6 +49,7 @@ export class PimEntity {
     cascade: true
   })
   public pimLogs: PimLogEntity[];
+  public isLogs: boolean | undefined;
 
   @OneToMany(() => InfoEntity, info => info.pim)
   public infos: InfoEntity[];

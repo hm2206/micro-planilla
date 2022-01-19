@@ -1,12 +1,12 @@
-import { PimLogsService } from "../../../modules/pim-logs/application/pim-logs.service";
 import { EventSubscriber, EntitySubscriberInterface, Connection, InsertEvent } from "typeorm";
 import { PimEntity } from "./pim.entity";
+import { CreatePimLogsService } from "../../../modules/pim-logs/application/create-pim.logs.service";
 
 @EventSubscriber()
 export class PimSubscriber implements EntitySubscriberInterface<PimEntity> {
   constructor(
     private connection: Connection,
-    private pimLogsService: PimLogsService) {
+    private createPimLogsService: CreatePimLogsService) {
     this.connection.subscribers.push(this);
   }
 
@@ -21,7 +21,7 @@ export class PimSubscriber implements EntitySubscriberInterface<PimEntity> {
 
   public afterInsert(event: InsertEvent<PimEntity>): void {
     const pimEntity = event.entity;
-    this.pimLogsService.createPimLog({
+    this.createPimLogsService.createPimLog({
       pimId: pimEntity.id,
       amount: pimEntity.amount,
       date: new Date(),

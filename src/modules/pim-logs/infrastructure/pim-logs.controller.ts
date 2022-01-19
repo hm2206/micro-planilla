@@ -1,19 +1,22 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiTags } from "@nestjs/swagger";
+import { CreatePimLogsService } from "../application/create-pim.logs.service";
 import { CreatePimLogDto } from "../application/dtos/create-pim-log.dto";
-import { PimLogsService } from "../application/pim-logs.service";
 
 @Controller('pimLogs')
 @ApiTags('pimLogs')
 export class PimLogsController {
-  constructor(private pimLogsService: PimLogsService) { }
+  constructor(private createPimLogsService: CreatePimLogsService) { }
   
   @Post()
-  public store(@Body() createPinLogDto: CreatePimLogDto) {
-    return this.pimLogsService.createPimLog({
-      ...createPinLogDto,
+  @UseInterceptors(FileInterceptor('file'))
+  public store(@Body() createPimLogDto: CreatePimLogDto,
+    @UploadedFile() file: Express.Multer.File) {
+    return this.createPimLogsService.createPimLog({
+      ...createPimLogDto,
       date: new Date,
       isDefault: false
-    });
+    }, file);
   }
 }

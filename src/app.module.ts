@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { CronogramasModule } from './modules/cronogramas/cronogramas.module';
-import { storageConfig } from './common/configs/storage.config';
-import { StorageModule } from '@haorama/nestjs-storage';
 import { DatabaseModule } from './database/database.module';
 import { TypeRemunerationsModule } from './modules/type-remunerations/type-remunerations.module';
 import { PimsModule } from './modules/pims/pims.module';
@@ -38,11 +36,12 @@ import { ConfigAfpsModule } from './modules/config-afps/config-afps.module';
 import { ConfigPaysModule } from './modules/config-pays/config-pays.module';
 import { TypePaysModule } from './modules/type-pays/type-pays.module';
 import { ConfigAportationMaxModule } from './modules/config-aportation-max/config-aportation-max.module';
+import { FilesModule } from './modules/files/files.module';
 
 @Module({
   imports: [
     ConfigsModule,
-    StorageModule.forRoot(storageConfig),
+    FilesModule,
     CronogramasModule,
     DatabaseModule,
     TypeRemunerationsModule,

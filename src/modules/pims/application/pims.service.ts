@@ -37,11 +37,16 @@ export class PimsService {
   }
 
   public async findPim(id: number): Promise<PimEntity> {
-    return await this.pimRepository.createQueryBuilder('pim')
+    const pim = await this.pimRepository.createQueryBuilder('pim')
       .innerJoinAndSelect('pim.meta', 'met')
       .innerJoinAndSelect('pim.cargo', 'car')
       .where(`pim.id = ${id}`)
       .getOneOrFail();
+    const isLogs = await this.pimLogsService.isPimLogExecute(pim.id);
+    // setting
+    pim.isLogs = isLogs;
+    // response
+    return pim;
   }
 
   public async editPim(id: number, editPimDto: IEditPimDto): Promise<PimEntity> {

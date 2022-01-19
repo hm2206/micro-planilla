@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsNumber } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsNumberString, IsOptional, IsString, MaxLength } from "class-validator";
 import { PimLogModeEnum } from "../../domain/pim-log.enum";
 
 export interface ICreatePimLogDto {
@@ -13,11 +13,11 @@ export interface ICreatePimLogDto {
 
 export class CreatePimLogDto implements ICreatePimLogDto {
   @ApiProperty()
-  @IsNumber()
+  @IsNumberString()
   pimId: number;
 
   @ApiProperty()
-  @IsNumber({ maxDecimalPlaces: 2 })
+  @IsNumberString({ maxDecimalPlaces: 2 })
   amount: number;
 
   date: Date;
@@ -25,4 +25,10 @@ export class CreatePimLogDto implements ICreatePimLogDto {
   @ApiProperty({ enum: PimLogModeEnum })
   @IsEnum(PimLogModeEnum)
   mode: PimLogModeEnum;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(1000)
+  observation?: string;
 }
