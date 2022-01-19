@@ -39,4 +39,9 @@ export class PimsController {
   public cargo(@Param('id') id: number) {
     return this.pimsService.findCargo(id);
   }
+
+  @Post(':year/calcExecuted')
+  public calcExecute(@Param('year') year: number) {
+    return this.pimsService.calcPim(year);
+  }
 }

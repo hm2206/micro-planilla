@@ -18,6 +18,7 @@ import { CalcObligationsProcedured } from '../modules/obligations/domain/procedu
 import { CalcAffiliationsProcedured } from '../modules/affiliations/domain/procedured/calc-affiliations.procedured';
 import { CalcDiscountsProcedured } from '../modules/discounts/domain/procedured/calc-discounts.procedured';
 import { AddHistorialIdsProcedured } from 'src/modules/historial/domain/procedured/add-historial-ids.procedured';
+import { CalcPimYearProcedured } from 'src/modules/pims/domain/procedured/calc-pim-year.procedured';
 
 @Injectable()
 export class Seeder {
@@ -35,5 +36,6 @@ export class Seeder {
     await (new CalcAfpsProcedured).up();
     await (new CalcDiscountsProcedured).up();
     await (new AddAportationsProcedured).up();
+    await (new CalcPimYearProcedured).up();
   }
 }

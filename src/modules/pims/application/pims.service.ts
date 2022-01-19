@@ -7,6 +7,7 @@ import { PimRepository } from "../domain/pim.repository";
 import { ICreatePimDto } from "./dtos/create-pim.dto";
 import { IEditPimDto } from "./dtos/edit-pim.dto";
 import { GetPimDto } from "./dtos/filter-pim.dto";
+import { CalcPimYearProcedured } from "../domain/procedured/calc-pim-year.procedured";
 
 @Injectable()
 export class PimsService {
@@ -89,5 +90,14 @@ export class PimsService {
 
   public async findCargo(id: number) {
     return await this.cargosService.findCargo(id);
+  }
+
+  public async calcPim(year: number) {
+    try {
+      await (new CalcPimYearProcedured()).call(year);
+      return { process: true };
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 }

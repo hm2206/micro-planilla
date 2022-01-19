@@ -31,7 +31,6 @@ export class PimLogSubscriber implements EntitySubscriberInterface<PimLogEntity>
     // setting data    
     const pimAmount = parseFloat(`${pim.amount}`);
     const pimLogAmount = parseFloat(`${pimLog.amount}`);
-    const pimExecutedAmount = parseFloat(`${pim.executedAmount}`);
     const pimDiffAmount = parseFloat(`${pim.diffAmount}`);
 
     /** 
@@ -48,7 +47,7 @@ export class PimLogSubscriber implements EntitySubscriberInterface<PimLogEntity>
     if (pimLog.mode == PimLogModeEnum.EGRESS) {
       
       // validar amount
-      if (pimDiffAmount > pimExecutedAmount) throw new InternalServerErrorException(
+      if (pimDiffAmount > pimDiffAmount) throw new InternalServerErrorException(
         `El monto debe ser menor/igual al saldo del PIM`
       )
       
