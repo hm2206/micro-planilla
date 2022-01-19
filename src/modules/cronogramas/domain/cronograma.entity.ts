@@ -1,61 +1,82 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import { HistorialEntity } from '../../../modules/historial/domain/historial.entity';
+import { PlanillaEntity } from '../../../modules/planillas/domain/planilla.entity';
+import { ConfigAfpEntity } from '../../../modules/config-afps/domain/config-afp.entity';
+import { ConfigPayEntity } from '../../../modules/config-pays/domain/config-pay.entity';
 
-@Entity('cronogramas')
+@Entity('p_cronogramas')
+@Unique('u_cronogramas', ['year', 'month', 'campusId', 'planillaId', 'adicional'])
 export class CronogramaEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
   @Column()
-  public descripcion: string;
-
-  @Column()
   public year: number;
 
   @Column()
-  public mes: number;
+  public month: number;
+
+  @Column({ default: 30 })
+  public numberOfDays: number;
+
+  @Column({ default: 30 })
+  public calcOfDays: number;
 
   @Column({ default: 0 })
   public adicional: number;
 
-  @Column({ default: 30 })
-  public dias: number;
-
-  @Column()
-  public observacion: string;
+  @Column({ nullable: true })
+  public observation: string;
 
   @Column()
   public token: string;
 
-  @Column({ name: 'entity_id' })
-  public entityId: number;
+  @Column()
+  public campusId: number;
 
-  @Column({ name: 'planilla_id' })
+  @Column()
   public planillaId: number;
 
-  @Column({ name: 'sede_id' })
-  public sedeId: number;
+  @Column({ default: 0 })
+  public selloId: number;
 
   @Column({ default: false })
   public remanente: boolean;
 
-  @Column({ name: 'send_email', default: false })
+  @Column('boolean', { default: false })
   public sendEmail: boolean
 
-  @Column({ default: false})
+  @Column('boolean', { default: false })
   public processing: boolean;
 
-  @Column({ default: '/img/sello.png' })
-  public sello: string
-
-  @Column({ name: 'count_token', default: 0 })
+  @Column({ default: 0 })
   public countToken: number;
 
-  @Column({ name: 'estado', default: true })
+  @Column('boolean', { default: true })
   public state: boolean;
 
-  @CreateDateColumn({ name: 'created_at', default: 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn()
   public createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', default: 'CURRENT_TIMESTAMP' })
+  @UpdateDateColumn()
   public updatedAt: Date; 
+
+  @ManyToOne(() => PlanillaEntity, planilla => planilla.cronogramas)
+  public planilla: PlanillaEntity;
+
+  @OneToMany(() => HistorialEntity, historial => historial.cronograma, {
+    cascade: true
+  })
+  public historials: HistorialEntity[];
+  public historialsCount!: number;
+
+  @OneToMany(() => ConfigAfpEntity,
+    configAfp => configAfp.cronograma, {
+      cascade: true
+  })
+  public configAfps: ConfigAfpEntity[];
+
+  @OneToMany(() => ConfigPayEntity,
+    configPay => configPay.cronograma)
+  public configPays: ConfigPayEntity[];
 }

@@ -34,6 +34,11 @@ export class DatabaseProcedured implements BaseProcedured {
     return [];
   }
 
+  public getParam(key: string): string {
+    const result = this.params().find(p => p.name == key);
+    return result?.name || "";
+  }
+
   public query() {
     return ``;
   }
@@ -52,13 +57,13 @@ export class DatabaseProcedured implements BaseProcedured {
   }
 
   public async down() {
-    this.connection.query(`DROP PROCEDURE IF EXISTS \`${this.displayName}\`;`)
+    await this.connection.query(`DROP PROCEDURE IF EXISTS \`${this.displayName}\`;`)
   }
 
   public async up() {
     const query = await this.toSql();
     await this.down();
-    this.connection.query(`${query}`);
+    await this.connection.query(`${query}`);
   }
 
   public call(...args) {

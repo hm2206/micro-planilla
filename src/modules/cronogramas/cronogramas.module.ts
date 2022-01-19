@@ -13,8 +13,8 @@ import { ProcessCronogramasService } from './application/process-cronogramas.ser
 
 @Module({
   imports: [
-    HistorialModule,
     TypeOrmModule.forFeature([CronogramaRepository]),
+    HistorialModule,
     PlanillasModule
   ],
   providers: [

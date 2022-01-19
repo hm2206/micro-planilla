@@ -1,47 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { AddInfosProcedured } from '../modules/cronogramas/domain/procedured/add-infos.procedured';
-import { CopyCronogramaProcedured } from '../modules/cronogramas/domain/procedured/copy-cronograma.procedured';
-import { AddRemuneracionesProcedured } from '../modules/cronogramas/domain/procedured/add-remuneraciones.procedured'
-import { AddDescuentosProcedured } from '../modules/cronogramas/domain/procedured/add-descuentos.procedured';
-import { ConfigAfpProcedured } from '../modules/cronogramas/domain/procedured/config-afp.procedured';
-import { AddAportacionesProcedured } from '../modules/cronogramas/domain/procedured/add-aportaciones.procedured';
-import { ConfigEdadProcedured } from '../modules/cronogramas/domain/procedured/config-edad.procedured';
-import { ConfigPagoProcedured } from '../modules/cronogramas/domain/procedured/config-pago.procedured';
-import { UpdateCalcRemuneracionDiaProcedured } from '../modules/cronogramas/domain/procedured/update-calc-remuneracion-dia.procedured';
-import { ClearPayProcedured } from '../modules/cronogramas/domain/procedured/clear-pay.procedured';
-import { AddObligacionProcedured } from '../modules/cronogramas/domain/procedured/add-obligacion.procedured';
-import { UpdateObligacionProcedured } from '../modules/cronogramas/domain/procedured/update-obligacion.procedured';
-import { UpdateAfpAporteProcedured } from '../modules/cronogramas/domain/procedured/update-afp-aporte.procedured';
-import { UpdateAfpPrimaProcedured } from '../modules/cronogramas/domain/procedured/update-afp-prima.procedured';
-import { UpdateAfpTypeProcedured } from '../modules/cronogramas/domain/procedured/update-afp-type.procedured';
-import { AddSindicatoProcedured } from '../modules/cronogramas/domain/procedured/add-sindicato.procedured';
-import { UpdateSindicatoProcedured } from '../modules/cronogramas/domain/procedured/update-sindicato.procedured'
-import { UpdateAportacionProcedured } from '../modules/cronogramas/domain/procedured/update-aportacion.procedured';
-import { UpdateDescuentoEscalafonProcedured } from '../modules/cronogramas/domain/procedured/update-descuento-escalafon.procedured';
-import { AddRemuneracionInfosProcedure } from '../modules/type-remunerations/domain/procedured/add-remuneracion-infos.procedured';
+import { AddConfigInfosProcedure } from '../modules/infos/domain/procedured/add-config-infos.procedured';
+import { AddHistorialsProcedured } from '../modules/historial/domain/procedured/add-historials.procedured';
+import { CalcDaysHistorialsProcedured } from '../modules/historial/domain/procedured/calc-days-historials.procedured';
+import { AddRemunerationsProcedured } from '../modules/remunerations/domain/procedured/add-remunerations.procedured';
+import { AddDiscountsProcedured } from '../modules/discounts/domain/procedured/add-discounts.procedured';
+import { AddAportationsProcedured } from '../modules/aportations/domain/procedured/add-aportations.procedured';
+import { CalcRemunerationsProcedured } from '../modules/remunerations/domain/procedured/calc-remuneration.procedured';
+import { CalcAfpsProcedured } from '../modules/afps/domain/procedured/calc-afps.procedured';
+import { CalcConfigCronogramaProcedured } from '../modules/cronogramas/domain/procedured/calc-config-cronograma.procedured';
+import { CalcObligationsProcedured } from '../modules/obligations/domain/procedured/calc-obligations.procedured';
+import { CalcAffiliationsProcedured } from '../modules/affiliations/domain/procedured/calc-affiliations.procedured';
+import { CalcDiscountsProcedured } from '../modules/discounts/domain/procedured/calc-discounts.procedured';
+import { AddHistorialIdsProcedured } from '../modules/historial/domain/procedured/add-historial-ids.procedured';
+import { CalcPimYearProcedured } from '../modules/pims/domain/procedured/calc-pim-year.procedured';
+import { DisabledContractsProcedured } from '../modules/contracts/domain/procedured/disabled-contracts.procedured';
+import { DisabledInfosProcedured } from '../modules/infos/domain/procedured/disabled-infos.procedured';
 
 @Injectable()
 export class Seeder {
   async seed() {
-    (new AddInfosProcedured).up();
-    (new AddRemuneracionesProcedured).up();
-    (new AddDescuentosProcedured).up();
-    (new ConfigAfpProcedured).up();
-    (new AddAportacionesProcedured).up();
-    (new ConfigEdadProcedured).up();
-    (new ConfigPagoProcedured).up();
-    (new UpdateCalcRemuneracionDiaProcedured).up();
-    (new ClearPayProcedured).up();
-    (new AddObligacionProcedured).up();
-    (new UpdateObligacionProcedured).up();
-    (new UpdateAfpAporteProcedured).up();
-    (new UpdateAfpPrimaProcedured).up();
-    (new UpdateAfpTypeProcedured).up();
-    (new AddSindicatoProcedured).up();
-    (new UpdateSindicatoProcedured).up();
-    (new UpdateAportacionProcedured).up();
-    (new UpdateDescuentoEscalafonProcedured).up();
-    (new CopyCronogramaProcedured).up();
-    (new AddRemuneracionInfosProcedure).up();
+    await (new AddConfigInfosProcedure).up();
+    await (new CalcConfigCronogramaProcedured).up();
+    await (new AddHistorialsProcedured).up();
+    await (new AddHistorialIdsProcedured).up();
+    await (new CalcDaysHistorialsProcedured).up();
+    await (new AddRemunerationsProcedured).up();
+    await (new CalcRemunerationsProcedured).up();
+    await (new AddDiscountsProcedured).up();
+    await (new CalcObligationsProcedured).up();
+    await (new CalcAffiliationsProcedured).up();
+    await (new CalcAfpsProcedured).up();
+    await (new CalcDiscountsProcedured).up();
+    await (new AddAportationsProcedured).up();
+    await (new CalcPimYearProcedured).up();
+    await (new DisabledContractsProcedured).up();
+    await (new DisabledInfosProcedured).up();
   }
 }

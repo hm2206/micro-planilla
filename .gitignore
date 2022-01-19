@@ -3,6 +3,7 @@
 /node_modules
 
 # Logs
+storage
 logs
 *.log
 npm-debug.log*
@@ -17,6 +18,7 @@ lerna-debug.log*
 # Tests
 /coverage
 /.nyc_output
+package-lock.json
 
 # IDEs and editors
 /.idea

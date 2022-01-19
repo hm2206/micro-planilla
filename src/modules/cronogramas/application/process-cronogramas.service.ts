@@ -1,22 +1,16 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CronogramaRepository } from '../domain/cronograma.repository';
-import { ConfigAfpProcedured } from '../domain/procedured/config-afp.procedured';
-import { AddAportacionesProcedured } from '../domain/procedured/add-aportaciones.procedured';
-import { ConfigEdadProcedured } from '../domain/procedured/config-edad.procedured';
-import { ConfigPagoProcedured } from '../domain/procedured/config-pago.procedured';
-import { UpdateCalcRemuneracionDiaProcedured } from '../domain/procedured/update-calc-remuneracion-dia.procedured';
-import { ClearPayProcedured } from '../domain/procedured/clear-pay.procedured';
-import { AddObligacionProcedured } from '../domain/procedured/add-obligacion.procedured';
-import { UpdateObligacionProcedured } from '../domain/procedured/update-obligacion.procedured';
-import { UpdateAfpAporteProcedured } from '../domain/procedured/update-afp-aporte.procedured';
-import { UpdateAfpPrimaProcedured } from '../domain/procedured/update-afp-prima.procedured';
-import { UpdateAfpTypeProcedured } from '../domain/procedured/update-afp-type.procedured';
-import { AddSindicatoProcedured } from '../domain/procedured/add-sindicato.procedured';
-import { UpdateSindicatoProcedured } from '../domain/procedured/update-sindicato.procedured';
-import { UpdateAportacionProcedured } from '../domain/procedured/update-aportacion.procedured';
-import { UpdateDescuentoEscalafonProcedured } from '../domain/procedured/update-descuento-escalafon.procedured';
-import { FilterTypeObject } from '../application/dtos/filter-type.dto';
+import { CalcConfigCronogramaProcedured } from '../domain/procedured/calc-config-cronograma.procedured';
+import { AddAportationsProcedured } from '../../aportations/domain/procedured/add-aportations.procedured';
+import { CalcRemunerationsProcedured } from '../../remunerations/domain/procedured/calc-remuneration.procedured';
+import { CalcAfpsProcedured } from '../../afps/domain/procedured/calc-afps.procedured';
+import { FilterRemoveHistorialDto, FilterTypeObject } from '../application/dtos/filter-type.dto';
 import { ProcessHistorialService } from '../../historial/application/process-historial.service';
+import { CalcObligationsProcedured } from '../../../modules/obligations/domain/procedured/calc-obligations.procedured';
+import { CalcDiscountsProcedured } from '../../../modules/discounts/domain/procedured/calc-discounts.procedured';
+import { AddDiscountsProcedured } from '../../discounts/domain/procedured/add-discounts.procedured';
+import { AddRemunerationsProcedured } from '../../remunerations/domain/procedured/add-remunerations.procedured';
+
 
 @Injectable()
 export class ProcessCronogramasService {
@@ -26,21 +20,15 @@ export class ProcessCronogramasService {
 
   public async processing(id: number) {
     try {
-      await (new ConfigAfpProcedured).call(id);
-      await (new AddAportacionesProcedured).call(id);
-      await (new ConfigEdadProcedured).call(id);
-      await (new ConfigPagoProcedured).call(id);
-      await (new UpdateCalcRemuneracionDiaProcedured).call(id);
-      await (new ClearPayProcedured).call(id);
-      await (new AddObligacionProcedured).call(id);
-      await (new UpdateObligacionProcedured).call(id);
-      await (new UpdateAfpAporteProcedured).call(id);
-      await (new UpdateAfpPrimaProcedured).call(id);
-      await (new UpdateAfpTypeProcedured).call(id);
-      await (new AddSindicatoProcedured).call(id);
-      await (new UpdateSindicatoProcedured).call(id);
-      await (new UpdateAportacionProcedured).call(id);
-      await (new UpdateDescuentoEscalafonProcedured).call(id);
+      await (new AddRemunerationsProcedured).call(id);
+      await (new AddDiscountsProcedured).call(id);
+      await (new CalcConfigCronogramaProcedured).call(id);
+      await (new AddAportationsProcedured).call(id);
+      await (new CalcRemunerationsProcedured).call(id);
+      await (new CalcObligationsProcedured).call(id);
+      await (new CalcAfpsProcedured).call(id);
+      await (new CalcDiscountsProcedured).call(id);
+      return { process: true }
     } catch (error) {
       throw new InternalServerErrorException("No se pudó procesar el cronograma!");
     }
@@ -63,5 +51,23 @@ export class ProcessCronogramasService {
     await this.processHistorialService.updateMassive(filterUpdate, data, !isRemanente);
     // result
     return { process: true };
+  }
+
+  public async addHistorials(id: number, infoIds: any[]) {
+    try {
+      const cronograma = await this.cronogramaRepository.findOneOrFail(id);
+      await this.processHistorialService.createMassive(cronograma.id, infoIds);
+      return await this.processing(cronograma.id);
+    } catch (error) {
+      throw new InternalServerErrorException;
+    }
+  }
+
+  public async removeHistorials(id: number, filters: FilterRemoveHistorialDto) {
+    const cronograma = await this.cronogramaRepository.findOneOrFail(id);
+    return await this.processHistorialService.deleteMassive({
+      ...filters,
+      cronogramaId: cronograma?.id
+    });
   }
 }

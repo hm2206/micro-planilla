@@ -2,12 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
 import { Seeder } from './database/seeder';
 import { SENT_MAIL } from './microservices';
+import { ValidationInputsPipe } from './common/pipes/validation.inputs.pipe';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger(AppModule.name);
 
   app.setGlobalPrefix('api');
 
@@ -15,7 +17,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter);
   
   // pipe
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.useGlobalPipes(new ValidationInputsPipe);
 
   // cors
   app.enableCors({
@@ -40,7 +42,7 @@ async function bootstrap() {
   const { HOST, PORT } = process.env;
   // host
   await app.listen(PORT, HOST, () => {
-    console.log(`Server run: ${HOST}:${PORT}`);
+    logger.log(`Server run: http://${HOST}:${PORT}`);
   });
 
   // microservices

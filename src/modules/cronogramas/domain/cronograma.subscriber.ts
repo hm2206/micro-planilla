@@ -1,15 +1,12 @@
 import { Connection, EntitySubscriberInterface, EventSubscriber, InsertEvent } from 'typeorm';
 import { CronogramaEntity } from './cronograma.entity';
 import ObjectId from 'bson-objectid';
-import { PlanillasService } from '../../planillas/application/planillas.service';
+import { DateTime } from 'luxon';
 
 @EventSubscriber()
 export class CronogramaSubscriber implements EntitySubscriberInterface<CronogramaEntity> {
-  constructor(
-    connection: Connection,
-    private planillasService: PlanillasService
-  ) {
-    connection.subscribers.push(this);
+  constructor(private connection: Connection) {
+    this.connection.subscribers.push(this);
   }
 
   public listenTo() {
@@ -17,11 +14,11 @@ export class CronogramaSubscriber implements EntitySubscriberInterface<Cronogram
   }
 
   public async beforeInsert(event: InsertEvent<CronogramaEntity>) {
-    const token = new ObjectId().toHexString();
     const cronograma = event.entity;
-    const planilla = await this.planillasService.findOrFail(cronograma.planillaId);
+    const token = new ObjectId().toHexString();
+    const currentDate = DateTime.local(cronograma.year, cronograma.month);
+    // setting cronogramas
     cronograma.token = token;
-    cronograma.descripcion = planilla.description;
-    cronograma.createdAt = new Date;
+    cronograma.numberOfDays = currentDate.daysInMonth;
   }
 }

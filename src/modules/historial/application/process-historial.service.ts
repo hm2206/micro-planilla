@@ -1,40 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { HistorialRepository } from '../domain/historial.repository';
 import { FilterTypeObject, UpdateHistorial } from '../domain/historial.dto';
-import { HistorialEntity } from '../domain/historial.entity';
-import { Collection } from 'collect.js';
-import { ProcessInfosService } from '../../infos/application/process-infos.service';
+import { InfosService } from '../../../modules/infos/application/infos.service';
+import { AddHistorialIdsProcedured } from '../domain/procedured/add-historial-ids.procedured';
 
 @Injectable()
 export class ProcessHistorialService {
   constructor(private historialRepository: HistorialRepository,
-    private processInfosService: ProcessInfosService) {}
+    private infosService: InfosService) {}
 
+  public async createMassive(cronogramaId: number, infoIds: number[]) {
+    await (new AddHistorialIdsProcedured()).call(cronogramaId, infoIds);
+    return { process: true }
+  } 
+  
   public async updateMassive(filter: FilterTypeObject, payload: UpdateHistorial, updateInfo = false){
-    await this.historialRepository.createQueryBuilder()
-    .where(filter.cronogramaId ? `cronograma_id = ${filter.cronogramaId}` : '1')
-    .andWhere(filter.cargoId ? `cargo_id = ${filter.cargoId}` : '1')
-    .andWhere(filter.typeCategoriaId ? `type_categoria_id = ${filter.typeCategoriaId}` : '1')
-    .andWhere(filter.metaId ? `meta_id = ${filter.metaId}` : '1')
-    .update(payload as HistorialEntity)
-    .execute();
-    // validar actualizar infos
-    if (updateInfo) {
-      // actualizar infos
-      const historial = await this.historialRepository.createQueryBuilder('his')
-      .where(filter.cronogramaId ? `his.cronograma_id = ${filter.cronogramaId}` : '1')
-      .andWhere(filter.cargoId ? `his.cargo_id = ${filter.cargoId}` : '1')
-      .andWhere(filter.typeCategoriaId ? `type_categoria_id = ${filter.typeCategoriaId}` : '1')
-      .andWhere(filter.metaId ? `his.meta_id = ${filter.metaId}` : '1')
-      .select('his.info_id as infoId')
-      .getRawMany();
-      // obtener ids
-      const ids: any = new Collection(historial).pluck('infoId').toArray();
-      const filterInfos = { ids };
-      // actualizar infos
-      await this.processInfosService.updateMassive(filterInfos, payload);
-    }
+    
     // result
     return { process: true };
+  }
+
+  public async deleteMassive(filter: FilterTypeObject) {
+    try {
+      const queryBuilder = this.historialRepository.createQueryBuilder().delete()
+      if (filter.ids) queryBuilder.andWhereInIds(filter.ids);
+      if (filter.cronogramaId) queryBuilder.andWhere("cronogramaId = :cronogramaId", filter);
+      if (filter.pimId) queryBuilder.andWhere("pimId = :pimId", filter);
+      const { affected } = await queryBuilder.execute();
+      return { affected };
+    } catch (error) {
+      throw new InternalServerErrorException;
+    }
   }
 }

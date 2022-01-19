@@ -1,34 +1,42 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { InfoEntity } from '../../../modules/infos/domain/info.entity';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CronogramaEntity } from '../../../modules/cronogramas/domain/cronograma.entity';
 
-@Entity('planillas')
+@Entity('p_planillas')
 export class PlanillaEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({ name: 'nombre' })
+  @Column()
   public name: string;
 
-  @Column({ name: 'descripcion' })
+  @Column()
   public description: string;
 
-  @Column({ name: 'plame_type' })
+  @Column({ nullable: true })
   public plameType: string;
 
-  @Column({ name: 'plame_code' })
+  @Column({ nullable: true })
   public plameCode: string;
 
-  @Column({ name: 'sello' })
+  @Column()
   public sello: string;
   
   @Column({ default: true })
   public principal: boolean;
 
-  @Column({ name: 'estado', default: true })
+  @Column({ default: true })
   public state: boolean;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn()
   public createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn()
   public updatedAt: Date;
+
+  @OneToMany(() => InfoEntity, info => info.planilla)
+  public infos: InfoEntity[];
+
+  @OneToMany(() => CronogramaEntity, cronograma => cronograma.planilla)
+  public cronogramas: CronogramaEntity[];
 }
