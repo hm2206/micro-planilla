@@ -33,22 +33,28 @@ export class UpdateObligacionProcedured extends DatabaseProcedured {
         INNER JOIN historials as his ON his.id = des.historial_id
         SET des.monto = 0
         WHERE his.cronograma_id = p_cronograma_id AND des.edit = 0 AND des.judicial = 1;
+        
+        // actualizar las obligaciones por porcentaje con bonificacion
         UPDATE obligacions as obl INNER JOIN (
         SELECT his.id, sum(rem.monto) as base
         FROM historials as his
         INNER JOIN remuneracions as rem ON rem.historial_id = his.id
-        WHERE his.cronograma_id = p_cronograma_id GROUP BY his.id)
+        WHERE his.cronograma_id = p_cronograma_id AND rem.is_visibled = 1
+        GROUP BY his.id)
         AS up_his ON obl.historial_id = up_his.id
         SET obl.monto = IF(obl.modo = 'NETO', 
         ((up_his.base - (SELECT sum(des.monto) FROM descuentos as des
         WHERE des.historial_id = up_his.id AND des.except = 1)) * obl.porcentaje) / 100, 
         (obl.porcentaje * up_his.base) / 100)
         WHERE obl.is_porcentaje = 1 AND obl.bonificacion = 1;
+        
+        // actualizar las obligaciones por porcentaje sin bonificacion
         UPDATE obligacions as obl INNER JOIN (
         SELECT his.id, sum(rem.monto) as base
         FROM historials as his
         INNER JOIN remuneracions as rem ON rem.historial_id = his.id
-        WHERE his.cronograma_id = p_cronograma_id AND rem.bonificacion = 0 GROUP BY his.id)
+        WHERE his.cronograma_id = p_cronograma_id AND rem.bonificacion = 0 AND rem.is_visibled = 1
+        GROUP BY his.id)
         AS up_his ON obl.historial_id = up_his.id
         SET obl.monto = IF(obl.modo = 'NETO', 
         ((up_his.base - (SELECT sum(des.monto) FROM descuentos as des
