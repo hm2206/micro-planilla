@@ -34,7 +34,7 @@ export class UpdateObligacionProcedured extends DatabaseProcedured {
         SET des.monto = 0
         WHERE his.cronograma_id = p_cronograma_id AND des.edit = 0 AND des.judicial = 1;
         
-        // actualizar las obligaciones por porcentaje con bonificacion
+        # actualizar las obligaciones por porcentaje con bonificacion
         UPDATE obligacions as obl INNER JOIN (
         SELECT his.id, sum(rem.monto) as base
         FROM historials as his
@@ -48,7 +48,7 @@ export class UpdateObligacionProcedured extends DatabaseProcedured {
         (obl.porcentaje * up_his.base) / 100)
         WHERE obl.is_porcentaje = 1 AND obl.bonificacion = 1;
         
-        // actualizar las obligaciones por porcentaje sin bonificacion
+        # actualizar las obligaciones por porcentaje sin bonificacion
         UPDATE obligacions as obl INNER JOIN (
         SELECT his.id, sum(rem.monto) as base
         FROM historials as his
