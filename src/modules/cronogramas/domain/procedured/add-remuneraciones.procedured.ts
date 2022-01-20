@@ -29,9 +29,9 @@ export class AddRemuneracionesProcedured extends DatabaseProcedured {
   public query() {
     return (
       `
-        INSERT INTO remuneracions(historial_id, type_remuneracion_id, monto, base, bonificacion, edit, orden)
+        INSERT INTO remuneracions(historial_id, type_remuneracion_id, monto, base, bonificacion, edit, orden, is_visibled)
         SELECT his.id as historial_id, inf.type_remuneracion_id, inf.monto, inf.base, type.bonificacion, 
-        IF(cro.remanente = 1, 1, type.edit), type.orden
+        IF(cro.remanente = 1, 1, type.edit), type.orden, type.is_visibled
         FROM historials as his
         INNER JOIN config_infos as inf ON inf.info_id = his.info_id
         INNER JOIN type_remuneracions as type ON inf.type_remuneracion_id = type.id
