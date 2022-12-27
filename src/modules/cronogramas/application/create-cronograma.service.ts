@@ -29,6 +29,7 @@ export class CreateCronogramaService {
         if (!countAdicional) throw new InternalServerErrorException("No se puede crear adicional");
         payload.adicional = countAdicional;
         payload.remanente = new Boolean(payload.remanente).valueOf();
+        console.log(payload);
         const tmpCronograma = this.cronogramaRepository.create(payload)
         const cronograma = await this.cronogramaRepository.save(tmpCronograma);
         await this.processCronogramasService.processing(cronograma.id);
