@@ -19,17 +19,17 @@ export class CreateCronogramaService {
       // validar adicional
       if (isAdicional) {
         // obtener cronogramas;
-        const countAdicional = await this.cronogramaRepository.createQueryBuilder()
+        const lastCronograma = await this.cronogramaRepository.createQueryBuilder()
           .where(`entity_id = ${payload.entityId}`)
           .andWhere(`planilla_id = ${payload.planillaId}`)
           .andWhere(`year = ${payload.year}`)
           .andWhere(`mes = ${payload.mes}`)
-          .getCount();
+          .orderBy(`adicional`, 'DESC')
+          .getOne();
         // validar creación de adicional
-        if (!countAdicional) throw new InternalServerErrorException("No se puede crear adicional");
-        payload.adicional = countAdicional;
+        if (!lastCronograma) throw new InternalServerErrorException("No se puede crear adicional");
+        payload.adicional = lastCronograma.adicional + 1;
         payload.remanente = new Boolean(payload.remanente).valueOf();
-        console.log(payload);
         const tmpCronograma = this.cronogramaRepository.create(payload)
         const cronograma = await this.cronogramaRepository.save(tmpCronograma);
         await this.processCronogramasService.processing(cronograma.id);
